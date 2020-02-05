@@ -1,0 +1,14 @@
+{
+	"version": 3,
+	"file": "styles.css",
+	"sources": [
+		"styles.scss",
+		"_sass/main.scss"
+	],
+	"sourcesContent": [
+		"@import \"main\";",
+		"body {\n    font-family: 'Lato', sans-serif;\n}\n\na {\n    color: black;\n    transition: color .15s ease-in;\n}\n\na:hover,\na:active {\n    opacity: .6;\n}"
+	],
+	"names": [],
+	"mappings": "ACAA,AAAA,IAAI,CAAC,EACD,WAAW,EAAE,kBAAkB,GAClC;;AAED,AAAA,CAAC,CAAC,EACE,KAAK,EAAE,KAAK,EACZ,UAAU,EAAE,kBAAkB,GACjC;;AAED,AAAA,CAAC,AAAA,MAAM,EACP,CAAC,AAAA,OAAO,CAAC,EACL,OAAO,EAAE,EAAE,GACd"
+}

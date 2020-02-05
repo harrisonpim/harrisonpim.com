@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>A new kind of image search</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css" />
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+
+</head>
+
+<body class="pa3 pa4-ns">
+    <nav>
+    <div class="pb3 pb4-ns bb b--gray">
+        <a class="link dim black b f4 f3-ns dib mr3" href="/" title="Home">Harrison Pim</a>
+        <a class="link dim gray f5 f4-ns dib mr3" href="/blog" title="Blog">Blog</a>
+        <a class="link dim gray f5 f4-ns dib mr3" href="/cv" title="CV">CV</a>
+        <a class="link dim gray dib h1 w1 mr3" href="https://twitter.com/hmpim" title="Twitter">
+            <svg data-icon="twitter" viewBox="0 0 32 32" style="fill:currentcolor">
+                <path
+                    d="M2 4 C6 8 10 12 15 11 A6 6 0 0 1 22 4 A6 6 0 0 1 26 6 A8 8 0 0 0 31 4 A8 8 0 0 1 28 8 A8 8 0 0 0 32 7 A8 8 0 0 1 28 11 A18 18 0 0 1 10 30 A18 18 0 0 1 0 27 A12 12 0 0 0 8 24 A8 8 0 0 1 3 20 A8 8 0 0 0 6 19.5 A8 8 0 0 1 0 12 A8 8 0 0 0 3 13 A8 8 0 0 1 2 4">
+                </path>
+            </svg>
+        </a>
+    </div>
+</nav>
+    <main>
+        <div class="f5 lh-copy measure-wide">
+            <article class="cf">
+    <header class="fn">
+        <h1 class="mb2 mt0 lh-title pt3">A new kind of image search</h1>
+        <time class="f6 ttu tracked gray">18 Oct 2018</time>
+    </header>
+    <div class="lh-copy">
+        <p>‘Search’ entered the public consciousness at a time when a person’s interaction with the internet was largely an interaction with text, and in many ways, the algorithms we use to explore the web have stayed the same since then. In the meantime, the internet has become a much faster, more fluid, and more visual place.</p>
+
+<p>When you run a search within a huge catalogue of images like the one we have at Wellcome Collection, almost all search algorithms will examine the words in your query, compare them to the words in all of the images’ captions, and return those with the largest overlap. The algorithm’s designer might incorporate one or two extra mathematical tricks, but the algorithm is never much more than ‘check whether the words match’.</p>
+
+<p>To return precise, meaningful matches, this technique relies on images having thoroughly descriptive captions.</p>
+
+<p><img src="https://iiif.wellcomecollection.org/image/L0023425.jpg/full/full/0/default.jpg" alt="D’Orbigny, Voyage pittoresque dans les deux Amériques." />
+<em>This is how we hunted for images before search boxes were invented | <a href="https://wellcomecollection.org/works/k524qkjg">D’Orbigny, Voyage pittoresque dans les deux Amériques.</a> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a></em></p>
+
+<p>‘Check whether the words match’ might have been sufficient in a world which was text-heavy, but images, video, and audio are the content types we interact with most today, whether they’re captioned or not. An image is invisible to this approach if isn’t attached to some text, and a huge amount of un-captioned stuff continues to sit around in storage while the algorithms in place do nothing to show it to users. The algorithms which grew up in a world of text aren’t smart enough to keep up on their own today.</p>
+
+<p><img src="https://iiif.wellcomecollection.org/image/V0039272.jpg/full/full/0/default.jpg" alt="A man is pointing to the Latin inscription on a plinth. Etching by D. Lizars." />
+<em>Checking whether the words match | <a href="https://wellcomecollection.org/works/dmxp7x4p">A man is pointing to the Latin inscription on a plinth. Etching by D. Lizars.</a> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a></em></p>
+
+<p>These problems are particularly prescient for Wellcome Collection, where we’re producing thousands of images of digitised works every day. The speed at which we’re digitising makes the material impossible to catalogue in sufficient detail as it’s being produced, but from our users’ perspective, until the works are searchable, they might as well not exist.</p>
+
+<h2 id="the-technical-bit">The technical bit</h2>
+
+<p>Modern machine learning has given data scientists tools to describe non-numeric data numerically — an artwork’s visual features, the sound of a persons voice, or the meaning of the word ‘dog’ can all be encoded as a compact array of numbers. If done well, those arrays can be compared to one another, allowing us to suggest similar artwork or to power predictive-text, among other things.</p>
+
+<p>However, the spaces described by these arrays are separate, and without the injection of some human understanding it’s been impossible to transfer knowledge from word-vector space to image-feature-vector space, or vice-versa. It’s easy to compare an image to an image, but comparing an image to some text is much harder.</p>
+
+<p><img src="https://iiif.wellcomecollection.org/image/N0021596.jpg/full/full/0/default.jpg" alt="Fruit and Vegetables — Year 2000 prices." />
+<em>Separate vector spaces - they’re like apples and oranges | <a href="https://wellcomecollection.org/works/arx8xs5b">Fruit and Vegetables — Year 2000 prices. Credit: Sue Snell.</a> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a></em></p>
+
+<p>Enter <a href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/41473.pdf">DeViSE</a>, a largely ignored research paper which came out of Google in 2012. DeViSE is a terrible name for an incredibly powerful technique. Broken down, it stands for <em>Deep Visual-Semantic Embedding</em>; the <em>visual-semantic embedding</em> referring to a shared space in which images and text can theoretically exist, and <em>deep</em> referring to the fact that we use deep neural networks to put them there.</p>
+
+<p>The key insight in the DeViSE paper was to create a shared space for words and images. In this shared space, the array describing the word <em>‘dog’</em> would be exactly the same as the array describing an image of a dog.</p>
+
+<p>When we’re able to embed an image in word vector space, real image search becomes possible. Even if a collection of images has no associated text whatsoever, we can figure out their positions in this new, shared space and measure the distance between them and a known query word. Intuitively, the closest images to the query word should be the most relevant search results!</p>
+
+<p>We’re no longer searching against text and returning the connected images here — this new method uses nothing but the images’ visual features to connect them to a user’s query.</p>
+
+<p><img src="/assets/images/devise/data.png" alt="data" />
+<em>Known points in word vector space and image feature vector space, with no meaningful mapping between them</em></p>
+
+<p><img src="/assets/images/devise/learning.png" alt="learning" />
+<em>Using known image-label pairs, we learn how to jump between text- and image-space</em></p>
+
+<p><img src="/assets/images/devise/inference.png" alt="inference" />
+<em>Using the inferred mapping, we can make reasonable guesses about where the position of a new, unseen point from one space might be in the other.</em></p>
+
+<p>Things get slightly more complicated in practice. While words are well understood individually, we don’t have an accepted way of representing longer sequences. Being restricted to word-space alone means that our users would only be able to search with single-word queries, and longer, more detailed queries would become meaningless.</p>
+
+<p>Progress is being made on the sentence-vector problem though, and recent work by teams at <a href="https://arxiv.org/abs/1803.11175">Google</a> and <a href="https://arxiv.org/abs/1705.02364">Facebook</a> inspired us to build our own sentence encoder. This gives us a much richer and more complex space to work with, in which single words and longer sequences are universally represented as useful arrays. Most importantly, queries with shared meaning are positioned in similar regions of the space, even in the case where none of the words within them overlap.</p>
+
+<h2 id="tldr">TL;DR</h2>
+
+<p>The combination of all of the technical stuff boils down to this: The machine now has a decent understanding of what your queries mean, and what kind of corresponding visual features should appear in the results. When you hit ‘search’, the machine actually looks at all the images in the collection before making a decision about which ones are most relevant - there’s no ‘check whether the words match’ here.</p>
+
+<h2 id="the-results">The results</h2>
+
+<p>Let’s run a few queries through the new algorithm and see what it comes up with.</p>
+
+<p><code class="highlighter-rouge">an old wooden boat</code>
+<img src="/assets/images/devise/boat_1.jpg" alt="" />
+<img src="/assets/images/devise/boat_2.jpg" alt="" />
+<img src="/assets/images/devise/boat_3.jpg" alt="" /></p>
+
+<p><code class="highlighter-rouge">a group of children</code>
+<img src="/assets/images/devise/children_1.jpg" alt="" />
+<img src="/assets/images/devise/children_2.jpg" alt="" />
+<img src="/assets/images/devise/children_3.jpg" alt="" /></p>
+
+<p><code class="highlighter-rouge">sheep</code>
+<img src="/assets/images/devise/sheep_1.jpg" alt="" />
+<img src="/assets/images/devise/sheep_2.jpg" alt="" />
+<img src="/assets/images/devise/sheep_3.jpg" alt="" /></p>
+
+<p><code class="highlighter-rouge">surgical instruments</code>
+<img src="/assets/images/devise/surgical_1.jpg" alt="" />
+<img src="/assets/images/devise/surgical_2.jpg" alt="" />
+<img src="/assets/images/devise/surgical_3.jpg" alt="" /></p>
+
+<p><code class="highlighter-rouge">mri brain scan</code>
+<img src="/assets/images/devise/brain_1.jpg" alt="" />
+<img src="/assets/images/devise/brain_2.jpg" alt="" />
+<img src="/assets/images/devise/brain_3.jpg" alt="" /></p>
+
+<p>One of these brains is not like the others…</p>
+
+<p><code class="highlighter-rouge">simulations of protein structure</code>
+<img src="/assets/images/devise/protein_1.jpg" alt="" />
+<img src="/assets/images/devise/protein_2.jpg" alt="" />
+<img src="/assets/images/devise/protein_3.jpg" alt="" /></p>
+
+<p><code class="highlighter-rouge">skeletons in excessively dramatic poses</code>
+<img src="/assets/images/devise/skeleton_1.jpg" alt="" />
+<img src="/assets/images/devise/skeleton_2.jpg" alt="" />
+<img src="/assets/images/devise/skeleton_3.jpg" alt="" /></p>
+
+<p>The queries above are reasonably broad, and fit a usage pattern we’d expect for a non-expert who isn’t familiar with what’s in the collection; We’d expect that someone searching for <code class="highlighter-rouge">sheep</code> would be happy with any images of sheep.</p>
+
+<p>However, this new kind of search is also useful if the user is looking for an particular work whose subject matter is relatively unique in the collection. The user doesn’t need to remember the work’s exact title, just an approximate description of what’s going on in the image. For instance:</p>
+
+<p><code class="highlighter-rouge">a woman is riding a horse and it's jumping over a hedge</code>
+<img src="/assets/images/devise/horse.jpg" alt="" /></p>
+
+<h2 id="dangers">Dangers</h2>
+
+<p>These algorithms are never perfect and need to be introduced cautiously. The most notorious example of well-intentioned computer vision gone awry was the ‘Google gorillas’ incident in 2015, which rightly generated huge backlash.</p>
+
+<p>We’re not exempt from these pitfalls. Sometimes the machine’s mistakes are innocent enough - it obviously can’t find any <code class="highlighter-rouge">cows on the beach</code>, so gives us hippos in a river instead:</p>
+
+<p><img src="/assets/images/devise/cows.jpg" alt="" /></p>
+
+<p>But while the point about caution should be taken seriously in any domain, it’s especially true when working with material as sensitive as ours.</p>
+
+<p>Wellcome is primarily a medical collection, and as a result we hold a lot of instructive medical images. When we started testing the new tool internally, we discovered that the algorithm struggled to distinguish between images of meaty-looking-stuff in the context of food-preparation, and meaty-looking-stuff in the context of surgery. Because of the algorithm’s strong visual-semantic links and the tight cluster of foody-words in word-vector space, users searching for ‘cake’ or ‘iceberg’ would be served up gory images of surgical procedures.</p>
+
+<p>This is obviously something we’re working to avoid putting in front of our users…</p>
+
+<h2 id="how-are-we-using-this-at-wellcome">How are we using this at Wellcome?</h2>
+
+<p>In reality, a combination of techniques will almost always provide the best results, so <em>‘check whether the words match’</em> will be around in Wellcome Collection’s search bar for a while longer, probably working in tandem with the new visual search. Our query encoder might also be used as a third prong, matching against the existing captions.
+The new search tool seems like an almost universally useful technology though, so it’s likely to find applications in all sorts of areas at Wellcome beyond the search bar. We’re particularly excited about using it as an internal tool for cataloguers and researchers working with our archives, where very little textual metadata currently exists.</p>
+
+<h2 id="still-want-to-know-more">Still want to know more?</h2>
+
+<p>We work openly at Wellcome, and all of the platform team’s code is available for anyone to read and reuse, including everything I’ve produced in the /data_science folder. The research I’ve described above is documented in much more detail in a set of jupyter notebooks, alongside the working code I used to produce the results above. Feel free to get in touch on twitter if you have any questions!</p>
+
+    </div>
+</article>
+        </div>
+    </main>
+</body>
+
+</html>

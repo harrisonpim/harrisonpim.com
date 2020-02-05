@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css" />
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+
+</head>
+
+<body class="pa3 pa4-ns">
+    {% include navigation.html %}
+    <main>
+        <div class="f5 lh-copy measure-wide">
+            {{ content }}
+        </div>
+    </main>
+</body>
+
+</html>
