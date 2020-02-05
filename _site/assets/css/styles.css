@@ -1,0 +1,7 @@
+body { font-family: 'Lato', sans-serif; }
+
+a { color: black; transition: color .15s ease-in; }
+
+a:hover, a:active { opacity: .6; }
+
+/*# sourceMappingURL=styles.css.map */
