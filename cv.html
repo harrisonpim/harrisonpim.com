@@ -6,8 +6,8 @@ title: CV - Harrison Pim
 <div>
     {% for section in site.data.cv %}
     <section class="cf">
-        <div class="fl w-100 w-20-ns tl tr-ns mt3 pr3-ns">{{ section.section }}</div>
-        <div class="fr w-100 w-80-ns">
+        <div class="fl w-100 w-20-l tl mt3 pt2">{{ section.section }}</div>
+        <div class="fr w-100 w-80-l">
             <ul class="list pl0">
                 {% if section.section == "Work" %}
                 {% for job in section.jobs %}

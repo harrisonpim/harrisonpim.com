@@ -10,7 +10,9 @@ Wellcome Collection is home to a lot of images. 120,000 of them are currently ac
 _We’ve got loads of books, and we’re digitising all of them | [Octavo books in strong rooms](https://wellcomecollection.org/works/ytgd5t2s). [CC BY](https://creativecommons.org/licenses/by/4.0/)_
 
 Making sense of that volume of material by hand is an almost impossible task. Experts use years of training and experience to disentangle and catalogue the connections between works, but there’s no way they can process the digitised works in enough detail at the rate we’re creating them. That kind of intricate work is enormously valuable and anything we can do to speed up their workflow is a benefit to everyone.
+
 Also, while some of the people using our catalogue’s front-end are domain experts, a lot of them aren’t, and we can’t expect them to have the passion or patience to trawl through every work in the collection to find something they’re interested in.
+
 By integrating machine learning into the ways we access the collection, we’re making some of the awkward early-stage work faster and easier for the experts while improving people’s experiences accessing the collection online.
 As an example, in this post we’ll be using machine learning to find and measure visual similarities between all of the images in our collection.
 
