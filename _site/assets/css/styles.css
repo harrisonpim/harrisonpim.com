@@ -1,7 +1,7 @@
-body { font-family: 'Lato', sans-serif; }
+body { font-family: "Lato", sans-serif; }
 
-a { color: black; transition: color .15s ease-in; }
+a { color: black; transition: color 0.15s ease-in; }
 
-a:hover, a:active { opacity: .6; }
+a:hover, a:active { opacity: 0.6; }
 
 /*# sourceMappingURL=styles.css.map */

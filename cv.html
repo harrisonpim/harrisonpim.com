@@ -2,60 +2,64 @@
 layout: default
 title: CV - Harrison Pim
 ---
+<div>
+    {% for section in site.data.cv %}
+    <div class="cf">
+        <div class="db fl w-100 w-20-l mt3 pt2 b">{{ section.section }}</div>
+        <div class="db fl fr-l w-100 w-80-l">
+            <ul class="list pl0">
+                {% if section.section == "Work" %}
+                {% for job in section.jobs %}
+                <li>
+                    {{ job.title }}, {{job.employer }}<div class="di dn-l">{{job.start_date | date:", %Y"}} -
+                        {{ job.end_date | date:"%Y"}}</div>
+                    <div class="dn di-l fr">
+                        {{ job.start_date | date:"%b %Y"}} - {{ job.end_date | date:"%b %Y"}}
+                    </div>
+                </li>
+                {% endfor %}
 
-{% for section in site.data.cv %}
-<section class="cf">
-    <div class="db fl w-100 w-20-l mt3 pt2 b">{{ section.section }}</div>
-    <div class="db fl fr-l w-100 w-80-l">
-        <ul class="list pl0">
-            {% if section.section == "Work" %}
-            {% for job in section.jobs %}
-            <li>
-                {{ job.title }}, {{job.employer }}
-                <div class="fr dn di-l">
-                    {{ job.start_date | date:"%b %Y"}} - {{ job.end_date | date:"%b %Y"}}
-                </div>
-            </li>
-            {% endfor %}
+                {% elsif section.section == "Education" %}
+                {% for school in section.schools %}
+                <li class="pb3">
+                    {{ school.name}}<div class="di dn-l">, {{ school.start_year }} - {{ school.end_year }}</div>
+                    <div class="fr dn di-l">
+                        {{ school.start_year }} - {{ school.end_year }}
+                    </div>
+                    <ul class="list pl0">
+                        {% for qualification in school.qualifications %}
+                        <li>{{ qualification }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
 
-            {% elsif section.section == "Education" %}
-            {% for school in section.schools %}
-            <li class="pb3">
-                {{ school.name}}
-                <div class="fr dn di-l">{{ school.start_year }} - {{ school.end_year }}</div>
-                <ul class="list pl0">
-                    {% for qualification in school.qualifications %}
-                    <li>{{ qualification }}</li>
-                    {% endfor %}
-                </ul>
-            </li>
-            {% endfor %}
+                {% elsif section.section == "Tools I Use" %}
+                {% for tool in section.tools %}
+                <li>
+                    {{ tool.category }}: {{ tool.set }}
+                </li>
+                {% endfor %}
 
-            {% elsif section.section == "Tools I Use" %}
-            {% for tool in section.tools %}
-            <li>
-                {{ tool.category }}: {{ tool.set }}
-            </li>
-            {% endfor %}
+                {% elsif section.section == "Projects" %}
+                {% for project in section.projects %}
+                <li class="pb3">
+                    {{ project.title }}, {{ project.year }}
+                    <div>{{ project.description }}</div>
+                </li>
+                {% endfor %}
 
-            {% elsif section.section == "Projects" %}
-            {% for project in section.projects %}
-            <li class="pb3">
-                {{ project.title }}, {{ project.year }}
-                <div>{{ project.description }}</div>
-            </li>
-            {% endfor %}
+                {% elsif section.section == "Other stuff" %}
+                {% for thing in section.things %}
+                <li class="pb3">
+                    {{ thing.title }}
+                    <div>{{ thing.description | liquify }}</div>
+                </li>
+                {% endfor %}
 
-            {% elsif section.section == "Other stuff" %}
-            {% for thing in section.things %}
-            <li class="pb3">
-                {{ thing.title }}
-                <div>{{ thing.description | liquify }}</div>
-            </li>
-            {% endfor %}
-
-            {% endif %}
-        </ul>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-</section>
-{% endfor %}
+    {% endfor %}
+</div>

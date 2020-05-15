@@ -40,17 +40,26 @@ The data came from TripAdvisor themselves. We reached out to them and explained 
 
 By writing a few lines of code to automatically tag our new and complete reviews, we very quickly had a much larger usable dataset to play with. We could immediately see which topics had the greatest impact on satisfaction. Additionally, topical intersections let us see which topics were most related to one another, and whether any of those relationships might be causal. We could then advise the Museum more pragmatically, by going after the root of a problem rather than its symptoms.
 
-![confusion_matrix](/assets/images/invisible_insights/confusion_matrix.png)
+{%
+    include image.html
+    image_url="/assets/images/invisible_insights/confusion_matrix.png"
+%}
 
 This kind of traditional, manual approach to topic identification was fine, and it gave us some great initial results. However, we’ve found that it’s often too easy for people to subtly impose their own biases in analysis, and that this can contribute to a gap between our visitors’ understanding of the Museum and our own.
 Fortunately, this dataset is massive. If the data is massaged correctly and we use a few careful modern data science techniques, themes begin to rise to the top by themselves — emergent from the data rather than the analyst’s domain knowledge. This kind of approach is much more in line with the idea of ‘letting our audience speak to us’, instead of the selective hearing that it’s so easy to fall into.
 For example, by using a few modern natural language processing techniques we can enumerate the semantic similarity of individual words in our reviews, as illustrated below:
 
-![scatter](/assets/images/invisible_insights/scatter.png)
+{%
+    include image.html
+    image_url="/assets/images/invisible_insights/scatter.png"
+%}
 
 Similar groups of words are clustered together, giving us topics to investigate:
 
-![scatter_zoom](/assets/images/invisible_insights/scatter_zoom.png)
+{%
+    include image.html
+    image_url="/assets/images/invisible_insights/scatter_zoom.png"
+%}
 
 That knowledge can also be abstracted to a higher level, showing us the similarity of entire reviews to one another.
 Using a bit more machine learning, we can also make probabilistic guesses about whether new reviews contain positive or negative sentiment, or how many bubbles (the TripAdvisor term for stars) they’re likely to give us based on the sequences of words within them.
@@ -61,9 +70,15 @@ The approach has a few more benefits. For example, everything we’ve described 
 
 Now for the impacts. We’ve made some interesting discoveries throughout this project. For example: visitors care more about temperatures than crowds. Toilets have a bigger impact on satisfaction rating than object labels. Spanish-speaking visitors are more likely to mention tours and audio guides than any other nationality (even though there are currently no tours in Spanish on offer). French visitors talk a lot about family activities. Non-English speakers are more reliant on the audio guide and therefore have higher expectations for it, so they give more critical feedback. These insights have been shared with teams around the Museum, and are currently being used to inform long-term strategy decisions.
 
-![topics](/assets/images/invisible_insights/topics.png)
+{%
+    include image.html
+    image_url="/assets/images/invisible_insights/topics.png"
+%}
 
-![group_types](/assets/images/invisible_insights/group_types.png)
+{%
+    include image.html
+    image_url="/assets/images/invisible_insights/group_types.png"
+%}
 
 These are insights which would otherwise go unseen, from voices that would otherwise be unheard. The blend of automation and human supervision allows us to do research at a large scale, and to listen to the distinct conversations our visitors are having instead of being drowned by the overall noise. This has helped us learn from our audience and make the case for change across the institution.
 

@@ -38,8 +38,12 @@
     <div class="lh-copy">
         <p>Wellcome Collection is home to a lot of images. 120,000 of them are currently accessible through the <a href="https://developers.wellcomecollection.org/catalogue">catalogue API</a>, while a further 40 million are openly licensed and freely available for anyone to use. Our digitisation team are churning through the rest of the collection at an incredible rate, producing thousands of new digital images every day.</p>
 
-<p><img src="https://iiif.wellcomecollection.org/image/L0015802.jpg/full/full/0/default.jpg" alt="Octavo books in strong rooms" />
-<em>We’ve got loads of books, and we’re digitising all of them | <a href="https://wellcomecollection.org/works/ytgd5t2s">Octavo books in strong rooms</a>. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a></em></p>
+<figure class="w-90 ml0 center">
+    <img src="https://iiif.wellcomecollection.org/image/L0015802.jpg/full/full/0/default.jpg" alt="We’ve got loads of books, and we’re digitising all of them | Octavo books in strong rooms" />
+    <a href="https://wellcomecollection.org/works/ytgd5t2s" class="no-underline">
+        <figcaption class="f4 tc gray">We’ve got loads of books, and we’re digitising all of them | Octavo books in strong rooms</figcaption>
+    </a>
+</figure>
 
 <p>Making sense of that volume of material by hand is an almost impossible task. Experts use years of training and experience to disentangle and catalogue the connections between works, but there’s no way they can process the digitised works in enough detail at the rate we’re creating them. That kind of intricate work is enormously valuable and anything we can do to speed up their workflow is a benefit to everyone.</p>
 
@@ -53,8 +57,12 @@ As an example, in this post we’ll be using machine learning to find and measur
 <p>Image classification is a very common task in machine learning, and it’s the starting point for our similarity work here.
 Neural networks are usually trained to recognise the things that people usually photograph — things like dogs, cats, people, and cars.</p>
 
-<p><img src="https://iiif.wellcomecollection.org/image/A0001296.jpg/full/full/0/default.jpg" alt="Domestic pet. dog health check" />
-<em>Machine learning tells me that this is definitely a dog | <a href="https://iiif.wellcomecollection.org/image/A0001296.jpg/full/full/0/default.jpges/by/4.0/">Domestic pet. dog health check</a>. Credit: Caroline Gunn. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a></em></p>
+<figure class="w-90 ml0 center">
+    <img src="https://iiif.wellcomecollection.org/image/A0001296.jpg/full/full/0/default.jpg" alt="Machine learning tells me that this is definitely a dog | Domestic pet. dog health check. Credit: Caroline Gunn. CC BY" />
+    <a href="https://wellcomecollection.org/works/rapaka88" class="no-underline">
+        <figcaption class="f4 tc gray">Machine learning tells me that this is definitely a dog | Domestic pet. dog health check. Credit: Caroline Gunn. CC BY</figcaption>
+    </a>
+</figure>
 
 <p>Because the classification is being done computationally, we need a way of representing our categories numerically. Using the categories <code class="highlighter-rouge">[dog, cat, man, car]</code> as an example, the network produces a classification vector in the following format for each new image:</p>
 
@@ -70,10 +78,26 @@ car = [0, 0, 0, 1]
 
 <p>The binary output of a classification network can tell us whether a picture is of a dog or not, but that information isn’t very subtle. We could use the classification vectors to find all of the dog pictures in the collection, but we wouldn’t be able to work out whether any of those dogs are Labradors, or which ones look most like a new, previously unseen dog. There’s only one bit of information in that vector and we can’t do much with it.</p>
 
-<p><img src="https://iiif.wellcomecollection.org/image/A0001300.jpg/full/full/0/default.jpg" alt="Domestic pet. Diabetic dog." />
-<img src="https://iiif.wellcomecollection.org/image/V0021884.jpg/full/full/0/default.jpg" alt="A St Bernard dog resting on the steps of a staircase." />
-<img src="https://iiif.wellcomecollection.org/image/A0000035.jpg/full/full/0/default.jpg" alt="Walk test for hip dysplasia — on a dog." />
-<em>Pretty sure that these are all <code class="highlighter-rouge">[1, 0, 0, 0]</code>s too | <a href="https://wellcomecollection.org/works/t42nr3ke">Domestic pet. Diabetic dog.</a> Credit Caroline Gunn. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a> | <a href="https://wellcomecollection.org/works/tetkyhr7">A St Bernard dog resting on the steps of a staircase.</a> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a> | <a href="https://wellcomecollection.org/works/wvmaevhm">Walk test for hip dysplasia — on a dog.</a> Credit: Royal Veterinary College. <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC</a></em></p>
+<figure class="w-90 ml0 center">
+    <img src="https://iiif.wellcomecollection.org/image/A0001300.jpg/full/full/0/default.jpg" alt="Domestic pet. Diabetic dog. Credit Caroline Gunn. CC BY" />
+    <a href="https://wellcomecollection.org/works/t42nr3ke" class="no-underline">
+        <figcaption class="f4 tc gray">Domestic pet. Diabetic dog. Credit Caroline Gunn. CC BY</figcaption>
+    </a>
+</figure>
+
+<figure class="w-90 ml0 center">
+    <img src="https://iiif.wellcomecollection.org/image/V0021884.jpg/full/full/0/default.jpg" alt="A St Bernard dog resting on the steps of a staircase. CC BY" />
+    <a href="https://wellcomecollection.org/works/tetkyhr7" class="no-underline">
+        <figcaption class="f4 tc gray">A St Bernard dog resting on the steps of a staircase. CC BY</figcaption>
+    </a>
+</figure>
+
+<figure class="w-90 ml0 center">
+    <img src="https://iiif.wellcomecollection.org/image/A0000035.jpg/full/full/0/default.jpg" alt="Walk test for hip dysplasia — on a dog. Credit: Royal Veterinary College. CC BY-NC" />
+    <a href="https://wellcomecollection.org/works/wvmaevhm" class="no-underline">
+        <figcaption class="f4 tc gray">Walk test for hip dysplasia — on a dog. Credit: Royal Veterinary College. CC BY-NC</figcaption>
+    </a>
+</figure>
 
 <p>However, thanks to the layered nature of neural networks, we have access to a few other vectors. The network’s intermediate layers (those between the raw pixel inputs and the classification vector outputs) contain all of the information about how the network came to its classification decision.</p>
 
@@ -83,9 +107,18 @@ car = [0, 0, 0, 1]
 
 <p>A 1000-class classification vector (top) and a 4096-dimensional feature vector (bottom) for a single image, where the height of each bar represents the strength of an activation. The feature vector is much more descriptive, making it a good choice for computing image similarity.</p>
 
-<p><img src="/assets/images/wellcome_computer_vision/classification_vector.png" alt="classification_vector" />
-<img src="/assets/images/wellcome_computer_vision/feature_vector.png" alt="feature_vector" />
-<em>A 1000-class classification vector (top) and a 4096-dimensional feature vector (bottom) for a single image, where the height of each bar represents the strength of an activation. The feature vector is much more descriptive, making it a good choice for computing image similarity.</em></p>
+<figure class="w-90 ml0 center">
+    <img src="/assets/images/wellcome_computer_vision/classification_vector.png" alt="" />
+    <a href="" class="no-underline">
+        <figcaption class="f4 tc gray"></figcaption>
+    </a>
+</figure>
+<figure class="w-90 ml0 center">
+    <img src="/assets/images/wellcome_computer_vision/feature_vector.png" alt="A 1000-class classification vector (top) and a 4096-dimensional feature vector (bottom) for a single image, where the height of each bar represents the strength of an activation. The feature vector is much more descriptive, making it a good choice for computing image similarity." />
+    <a href="" class="no-underline">
+        <figcaption class="f4 tc gray">A 1000-class classification vector (top) and a 4096-dimensional feature vector (bottom) for a single image, where the height of each bar represents the strength of an activation. The feature vector is much more descriptive, making it a good choice for computing image similarity.</figcaption>
+    </a>
+</figure>
 
 <p>Producing a feature vector is just as quick and easy as making a classification. We’re just asking the same network to give us the bits of information that would have contributed to its final classification decision, rather than asking for the decision itself.</p>
 
@@ -105,6 +138,25 @@ What about <code class="highlighter-rouge">dark borders</code>?</p>
 <h2 id="the-results">The results</h2>
 
 <p>We can now grab any image in our collection and ask for its closest matches! Here are a few examples.</p>
+
+<figure class="ml0 center w-100">
+    <div class="center">
+        <div class="dib w-30">
+            <img src="https://iiif.wellcomecollection.org/image/V0021056EL.jpg/full/full/0/default.jpg" alt="one" />
+        </div>
+        <div class="dib w-30">
+            <img src="https://iiif.wellcomecollection.org/image/V0021056EL.jpg/full/full/0/default.jpg" alt="two" />
+        </div>
+        <div class="dib w-30">
+            <img src="https://iiif.wellcomecollection.org/image/V0021056EL.jpg/full/full/0/default.jpg" alt="three" />
+        </div>
+    </div>
+    <figcaption class="f4 tc gray">
+        <a href="">one</a> |
+        <a href="">two</a> |
+        <a href="">three</a>
+    </figcaption>
+</figure>
 
 <p><img src="https://iiif.wellcomecollection.org/image/V0021056EL.jpg/full/full/0/default.jpg" alt="A fox running through reeds near a lake. Etching by J. E. Ridinger." />
 <img src="https://iiif.wellcomecollection.org/image/V0021069.jpg/full/full/0/default.jpg" alt="A beaver sitting on a lattice work of branches on the river shores. Etching by J. E. Ridinger." />
