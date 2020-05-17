@@ -7,8 +7,8 @@
 	],
 	"sourcesContent": [
 		"@import \"main\";",
-		"body {\n  font-family: \"Lato\", sans-serif;\n}\n\na {\n  color: black;\n  transition: color 0.15s ease-in;\n}\n\na:hover,\na:active {\n  opacity: 0.6;\n}\n"
+		"a {\n  color: black;\n  transition: color 0.15s ease-in;\n}\n\na:hover,\na:active {\n  opacity: 0.6;\n}\n\npre {\n  white-space: pre-wrap;\n}\n"
 	],
 	"names": [],
-	"mappings": "ACAA,AAAA,IAAI,CAAC,EACH,WAAW,EAAE,kBAAkB,GAChC;;AAED,AAAA,CAAC,CAAC,EACA,KAAK,EAAE,KAAK,EACZ,UAAU,EAAE,mBAAmB,GAChC;;AAED,AAAA,CAAC,AAAA,MAAM,EACP,CAAC,AAAA,OAAO,CAAC,EACP,OAAO,EAAE,GAAG,GACb"
+	"mappings": "ACAA,AAAA,CAAC,CAAC,EACA,KAAK,EAAE,KAAK,EACZ,UAAU,EAAE,mBAAmB,GAChC;;AAED,AAAA,CAAC,AAAA,MAAM,EACP,CAAC,AAAA,OAAO,CAAC,EACP,OAAO,EAAE,GAAG,GACb;;AAED,AAAA,GAAG,CAAC,EACF,WAAW,EAAE,QAAQ,GACtB"
 }
