@@ -1,4 +1,4 @@
-markdown: down
+markdown: kramdown
 
 kramdown:
   input: GFM
