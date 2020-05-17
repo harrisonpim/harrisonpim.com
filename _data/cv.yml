@@ -28,13 +28,13 @@
 - section: Tools I Use
   tools:
     - category: Machine Learning
-      set: PyTorch, Keras, Tensorflow, sklearn
+      set: pytorch, keras, tensorflow, sklearn
     - category: Analysis
-      set: Jupyter, pandas, numpy, scipy, networkx, etc
+      set: jupyter, pandas, numpy, scipy, networkx, etc
     - category: Infrastructure
-      set: AWS, Docker, Elasticsearch, Terraform
+      set: AWS, docker, elasticsearch, terraform
     - category: Infrequent but fun
-      set: SQL, Julia, Swift, R, bash, HTML, CSS, JS
+      set: SQL, julia, R, bash, HTML, CSS, JS
 
 - section: Projects
   projects:
@@ -66,7 +66,7 @@
 - section: Other stuff
   things:
     - title: Talking about science
-      description: I try to share what I’m working on with people who are interested, either directly or through <a href="/blog">blog posts</a> and <a href="/talks">talks</a>.
+      description: I try to share what I’m working on with people who are interested, either directly or through <a href="/blog">blog posts</a> and <a href="/talks">talks</a> at conferences, universities, etc.
     - title: Volunteering
       description: Grant application reviewer on the $25 million Google/Datakind Impact Challenge.
     - title: Cycling & Outdoor Swimming
