@@ -11,7 +11,7 @@ title: Talks - Harrison Pim
     {% for talk in site.data.talks %}
     <li class="pb3">
         <a class="f2 lh-title link dim black b" href="{{ talk.url }}">{{ talk.title }}</a>
-        <div>
+        <div class="gray">
             {{ talk.date | date:"%Y-%m-%d" }}
         </div>
         <div>

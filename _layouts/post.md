@@ -9,7 +9,7 @@ title: post.title
 <div>
     <header>
         <h1 class="b lh-title">{{  page.title  }}</h1>
-        <time class="gray">{{ page.date | date_to_string }}</time>
+        <time class="gray">{{ page.date | date:"%Y-%m-%d" }}</time>
     </header>
     <div>
         {{ content }}
