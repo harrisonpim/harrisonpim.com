@@ -1,0 +1,23 @@
+{
+  "name": "theblackhart",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "export": "next build && next export"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.0.2",
+    "next": "10.0.1",
+    "postcss-import": "^13.0.0",
+    "prismic-javascript": "^3.0.2",
+    "prismic-reactjs": "^1.3.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "stripe": "^8.126.0",
+    "tailwindcss": "^1.9.0"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,24 @@
+/* .prose {
+    h1, h2, h3, h4, h5, h6, figure, blockquote, pre {@apply mt-4 mb-2;}
+    p, li, dl, dd {@apply mb-2;}
+} */
+
+/* .prose {
+    h1 h2 h3 h4 h5 h6 figure blockquote pre {margin-top: 1rem; margin-bottom: 0.5rem}
+    p li dl dd {margin-bottom: 0.5rem}
+} */
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6,
+.prose figure,
+.prose blockquote,
+.prose pre {margin-top: 1rem; margin-bottom: 0.5rem}
+
+.prose p,
+.prose li,
+.prose dl,
+.prose dd {margin-bottom: 0.5rem}

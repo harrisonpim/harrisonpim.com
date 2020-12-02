@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>def from above</title>
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css" />
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+    <link rel="icon" href="/assets/favicon.svg">
+</head>
+
+<body class="f1-s f3-ns sans-serif bg-white pa5 w-100 mw8-l w-90-l">
+    <div class="cf lh-copy">
+        <div>
+    <a class="link dim gray" href="/blog">← back to the blog</a>
+</div>
+<div>
+    <header>
+        <h1 class="b lh-title">def from above</h1>
+        <time class="gray">2020-05-15</time>
+    </header>
+    <div>
+        <p>How do you do relative imports in python?? This is a problem beginners are always troubled by, and one I puzzled over for far too long. The answers on sites like stackoverflow are rubbish, so I thought I’d lay out a quick, beginner-friendly explanation of how to import a function from a file above the current directory in python.</p>
+
+<h2 id="the-problem">The problem</h2>
+
+<p>I have a set of files in a structure like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_project
+├── a.py
+├── main.py
+└── src
+    ├── __init__.py
+    └── b.py
+</code></pre></div></div>
+
+<p>which I run with the command <code class="highlighter-rouge">python main.py</code>.</p>
+
+<h2 id="the-common-mistake">The common mistake</h2>
+
+<p>Let’s illustrate the example more completely.</p>
+
+<p><code class="highlighter-rouge">a.py</code> looks like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">function_a</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">"hello world"</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">b.py</code> looks like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">..a</span> <span class="kn">import</span> <span class="n">function_a</span>
+
+<span class="k">def</span> <span class="nf">function_b</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">function_a</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>and <code class="highlighter-rouge">main.py</code> looks like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">src.b</span> <span class="kn">import</span> <span class="n">function_b</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">function_b</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>When we run <code class="highlighter-rouge">python main.py</code> from the command line, we hope that <code class="highlighter-rouge">"hello world"</code> gets printed to the console, but instead we get the error message:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ValueError: attempted relative import beyond top-level package
+</code></pre></div></div>
+
+<p>Aaaaargh! Why is python so dumb?? Why can’t I just use the code I’ve written? Am I going to have to restructure my entire project to satisfy the relative import gods?</p>
+
+<h2 id="the-solution">The solution</h2>
+
+<p>The fix is simple, and easy to remember once you know it.</p>
+
+<p>Python beginners are taught to stick that weird, blank <code class="highlighter-rouge">__init__.py</code> file in every directory they create, but never taught what it’s for. Spoiler alert: it’s for exactly this.</p>
+
+<p><code class="highlighter-rouge">__init__.py</code> acts as an interface between the code in its directory and the directory’s neighbouring files. If the directory’s called <code class="highlighter-rouge">src</code>, <code class="highlighter-rouge">__init__.py</code> effectively acts like <code class="highlighter-rouge">src.py</code>.</p>
+
+<p>A lot of people use <code class="highlighter-rouge">__init__.py</code> to import all the useful functionality in <code class="highlighter-rouge">src</code>, making it possible to write stuff like <code class="highlighter-rouge">from src import something_useful</code>, without specifying that <code class="highlighter-rouge">something_useful()</code> comes from <code class="highlighter-rouge">src.b</code> instead of a file called <code class="highlighter-rouge">src</code>.</p>
+
+<p><code class="highlighter-rouge">__init__.py</code> also allows you to import from a directory’s neighbouring files within that directory, making that functionality available to all the files within the directory.</p>
+
+<h2 id="ok-how-do-we-fix-the-example">OK, how do we fix the example?</h2>
+
+<p><code class="highlighter-rouge">a.py</code> doesn’t change:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">function_a</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">"hello world"</span>
+</code></pre></div></div>
+
+<p>We add a single line to <code class="highlighter-rouge">__init__.py</code>, importing <code class="highlighter-rouge">function_a()</code> from <code class="highlighter-rouge">a.py</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">a</span> <span class="kn">import</span> <span class="n">function_a</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">b.py</code> now looks like this, because it’s importing <code class="highlighter-rouge">function_a()</code> from <code class="highlighter-rouge">__init__.py</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">function_a</span>
+
+<span class="k">def</span> <span class="nf">function_b</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">function_a</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>and <code class="highlighter-rouge">main.py</code> still looks like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">src.b</span> <span class="kn">import</span> <span class="n">function_b</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">function_b</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>That’s it! Two lines changed and we’ve got relative imports working in python.</p>
+
+<p>Now, when we run <code class="highlighter-rouge">python main.py</code>, we get</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hello world
+</code></pre></div></div>
+
+<p>Hooray!</p>
+
+    </div>
+</div>
+
+    </div>
+</body>
+
+</html>

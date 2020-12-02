@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Exploring Wellcome Collection with computer vision</title>
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css" />
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+    <link rel="icon" href="/assets/favicon.svg">
+</head>
+
+<body class="f1-s f3-ns sans-serif bg-white pa5 w-100 mw8-l w-90-l">
+    <div class="cf lh-copy">
+        <div>
+    <a class="link dim gray" href="/blog">← back to the blog</a>
+</div>
+<div>
+    <header>
+        <h1 class="b lh-title">Exploring Wellcome Collection with computer vision</h1>
+        <time class="gray">2018-10-17</time>
+    </header>
+    <div>
+        <p>Wellcome Collection is home to a lot of images. 120,000 of them are currently accessible through the <a href="https://developers.wellcomecollection.org/catalogue">catalogue API</a>, while a further 40 million are openly licensed and freely available for anyone to use. Our digitisation team are churning through the rest of the collection at an incredible rate, producing thousands of new digital images every day.</p>
+
+<figure class="w-90 ml0 center">
+    <img src="https://iiif.wellcomecollection.org/image/L0015802.jpg/full/full/0/default.jpg" alt="We’ve got loads of books, and we’re digitising all of them | Octavo books in strong rooms" />
+    <a href="https://wellcomecollection.org/works/ytgd5t2s" class="no-underline">
+        <figcaption class="f4 tc gray">We’ve got loads of books, and we’re digitising all of them | Octavo books in strong rooms</figcaption>
+    </a>
+</figure>
+
+<p>Making sense of that volume of material by hand is an almost impossible task. Experts use years of training and experience to disentangle and catalogue the connections between works, but there’s no way they can process the digitised works in enough detail at the rate we’re creating them. That kind of intricate work is enormously valuable and anything we can do to speed up their workflow is a benefit to everyone.</p>
+
+<p>Also, while some of the people using our catalogue’s front-end are domain experts, a lot of them aren’t, and we can’t expect them to have the passion or patience to trawl through every work in the collection to find something they’re interested in.</p>
+
+<p>By integrating machine learning into the ways we access the collection, we’re making some of the awkward early-stage work faster and easier for the experts while improving people’s experiences accessing the collection online.
+As an example, in this post we’ll be using machine learning to find and measure visual similarities between all of the images in our collection.</p>
+
+<h2 id="image-classifiers-and-classification-vectors">Image classifiers and classification vectors</h2>
+
+<p>Image classification is a very common task in machine learning, and it’s the starting point for our similarity work here.
+Neural networks are usually trained to recognise the things that people usually photograph — things like dogs, cats, people, and cars.</p>
+
+<figure class="w-90 ml0 center">
+    <img src="https://iiif.wellcomecollection.org/image/A0001296.jpg/full/full/0/default.jpg" alt="Machine learning tells me that this is definitely a dog | Domestic pet. dog health check. Credit: Caroline Gunn. CC BY" />
+    <a href="https://wellcomecollection.org/works/rapaka88" class="no-underline">
+        <figcaption class="f4 tc gray">Machine learning tells me that this is definitely a dog | Domestic pet. dog health check. Credit: Caroline Gunn. CC BY</figcaption>
+    </a>
+</figure>
+
+<p>Because the classification is being done computationally, we need a way of representing our categories numerically. Using the categories <code class="highlighter-rouge">[dog, cat, man, car]</code> as an example, the network produces a classification vector in the following format for each new image:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dog = [1, 0, 0, 0]
+cat = [0, 1, 0, 0]
+man = [0, 0, 1, 0]
+car = [0, 0, 0, 1]
+</code></pre></div></div>
+
+<p>Computers are now absurdly good at this kind of thing, scoring higher than humans in many tasks that would have been considered impossible a few years ago, and working only with the images’ raw pixel data. They’re also incredibly fast — it would only take a few minutes to pass the entirety of Wellcome Collection’s image catalogue through a simple classifier.</p>
+
+<h2 id="feature-vectors">Feature vectors</h2>
+
+<p>The binary output of a classification network can tell us whether a picture is of a dog or not, but that information isn’t very subtle. We could use the classification vectors to find all of the dog pictures in the collection, but we wouldn’t be able to work out whether any of those dogs are Labradors, or which ones look most like a new, previously unseen dog. There’s only one bit of information in that vector and we can’t do much with it.</p>
+
+<figure class="w-90 ml0 center">
+    <img src="https://iiif.wellcomecollection.org/image/A0001300.jpg/full/full/0/default.jpg" alt="Domestic pet. Diabetic dog. Credit Caroline Gunn. CC BY" />
+    <a href="https://wellcomecollection.org/works/t42nr3ke" class="no-underline">
+        <figcaption class="f4 tc gray">Domestic pet. Diabetic dog. Credit Caroline Gunn. CC BY</figcaption>
+    </a>
+</figure>
+
+<figure class="w-90 ml0 center">
+    <img src="https://iiif.wellcomecollection.org/image/V0021884.jpg/full/full/0/default.jpg" alt="A St Bernard dog resting on the steps of a staircase. CC BY" />
+    <a href="https://wellcomecollection.org/works/tetkyhr7" class="no-underline">
+        <figcaption class="f4 tc gray">A St Bernard dog resting on the steps of a staircase. CC BY</figcaption>
+    </a>
+</figure>
+
+<figure class="w-90 ml0 center">
+    <img src="https://iiif.wellcomecollection.org/image/A0000035.jpg/full/full/0/default.jpg" alt="Walk test for hip dysplasia — on a dog. Credit: Royal Veterinary College. CC BY-NC" />
+    <a href="https://wellcomecollection.org/works/wvmaevhm" class="no-underline">
+        <figcaption class="f4 tc gray">Walk test for hip dysplasia — on a dog. Credit: Royal Veterinary College. CC BY-NC</figcaption>
+    </a>
+</figure>
+
+<p>However, thanks to the layered nature of neural networks, we have access to a few other vectors. The network’s intermediate layers (those between the raw pixel inputs and the classification vector outputs) contain all of the information about how the network came to its classification decision.</p>
+
+<p>Each element in our chosen feature vector array corresponds to a visual feature or shape like <code class="highlighter-rouge">paw</code>, <code class="highlighter-rouge">grass</code>, <code class="highlighter-rouge">pointy ear</code>, <code class="highlighter-rouge">floppy ear</code>, etc, and their value corresponds to how strongly the network believes that that feature is present in the image. The combination of high values in the <code class="highlighter-rouge">paw</code> and <code class="highlighter-rouge">floppy ear</code> elements of the feature vector might contribute to the final classification layer outputting a <code class="highlighter-rouge">1</code> in the <code class="highlighter-rouge">dog</code> position over the <code class="highlighter-rouge">car</code> position, for example.</p>
+
+<p>These vectors can take on any of the values <em>between</em> <code class="highlighter-rouge">0</code> and <code class="highlighter-rouge">1</code> in each position and are usually much bigger than our classification vectors, allowing them to encode much more nuance than the classification vectors.</p>
+
+<p>A 1000-class classification vector (top) and a 4096-dimensional feature vector (bottom) for a single image, where the height of each bar represents the strength of an activation. The feature vector is much more descriptive, making it a good choice for computing image similarity.</p>
+
+<figure class="w-90 ml0 center">
+    <img src="/assets/images/wellcome_computer_vision/classification_vector.png" alt="" />
+    <a href="" class="no-underline">
+        <figcaption class="f4 tc gray"></figcaption>
+    </a>
+</figure>
+<figure class="w-90 ml0 center">
+    <img src="/assets/images/wellcome_computer_vision/feature_vector.png" alt="A 1000-class classification vector (top) and a 4096-dimensional feature vector (bottom) for a single image, where the height of each bar represents the strength of an activation. The feature vector is much more descriptive, making it a good choice for computing image similarity." />
+    <a href="" class="no-underline">
+        <figcaption class="f4 tc gray">A 1000-class classification vector (top) and a 4096-dimensional feature vector (bottom) for a single image, where the height of each bar represents the strength of an activation. The feature vector is much more descriptive, making it a good choice for computing image similarity.</figcaption>
+    </a>
+</figure>
+
+<p>Producing a feature vector is just as quick and easy as making a classification. We’re just asking the same network to give us the bits of information that would have contributed to its final classification decision, rather than asking for the decision itself.</p>
+
+<h2 id="similarity">Similarity</h2>
+
+<p>So far, we’ve worked out a way of producing an information-rich, numerical description of every image in the collection. It’s fair to assume that similar images will be described by similar levels of a similar set of features, so by asking the following sorts of questions about a pair of images, we should be able to determine how similar they are:</p>
+
+<p>Do they have a similar amount of <code class="highlighter-rouge">pointy ear</code>?<br />
+Do they have a similar amount of <code class="highlighter-rouge">floppy ear</code>?<br />
+How much <code class="highlighter-rouge">bicycle wheel</code> are they showing?<br />
+How much <code class="highlighter-rouge">handwritten text</code> can you see in each one?<br />
+Is there a similar amount of <code class="highlighter-rouge">light background</code>?<br />
+What about <code class="highlighter-rouge">dark borders</code>?</p>
+
+<p>All of these questions are wrapped up into a single mathematical calculation, covering every feature in our feature vector. The calculation produces a single number between <code class="highlighter-rouge">0</code> and <code class="highlighter-rouge">1</code> which gives us a measure of the ‘distance’ between the vectors. The smaller the distance between the feature vectors, the more similar the images.</p>
+
+<h2 id="the-results">The results</h2>
+
+<p>We can now grab any image in our collection and ask for its closest matches! Here are a few examples.</p>
+
+<figure class="ml0 center w-100">
+    <div class="center">
+        <div class="dib w-30">
+            <img src="https://iiif.wellcomecollection.org/image/V0021056EL.jpg/full/full/0/default.jpg" alt="one" />
+        </div>
+        <div class="dib w-30">
+            <img src="https://iiif.wellcomecollection.org/image/V0021056EL.jpg/full/full/0/default.jpg" alt="two" />
+        </div>
+        <div class="dib w-30">
+            <img src="https://iiif.wellcomecollection.org/image/V0021056EL.jpg/full/full/0/default.jpg" alt="three" />
+        </div>
+    </div>
+    <figcaption class="f4 tc gray">
+        <a href="">one</a> |
+        <a href="">two</a> |
+        <a href="">three</a>
+    </figcaption>
+</figure>
+
+<p><img src="https://iiif.wellcomecollection.org/image/V0021056EL.jpg/full/full/0/default.jpg" alt="A fox running through reeds near a lake. Etching by J. E. Ridinger." />
+<img src="https://iiif.wellcomecollection.org/image/V0021069.jpg/full/full/0/default.jpg" alt="A beaver sitting on a lattice work of branches on the river shores. Etching by J. E. Ridinger." />
+<img src="https://iiif.wellcomecollection.org/image/V0021042EL.jpg/full/full/0/default.jpg" alt="A greyhound used for coursing hares standing on a forest clearing. Etching by J. E. Ridinger." />
+<img src="https://iiif.wellcomecollection.org/image/V0021036ER.jpg/full/full/0/default.jpg" alt="Small bulldog standing in front of a large rock. Etching by J. E. Ridinger." />
+<img src="https://iiif.wellcomecollection.org/image/V0021051ER.jpg/full/full/0/default.jpg" alt="An enraged lion is roaring and leaning with its front paws on a rock. Etching by J. E. Ridinger." />
+<em><a href="https://wellcomecollection.org/works/wkbsmkxj">A fox running through reeds near a lake</a> | <a href="https://wellcomecollection.org/works/jqygh5zs">A beaver sitting on a lattice work of branches on the river shores</a> | <a href="https://wellcomecollection.org/works/frup56pv">A greyhound used for coursing hares standing on a forest clearing</a> | <a href="https://wellcomecollection.org/works/qmq2n7jd">Small bulldog standing in front of a large rock</a> | <a href="https://wellcomecollection.org/works/gmnpbrfs">An enraged lion is roaring and leaning with its front paws on a rock</a></em></p>
+
+<p>The first images in each section here are the query images — the subsequent images are the ones we’ve measured to be most similar according to their feature vectors.</p>
+
+<p><img src="https://iiif.wellcomecollection.org/image/B0004904.jpg/full/full/0/default.jpg" alt="53 in the form of a double helix." />
+<img src="https://iiif.wellcomecollection.org/image/V0023387.jpg/full/full/0/default.jpg" alt="A snake, dark brown in colour and stout in shape." />
+<img src="https://iiif.wellcomecollection.org/image/V0023408.jpg/full/full/0/default.jpg" alt="A snake, dark green/brown in colour, with dark brown oval-shaped markings or cross-bands edged in white." />
+<img src="https://iiif.wellcomecollection.org/image/V0022070.jpg/full/full/0/default.jpg" alt="A spotted eel." />
+<img src="https://iiif.wellcomecollection.org/image/L0065286.jpg/full/full/0/default.jpg" alt="Cervical cap, ‘Improved Gem’ type." />
+<em><a href="https://wellcomecollection.org/works/hg3eqrjd">53 in the form of a double helix.</a> | <a href="https://wellcomecollection.org/works/ck9t8pq7">A snake, dark brown in colour and stout in shape.</a> | <a href="https://wellcomecollection.org/works/ey57cgyk">A snake, dark green/brown in colour, with dark brown oval-shaped markings or cross-bands edged in white.</a> | <a href="https://wellcomecollection.org/works/b22kvhud">A spotted eel.</a> | <a href="https://wellcomecollection.org/works/g27dnk3c">Cervical cap, ‘Improved Gem’ type.</a></em></p>
+
+<p>Both regular and abstract forms seem to be captured pretty well by the network!</p>
+
+<p><img src="https://iiif.wellcomecollection.org/image/L0031645.jpg/full/full/0/default.jpg" alt="Edwards’ “Harlene” for the hair: the great hair" />
+<img src="https://iiif.wellcomecollection.org/image/L0043530.jpg/full/full/0/default.jpg" alt="Book jacket — Zorastro" />
+<img src="https://iiif.wellcomecollection.org/image/V0047438.jpg/full/full/0/default.jpg" alt="Japan: a roof finial in Nagoya castle in the form of a dragon" />
+<img src="https://iiif.wellcomecollection.org/image/L0041027.jpg/full/full/0/default.jpg" alt="An Indian wrestler seated" />
+<em><a href="https://wellcomecollection.org/works/pax824ry">Edwards’ “Harlene” for the hair: the great hair</a> | <a href="https://wellcomecollection.org/works/ztj53jzf">Book jacket — Zorastro</a> | <a href="https://wellcomecollection.org/works/x75y4cdb">Japan: a roof finial in Nagoya castle in the form of a dragon</a> | <a href="https://wellcomecollection.org/works/wvezezey">An Indian wrestler seated</a></em></p>
+
+<p>Again, these matches are based on nothing but the raw pixel data in each image — the network has no access to any of the metadata and is making decisions based purely on the images’ visual similarity.</p>
+
+<p><img src="https://iiif.wellcomecollection.org/image/V0007938EL.jpg/full/full/0/default.jpg" alt="Skeleton: seen from the front" />
+<img src="https://iiif.wellcomecollection.org/image/V0008045.jpg/full/full/0/default.jpg" alt="Human skeleton with left arm extended" />
+<img src="https://iiif.wellcomecollection.org/image/L0011851.jpg/full/full/0/default.jpg" alt="Sketches of anatomy" />
+<img src="https://iiif.wellcomecollection.org/image/V0008168.jpg/full/full/0/default.jpg" alt="Skeleton, front view" />
+<img src="https://iiif.wellcomecollection.org/image/V0007939EL.jpg/full/full/0/default.jpg" alt="Skeleton: seen from behind" />
+<a href="https://wellcomecollection.org/works/vzqmu92e">Skeleton: seen from the front</a> | <a href="https://wellcomecollection.org/works/qwcrcssy">Human skeleton with left arm extended</a> | <a href="https://wellcomecollection.org/works/vasu72w2">Sketches of anatomy</a> | <a href="https://wellcomecollection.org/works/ry58kfpm">Skeleton, front view</a> | <a href="https://wellcomecollection.org/works/ubv8fjgb">Skeleton: seen from behind</a></p>
+
+<p>We can also use this technique to compare images from outside the collections to those within it, letting us do a kind of reverse image-search! Producing a feature vector for the MERL’s famous unit points us to another image of a hefty sheep from our own collection, for example.</p>
+
+<p><img src="https://pbs.twimg.com/media/DaWITF5WsAI-CYU?format=jpg&amp;name=large" alt="The MERL’s absolute unit" />
+<img src="https://iiif.wellcomecollection.org/image/A0000818.jpg/full/full/0/default.jpg" alt="Suffolk ram being measured (good condition)." />
+<a href="https://twitter.com/TheMERL/status/983341970318938112">The MERL’s absolute unit</a> Credit: <a href="https://www.reading.ac.uk/merl/research/countrysideimages/merl-PFSPH1_K90651.aspx">MERL. Ref: P FS PH1/K90651</a> // <a href="https://wellcomecollection.org/works/fa4bnckm">Suffolk ram being measured (good condition). Credit: Royal Veterinary College.</a> <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC</a></p>
+
+<h2 id="how-are-we-using-this-at-wellcome">How are we using this at Wellcome?</h2>
+
+<p>Being able to generate this kind of information is useful in lots of contexts. We’re using image similarity internally to find clusters of works in the collection to improve our cataloguing. We’ve used it to strip out unwanted images from our public collections. We’re likely to start trialling an image similarity feature on individual works pages in the hope of extending users’ journeys and exposing parts of the collection more serendipitously. Most importantly, these feature vectors provide a backbone for lots of Wellcome Collection’s forthcoming developments with machine learning. Watch this space!</p>
+
+<h2 id="still-want-to-know-more">Still want to know more?</h2>
+
+<p>We work openly at Wellcome, and all of the platform team’s code is available for anyone to read and reuse, including everything I’ve produced in the /data_science folder. The research I’ve described above is documented in much more detail in a set of jupyter notebooks, alongside the working code I used to produce the results above. Feel free to get in touch on twitter if you have any questions!</p>
+
+    </div>
+</div>
+
+    </div>
+</body>
+
+</html>
