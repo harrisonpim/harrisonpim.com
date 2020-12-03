@@ -1,8 +1,8 @@
 import Head from "next/head";
-import { Client } from "../utils/prismic-helpers";
+import { Client } from "../prismic/helpers";
 import { RichText } from "prismic-reactjs";
-import { customLink } from "../utils/prismic-helpers";
-import { linkResolver } from "../prismic-configuration";
+import { customLink } from "../prismic/helpers";
+import { linkResolver } from "../prismic/resolvers";
 
 const Index = ({ index }) => {
   if (index && index.data) {
@@ -15,11 +15,13 @@ const Index = ({ index }) => {
           <title>{title}</title>
           <meta name="Description" content={description} />
         </Head>
-        <RichText
-          render={index.data.body}
-          linkResolver={linkResolver}
-          serializeHyperlink={customLink}
-        />{" "}
+        <div className="prose">
+          <RichText
+            render={index.data.body}
+            linkResolver={linkResolver}
+            serializeHyperlink={customLink}
+          />
+        </div>
       </div>
     );
   }

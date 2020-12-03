@@ -1,11 +1,7 @@
 import Prismic from "prismic-javascript";
 import Link from "next/link";
-import {
-  apiEndpoint,
-  accessToken,
-  linkResolver,
-  hrefResolver,
-} from "../prismic-configuration";
+import { apiEndpoint, accessToken } from "./configuration";
+import { linkResolver, hrefResolver } from "./resolvers";
 
 // Helper function to convert Prismic Rich Text links to Next/Link components
 export const customLink = (type, element, content, children, index) => (

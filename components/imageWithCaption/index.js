@@ -1,4 +1,3 @@
-import React from "react";
 import Caption from "./caption";
 
 export default function ImageWithCaption({ slice }) {

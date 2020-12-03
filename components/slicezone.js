@@ -1,18 +1,18 @@
 import React from "react";
 import { RichText } from "prismic-reactjs";
 import ImageWithCaption from "./ImageWithCaption";
-import { customLink } from "../utils/prismic-helpers";
-import { linkResolver } from "../prismic-configuration";
+import { customLink } from "../prismic/helpers";
+import { linkResolver } from "../prismic/resolvers";
 
 export default function SliceZone({ sliceZone }) {
   return sliceZone.map((slice) => {
-    switch (slice.type) {
+    switch (slice.slice_type) {
       case "img":
         return <ImageWithCaption slice={slice} />;
-      case "paragraph":
+      case "text":
         return (
           <RichText
-            render={slice}
+            render={slice.primary.text}
             linkResolver={linkResolver}
             serializeHyperlink={customLink}
           />

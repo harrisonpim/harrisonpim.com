@@ -1,35 +1,28 @@
 import React from "react";
 import Head from "next/head";
 import { RichText } from "prismic-reactjs";
-import { queryRepeatableDocuments } from "../../utils/queries";
-import DefaultLayout from "../../layouts/default";
+import { queryRepeatableDocuments } from "../../prismic/queries";
+import { Client } from "../../prismic/helpers";
 import SliceZone from "../../components/slicezone";
-import { Client } from "../../utils/prismic-helpers";
-
-const formatDate = (dateString) => {
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  return new Date(dateString).toLocaleDateString(undefined, options);
-};
+import BackButton from "../../components/backButton";
+import { formatDate } from "../../components/date";
 
 const Post = ({ post }) => {
   if (post && post.data) {
-    const titleImageURL = post.data["title-image"].url;
-    const date = formatDate(post.data.date);
     const title = RichText.asText(post.data.title);
-
+    const date = formatDate(post.data.date);
     return (
-      <DefaultLayout parentHref="/research-blog" parentText="Blog">
+      <div>
         <Head>
           <title>{title}</title>
         </Head>
         <div>
-          <div className="mx-auto w-full">
-            <img className="mx-auto" src={titleImageURL} alt={title} />
-            <div className="text-sm text-silver pb-4">{date}</div>
-          </div>
-          <SliceZone sliceZone={post.data.body1} />
+          <BackButton text="back to the blog" href="/blog" />
+          <h1>{title}</h1>
+          <div className="text-gray">{date}</div>
+          <SliceZone sliceZone={post.data.body} />
         </div>
-      </DefaultLayout>
+      </div>
     );
   }
 
@@ -58,7 +51,7 @@ export async function getStaticPaths() {
     (doc) => doc.type === "blog-post"
   );
   return {
-    paths: documents.map((doc) => `/research-blog/${doc.uid}`),
+    paths: documents.map((doc) => `/blog/${doc.uid}`),
     fallback: false,
   };
 }

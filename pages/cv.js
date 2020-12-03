@@ -1,47 +1,58 @@
 import React from "react";
 import Head from "next/head";
 import { RichText } from "prismic-reactjs";
-import { queryRepeatableDocuments } from "../utils/queries";
-import DefaultLayout from "../layouts/default";
-import Client from "../utils/prismic-helpers";
-import SliceZone from "../components/slicezone";
+import Client from "../prismic/helpers";
+import Jobs from "../components/cv/jobs";
+import Education from "../components/cv/education";
+import Tools from "../components/cv/tools";
+import Projects from "../components/cv/projects";
+import Other from "../components/cv/other";
 
-const Page = ({ page }) => {
-  if (page && page.data) {
-    const title = RichText.asText(page.data.title);
+const CV = ({ overview, jobs, tools, education, projects, other }) => {
+  if (overview && overview.data) {
+    const title = RichText.asText(overview.data.title);
+    const description = RichText.asText(overview.data.description);
 
     return (
-      <DefaultLayout parentHref="/" parentText="Home">
+      <div>
         <Head>
-          <title>{title}</title>
+          <title>CV - {title}</title>
+          <meta name="Description" content={description} />
         </Head>
         <div>
           <h1>{title}</h1>
-          <SliceZone sliceZone={page.data.body} />
+          <div>{description}</div>
+          <div>
+            <Jobs data={jobs} />
+            <Education data={education} />
+            <Tools data={tools} />
+            <Projects data={projects} />
+            <Other data={other} />
+          </div>
         </div>
-      </DefaultLayout>
+      </div>
     );
   }
   return null;
 };
-
-export async function getStaticProps({ params }) {
-  const page = (await Client().getByUID("page", params.uid)) || {};
+export async function getStaticProps() {
+  const client = Client();
+  const overview = await client.getByUID("page", "cv");
+  const jobs = await client.getSingle("cv-jobs");
+  const tools = await client.getSingle("cv-tools");
+  const education = await client.getSingle("cv-education");
+  const projects = await client.getSingle("cv-projects");
+  const other = await client.getSingle("cv-other");
   return {
     props: {
-      page,
+      overview,
+      jobs,
+      tools,
+      education,
+      projects,
+      other,
     },
   };
 }
 
-export async function getStaticPaths() {
-  const documents = await queryRepeatableDocuments(
-    (doc) => doc.type === "page"
-  );
-  return {
-    paths: documents.map((doc) => `/${doc.uid}`),
-    fallback: false,
-  };
-}
-
-export default Page;
+export default CV;

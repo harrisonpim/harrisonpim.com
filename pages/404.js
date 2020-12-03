@@ -1,9 +1,10 @@
-import DefaultLayout from "../layouts/default";
+import BackButton from "../components/backButton";
 
 export default function Custom404() {
   return (
-    <DefaultLayout parentHref="/" parentText="Home">
+    <div>
+      <BackButton />
       <h1>404 - Page Not Found</h1>
-    </DefaultLayout>
+    </div>
   );
 }

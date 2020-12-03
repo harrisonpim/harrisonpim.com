@@ -19,32 +19,12 @@ const createClientOptions = (req = null, prismicAccessToken = null) => {
   };
 };
 
-const resolver = (doc, uid) => {
-  if (doc.link_type === "Web") {
-    return doc.url;
-  }
-  if (doc.type === "page") {
-    return `/${uid}`;
-  }
-  if (doc.type === "blog-post") {
-    return `research-blog/${uid}`;
-  }
-  if (doc.type === "product") {
-    return `shop/${uid}`;
-  }
-  if (doc.type === "shop") {
-    return "shop";
-  }
-  if (doc.type === "blog-home") {
-    return "research-blog";
-  }
-  return "/";
-};
-
-export const linkResolver = (doc) => {
-  return resolver(doc, doc.uid);
-};
-
-export const hrefResolver = (doc) => {
-  return resolver(doc, "[uid]");
-};
+export function PrismicScript() {
+  return (
+    <script
+      async
+      defer
+      src={`https://static.cdn.prismic.io/prismic.min.js?repo=${repoName}&new=true`}
+    />
+  );
+}

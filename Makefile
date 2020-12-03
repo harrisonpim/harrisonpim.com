@@ -2,7 +2,7 @@ clean:
 	rm -rf .next node_modules out
 
 install: clean
-	yarn install
+	yarn install netlify-cli
 
 build: install
 	yarn export
@@ -12,4 +12,4 @@ serve: build
 	yarn start
 
 dev: install
-	yarn dev
+	ntl dev

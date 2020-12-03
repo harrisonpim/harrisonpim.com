@@ -1,38 +1,39 @@
 import Head from "next/head";
 import { RichText } from "prismic-reactjs";
-import DefaultLayout from "../../layouts/default";
-import PostList from "../../components/postlist";
-import { queryRepeatableDocuments } from "../../utils/queries";
-import { Client } from "../../utils/prismic-helpers";
+import { queryRepeatableDocuments } from "../../prismic/queries";
+import { Client, customLink } from "../../prismic/helpers";
+import { linkResolver } from "../../prismic/resolvers";
+import BackButton from "../../components/backButton";
+import Post from "../../components/post";
 
-const Blog = ({ index, posts }) => {
+const Blog = ({ blog, posts }) => {
+  const title = RichText.asText(blog.data.title);
+  const description = RichText.asText(blog.data.description);
   return (
-    <DefaultLayout parentHref="/" parentText="Home">
+    <div>
       <Head>
-        <title>{RichText.asText(index.data.title)}</title>
-        <meta
-          name="description"
-          content={RichText.asText(index.data.description)}
-        />
+        <title>{title}</title>
+        <meta name="description" content={description} />
       </Head>
-      <div>{RichText.asText(index.data.description)}</div>
-      <div className="pt-4">
-        <PostList posts={posts} />
+      <BackButton />
+      <div>
+        {posts.map((thisPost) => (
+          <Post post={thisPost} />
+        ))}
       </div>
-    </DefaultLayout>
+    </div>
   );
 };
 
 export async function getStaticProps() {
-  const client = Client();
-  const index = await client.getSingle("blog-home");
+  const blog = await Client().getByUID("page", "blog");
   const posts = await queryRepeatableDocuments(
     (doc) => doc.type === "blog-post"
   );
 
   return {
     props: {
-      index,
+      blog,
       posts: posts,
     },
   };
