@@ -6,13 +6,15 @@ import Block from "./block";
 
 export default function Education({ data }) {
   const renderedEducation = data.data.body.map((school) => (
-    <div>
-      <div>{RichText.asText(school.primary.name)}</div>
-      <div>
+    <div className="pb-2">
+      <div className="text-base inline-block">
+        {RichText.asText(school.primary.name)}
+      </div>
+      <div className="text-base block lg:inline-block lg:float-right">
         {formatYear(school.primary["start-date"])}-
         {formatYear(school.primary["end-date"])}
       </div>
-      <div>
+      <div className="text-xs">
         <RichText
           render={school.primary.qualifications}
           linkResolver={linkResolver}

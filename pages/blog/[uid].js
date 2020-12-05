@@ -12,6 +12,7 @@ const Post = ({ post }) => {
   const description = RichText.asText(post.data.standfirst);
   const date = formatDate(post.data.date);
   const emoji = RichText.asText(post.data.favicon);
+
   return (
     <DefaultLayout faviconEmoji={emoji}>
       <Head>

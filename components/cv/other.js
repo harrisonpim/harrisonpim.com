@@ -3,9 +3,9 @@ import Block from "./block";
 
 export default function Other({ data }) {
   const renderedOther = data.data.body.map((thing) => (
-    <div>
-      <div>{RichText.asText(thing.primary.title)}</div>
-      <div>{RichText.asText(thing.primary.description)}</div>
+    <div className="pb-2">
+      <div className="text-base">{RichText.asText(thing.primary.title)}</div>
+      <div className="text-xs">{RichText.asText(thing.primary.description)}</div>
     </div>
   ));
 

@@ -15,7 +15,7 @@ const CV = ({ overview, jobs, tools, education, projects, other }) => {
   const favicon = RichText.asText(overview.data.favicon);
 
   return (
-    <DefaultLayout wide debug faviconEmoji={favicon}>
+    <DefaultLayout wide faviconEmoji={favicon}>
       <Head>
         <title>CV - {title}</title>
         <meta
@@ -23,15 +23,17 @@ const CV = ({ overview, jobs, tools, education, projects, other }) => {
           content={RichText.asText(overview.data.description)}
         />
       </Head>
-      <div>
+      <div className="max-w-2xl">
         <a className="no-underline" href="/">
           <h1>{title}</h1>
         </a>
-        <RichText
-          render={overview.data.description}
-          linkResolver={linkResolver}
-          serializeHyperlink={customLink}
-        />
+        <div className="text-sm py-4">
+          <RichText
+            render={overview.data.description}
+            linkResolver={linkResolver}
+            serializeHyperlink={customLink}
+          />
+        </div>
         <div>
           <Jobs data={jobs} />
           <Education data={education} />

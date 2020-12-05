@@ -1,5 +1,7 @@
 # [technology.rip](technology.rip)
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d0515f06-3d98-4a50-9ecc-d74c635a27c0/deploy-status)](https://app.netlify.com/sites/happy-goldwasser-d738cd/deploys)
+
 Personal landing page / blog / cv
 
 Built and deployed with [Jamstack](https://jamstack.org/) principles in mind, using:
@@ -11,7 +13,7 @@ Built and deployed with [Jamstack](https://jamstack.org/) principles in mind, us
 
 ## Developing
 
-I use `netlify-cli` for local development. Run `yarn add netlify-cli` to install it.
+I use `netlify-cli` for local development. Run `yarn add netlify-cli -g` to install it.
 
 Then run `ntl dev` to get a local version of the site running. Environment variables for prismic etc will be pulled directly from netlify, assuming you have the correct access permissions.
 
