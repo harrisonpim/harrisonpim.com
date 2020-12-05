@@ -6,12 +6,12 @@ export default function DefaultLayout({
   debug = false,
   faviconEmoji = "👋",
 }) {
-  const style = "prose";
+  const style = "";
   if (!wide) {
-    style.concat(" max-w-measure");
+    style.concat("max-w-measure ");
   }
   if (debug) {
-    style.concat(" debug");
+    style.concat("debug ");
   }
   return (
     <div>

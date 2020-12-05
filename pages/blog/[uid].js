@@ -1,4 +1,3 @@
-import React from "react";
 import Head from "next/head";
 import { RichText } from "prismic-reactjs";
 import { queryRepeatableDocuments } from "../../prismic/queries";
@@ -10,16 +9,22 @@ import DefaultLayout from "../../layouts/default";
 
 const Post = ({ post }) => {
   const title = RichText.asText(post.data.title);
+  const description = RichText.asText(post.data.standfirst);
   const date = formatDate(post.data.date);
+  const emoji = RichText.asText(post.data.favicon);
+
   return (
-    <DefaultLayout>
+    <DefaultLayout faviconEmoji={emoji}>
       <Head>
         <title>{title}</title>
+        <meta name="description" content={description} />
       </Head>
       <div>
         <BackButton text="back to the blog" href="/blog" />
-        <h1 className="py-0">{title}</h1>
-        <div className="text-gray">{date}</div>
+        <div className="pb-4">
+          <h1>{title}</h1>
+          <div className="text-gray">{date}</div>
+        </div>
         <SliceZone sliceZone={post.data.body} />
       </div>
     </DefaultLayout>

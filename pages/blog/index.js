@@ -1,8 +1,7 @@
 import Head from "next/head";
 import { RichText } from "prismic-reactjs";
 import { queryRepeatableDocuments } from "../../prismic/queries";
-import { Client, customLink } from "../../prismic/helpers";
-import { linkResolver } from "../../prismic/resolvers";
+import { Client } from "../../prismic/helpers";
 import BackButton from "../../components/backButton";
 import Post from "../../components/post";
 import DefaultLayout from "../../layouts/default";
@@ -10,8 +9,9 @@ import DefaultLayout from "../../layouts/default";
 const Blog = ({ blog, posts }) => {
   const title = RichText.asText(blog.data.title);
   const description = RichText.asText(blog.data.description);
+  const emoji = RichText.asText(blog.data.favicon);
   return (
-    <DefaultLayout>
+    <DefaultLayout faviconEmoji={emoji}>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />

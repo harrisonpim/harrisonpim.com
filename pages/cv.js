@@ -1,4 +1,3 @@
-import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { RichText } from "prismic-reactjs";
@@ -13,9 +12,10 @@ import DefaultLayout from "../layouts/default";
 
 const CV = ({ overview, jobs, tools, education, projects, other }) => {
   const title = RichText.asText(overview.data.title);
+  const favicon = RichText.asText(overview.data.favicon);
 
   return (
-    <DefaultLayout wide debug faviconEmoji="📄">
+    <DefaultLayout wide debug faviconEmoji={favicon}>
       <Head>
         <title>CV - {title}</title>
         <meta
@@ -24,11 +24,9 @@ const CV = ({ overview, jobs, tools, education, projects, other }) => {
         />
       </Head>
       <div>
-        <Link as={linkResolver("/")} href={linkResolver("/")} passHref>
-          <a className="no-underline">
-            <h1>{title}</h1>
-          </a>
-        </Link>
+        <a className="no-underline" href="/">
+          <h1>{title}</h1>
+        </a>
         <RichText
           render={overview.data.description}
           linkResolver={linkResolver}
