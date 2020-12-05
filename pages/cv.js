@@ -1,39 +1,49 @@
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
 import { RichText } from "prismic-reactjs";
-import Client from "../prismic/helpers";
+import Client, { customLink } from "../prismic/helpers";
 import Jobs from "../components/cv/jobs";
 import Education from "../components/cv/education";
 import Tools from "../components/cv/tools";
 import Projects from "../components/cv/projects";
 import Other from "../components/cv/other";
+import { linkResolver } from "../prismic/resolvers";
+import DefaultLayout from "../layouts/default";
 
 const CV = ({ overview, jobs, tools, education, projects, other }) => {
-  if (overview && overview.data) {
-    const title = RichText.asText(overview.data.title);
-    const description = RichText.asText(overview.data.description);
+  const title = RichText.asText(overview.data.title);
 
-    return (
+  return (
+    <DefaultLayout wide debug faviconEmoji="📄">
+      <Head>
+        <title>CV - {title}</title>
+        <meta
+          name="Description"
+          content={RichText.asText(overview.data.description)}
+        />
+      </Head>
       <div>
-        <Head>
-          <title>CV - {title}</title>
-          <meta name="Description" content={description} />
-        </Head>
+        <Link as={linkResolver("/")} href={linkResolver("/")} passHref>
+          <a className="no-underline">
+            <h1>{title}</h1>
+          </a>
+        </Link>
+        <RichText
+          render={overview.data.description}
+          linkResolver={linkResolver}
+          serializeHyperlink={customLink}
+        />
         <div>
-          <h1>{title}</h1>
-          <div>{description}</div>
-          <div>
-            <Jobs data={jobs} />
-            <Education data={education} />
-            <Tools data={tools} />
-            <Projects data={projects} />
-            <Other data={other} />
-          </div>
+          <Jobs data={jobs} />
+          <Education data={education} />
+          <Tools data={tools} />
+          <Projects data={projects} />
+          <Other data={other} />
         </div>
       </div>
-    );
-  }
-  return null;
+    </DefaultLayout>
+  );
 };
 export async function getStaticProps() {
   const client = Client();

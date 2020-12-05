@@ -2,9 +2,9 @@ clean:
 	rm -rf .next node_modules out
 
 install: clean
-	yarn install netlify-cli
+	yarn install
 
-build: install
+build: 
 	yarn export
 	cp ./_redirects ./out/_redirects
 

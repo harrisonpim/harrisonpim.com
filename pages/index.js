@@ -1,35 +1,26 @@
 import Head from "next/head";
 import { Client } from "../prismic/helpers";
 import { RichText } from "prismic-reactjs";
-import { customLink } from "../prismic/helpers";
-import { linkResolver } from "../prismic/resolvers";
+import DefaultLayout from "../layouts/default";
+import SliceZone from "../components/slicezone";
 
 const Index = ({ index }) => {
-  if (index && index.data) {
-    const title = RichText.asText(index.data.title);
-    const description = RichText.asText(index.data.description);
-
-    return (
-      <div>
-        <Head>
-          <title>{title}</title>
-          <meta name="Description" content={description} />
-        </Head>
-        <div className="prose">
-          <RichText
-            render={index.data.body}
-            linkResolver={linkResolver}
-            serializeHyperlink={customLink}
-          />
-        </div>
-      </div>
-    );
-  }
-  return null;
+  return (
+    <DefaultLayout>
+      <Head>
+        <title>{RichText.asText(index.data.title)}</title>
+        <meta
+          name="Description"
+          content={RichText.asText(index.data.description)}
+        />
+      </Head>
+      <SliceZone sliceZone={index.data.body} />
+    </DefaultLayout>
+  );
 };
 
 export async function getStaticProps() {
-  const index = (await Client().getSingle("index")) || {};
+  const index = (await Client().getByUID("page", "index")) || {};
   return {
     props: {
       index,

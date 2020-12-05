@@ -13,9 +13,8 @@ class MyDocument extends Document {
         <Head>
           <html lang="en" />
           <meta charSet="utf-8" />
-          <link href="/favicon.svg" rel="icon" />
         </Head>
-        <body className="py-5 px-12 font-sans prose">
+        <body className="p-4 lg:px-12 font-sans">
           <Main />
           <NextScript />
           <PrismicScript />

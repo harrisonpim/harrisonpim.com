@@ -5,12 +5,13 @@ import { Client, customLink } from "../../prismic/helpers";
 import { linkResolver } from "../../prismic/resolvers";
 import BackButton from "../../components/backButton";
 import Post from "../../components/post";
+import DefaultLayout from "../../layouts/default";
 
 const Blog = ({ blog, posts }) => {
   const title = RichText.asText(blog.data.title);
   const description = RichText.asText(blog.data.description);
   return (
-    <div>
+    <DefaultLayout>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -21,7 +22,7 @@ const Blog = ({ blog, posts }) => {
           <Post post={thisPost} />
         ))}
       </div>
-    </div>
+    </DefaultLayout>
   );
 };
 

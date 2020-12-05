@@ -6,27 +6,24 @@ import { Client } from "../../prismic/helpers";
 import SliceZone from "../../components/slicezone";
 import BackButton from "../../components/backButton";
 import { formatDate } from "../../components/date";
+import DefaultLayout from "../../layouts/default";
 
 const Post = ({ post }) => {
-  if (post && post.data) {
-    const title = RichText.asText(post.data.title);
-    const date = formatDate(post.data.date);
-    return (
+  const title = RichText.asText(post.data.title);
+  const date = formatDate(post.data.date);
+  return (
+    <DefaultLayout>
+      <Head>
+        <title>{title}</title>
+      </Head>
       <div>
-        <Head>
-          <title>{title}</title>
-        </Head>
-        <div>
-          <BackButton text="back to the blog" href="/blog" />
-          <h1>{title}</h1>
-          <div className="text-gray">{date}</div>
-          <SliceZone sliceZone={post.data.body} />
-        </div>
+        <BackButton text="back to the blog" href="/blog" />
+        <h1 className="py-0">{title}</h1>
+        <div className="text-gray">{date}</div>
+        <SliceZone sliceZone={post.data.body} />
       </div>
-    );
-  }
-
-  return null;
+    </DefaultLayout>
+  );
 };
 
 export async function getStaticProps({

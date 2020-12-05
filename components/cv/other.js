@@ -2,7 +2,6 @@ import { RichText } from "prismic-reactjs";
 import Block from "./block";
 
 export default function Other({ data }) {
-  console.log(data.data.body);
   const renderedOther = data.data.body.map((thing) => (
     <div>
       <div>{RichText.asText(thing.primary.title)}</div>
