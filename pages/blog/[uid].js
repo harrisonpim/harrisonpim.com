@@ -12,7 +12,6 @@ const Post = ({ post }) => {
   const description = RichText.asText(post.data.standfirst);
   const date = formatDate(post.data.date);
   const emoji = RichText.asText(post.data.favicon);
-
   return (
     <DefaultLayout faviconEmoji={emoji}>
       <Head>
@@ -21,7 +20,7 @@ const Post = ({ post }) => {
       </Head>
       <div>
         <BackButton text="back to the blog" href="/blog" />
-        <div className="pb-4">
+        <div className="py-4">
           <h1>{title}</h1>
           <div className="text-gray">{date}</div>
         </div>

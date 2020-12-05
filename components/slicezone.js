@@ -1,10 +1,19 @@
 import { RichText } from "prismic-reactjs";
 import { customLink } from "../prismic/helpers";
 import { linkResolver } from "../prismic/resolvers";
-import CodeBlock from "./codeBlock";
-import ImageWithCaption from "./ImageWithCaption";
+import CodeSnippet from "./codeSnippet";
+import ImageWithCaption from "./imageWithCaption";
+import { useEffect } from "react";
+import hljs from "highlight.js";
+import python from "highlight.js/lib/languages/python";
+
+hljs.registerLanguage("python", python);
 
 export default function SliceZone({ sliceZone }) {
+  useEffect(() => {
+    hljs.initHighlighting();
+  }, []);
+  
   return (
     <div className="prose">
       {sliceZone.map((slice) => {
@@ -19,8 +28,8 @@ export default function SliceZone({ sliceZone }) {
                 serializeHyperlink={customLink}
               />
             );
-          case "code":
-            return <CodeBlock />;
+          case "code_snippet":
+            return <CodeSnippet slice={slice} />;
           default:
             return null;
         }

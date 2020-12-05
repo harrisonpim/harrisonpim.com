@@ -6,13 +6,11 @@ export default function DefaultLayout({
   debug = false,
   faviconEmoji = "👋",
 }) {
-  const style = "";
-  if (!wide) {
-    style.concat("max-w-measure ");
-  }
-  if (debug) {
-    style.concat("debug ");
-  }
+  const style = [
+    `${wide ? "" : "max-w-measure"}`,
+    `${debug ? "debug" : ""}`,
+  ].join(" ");
+
   return (
     <div>
       <Favicon emoji={faviconEmoji} />
