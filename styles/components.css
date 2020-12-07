@@ -1,0 +1,16 @@
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6,
+.prose figure,
+.prose blockquote,
+.prose pre {margin-top: 1rem; margin-bottom: 1rem}
+
+.prose p,
+.prose ul,
+.prose dl,
+.prose dd {margin-bottom: 1rem}
+
+.prose ul {margin-left: 1rem}
