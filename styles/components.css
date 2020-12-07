@@ -19,5 +19,6 @@
     background-color: #ddd;
     border-radius: 0.2rem;
     padding: 0.15em;
-    @apply font-mono
+    @apply font-mono;
+    @apply text-sm;
 }
