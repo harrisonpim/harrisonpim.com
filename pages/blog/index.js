@@ -18,9 +18,12 @@ const Blog = ({ blog, posts }) => {
       </Head>
       <BackButton />
       <div>
-        {posts.map((thisPost) => (
-          <Post post={thisPost} />
-        ))}
+        {posts
+          .slice(0) // prismic returns the oldest posts first, so we reverse
+          .reverse() // the order to put the most recent ones at the top
+          .map((thisPost) => (
+            <Post post={thisPost} />
+          ))}
       </div>
     </DefaultLayout>
   );
