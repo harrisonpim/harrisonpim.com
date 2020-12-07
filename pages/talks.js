@@ -3,7 +3,7 @@ import { Client } from "../prismic/helpers";
 import { RichText } from "prismic-reactjs";
 import BackButton from "../components/backButton";
 import Talk from "../components/talk";
-import DefaultLayout from "../layouts/default";
+import DefaultLayout from "../components/defaultLayout";
 import Favicon from "../components/favicon";
 
 const Talks = ({ talks }) => {
@@ -15,12 +15,14 @@ const Talks = ({ talks }) => {
     <DefaultLayout faviconEmoji={favicon}>
       <Head>
         <title>{title}</title>
-        <meta name="Description" content={description} />
+        <meta name="description" content={description} />
       </Head>
       <BackButton />
       <div>
-        {talks.data.body.map((talk) => (
-          <Talk talk={talk} />
+        {talks.data.body.map((talk, idx) => (
+          <div key={idx}>
+            <Talk talk={talk} />
+          </div>
         ))}
       </div>
     </DefaultLayout>

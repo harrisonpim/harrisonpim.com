@@ -4,7 +4,7 @@ import { queryRepeatableDocuments } from "../../prismic/queries";
 import { Client } from "../../prismic/helpers";
 import BackButton from "../../components/backButton";
 import Post from "../../components/post";
-import DefaultLayout from "../../layouts/default";
+import DefaultLayout from "../../components/defaultLayout";
 
 const Blog = ({ blog, posts }) => {
   const title = RichText.asText(blog.data.title);
@@ -21,8 +21,10 @@ const Blog = ({ blog, posts }) => {
         {posts
           .slice(0) // prismic returns the oldest posts first, so we reverse
           .reverse() // the order to put the most recent ones at the top
-          .map((thisPost) => (
-            <Post post={thisPost} />
+          .map((thisPost, idx) => (
+            <div key={idx}>
+              <Post post={thisPost} />
+            </div>
           ))}
       </div>
     </DefaultLayout>

@@ -5,8 +5,8 @@ import { formatYear } from "../date";
 import Block from "./block";
 
 export default function Education({ data }) {
-  const renderedEducation = data.data.body.map((school) => (
-    <div className="pb-2">
+  const renderedEducation = data.data.body.map((school, idx) => (
+    <div className="pb-2" key={idx}>
       <div className="text-base inline-block">
         {RichText.asText(school.primary.name)}
       </div>

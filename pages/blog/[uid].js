@@ -5,7 +5,7 @@ import { Client } from "../../prismic/helpers";
 import SliceZone from "../../components/slicezone";
 import BackButton from "../../components/backButton";
 import { formatDate } from "../../components/date";
-import DefaultLayout from "../../layouts/default";
+import DefaultLayout from "../../components/defaultLayout";
 
 const Post = ({ post }) => {
   const title = RichText.asText(post.data.title);

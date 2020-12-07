@@ -8,7 +8,7 @@ import Tools from "../components/cv/tools";
 import Projects from "../components/cv/projects";
 import Other from "../components/cv/other";
 import { linkResolver } from "../prismic/resolvers";
-import DefaultLayout from "../layouts/default";
+import DefaultLayout from "../components/defaultLayout";
 
 const CV = ({ overview, jobs, tools, education, projects, other }) => {
   const title = RichText.asText(overview.data.title);
@@ -19,7 +19,7 @@ const CV = ({ overview, jobs, tools, education, projects, other }) => {
       <Head>
         <title>CV - {title}</title>
         <meta
-          name="Description"
+          name="description"
           content={RichText.asText(overview.data.description)}
         />
       </Head>

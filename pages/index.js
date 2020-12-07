@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Client } from "../prismic/helpers";
 import { RichText } from "prismic-reactjs";
-import DefaultLayout from "../layouts/default";
+import DefaultLayout from "../components/defaultLayout";
 import SliceZone from "../components/slicezone";
 
 const Index = ({ index }) => {
@@ -10,7 +10,7 @@ const Index = ({ index }) => {
       <Head>
         <title>{RichText.asText(index.data.title)}</title>
         <meta
-          name="Description"
+          name="description"
           content={RichText.asText(index.data.description)}
         />
       </Head>

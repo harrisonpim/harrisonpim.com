@@ -11,7 +11,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <html lang="en" />
+          <Html lang="en" />
           <meta charSet="utf-8" />
         </Head>
         <body className="p-4 lg:px-12 font-sans">

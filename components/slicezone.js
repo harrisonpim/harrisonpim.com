@@ -14,22 +14,32 @@ export default function SliceZone({ sliceZone }) {
     hljs.initHighlighting();
   }, []);
 
-  const slices = sliceZone.map((slice) => {
+  const slices = sliceZone.map((slice, idx) => {
     switch (slice.slice_type) {
-      case "image_with_caption":
-        return <ImageWithCaption slice={slice} />;
       case "text":
         return (
-          <RichText
-            render={slice.primary.text}
-            linkResolver={linkResolver}
-            serializeHyperlink={customLink}
-          />
+          <div key={idx}>
+            <RichText
+              render={slice.primary.text}
+              linkResolver={linkResolver}
+              serializeHyperlink={customLink}
+            />
+          </div>
+        );
+      case "image_with_caption":
+        return (
+          <div key={idx}>
+            <ImageWithCaption slice={slice} />
+          </div>
         );
       case "code_snippet":
-        return <CodeSnippet slice={slice} />;
+        return (
+          <div key={idx}>
+            <CodeSnippet slice={slice} />
+          </div>
+        );
       default:
-        return null;
+        return <div key={idx} />;
     }
   });
 

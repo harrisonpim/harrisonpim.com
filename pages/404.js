@@ -1,5 +1,5 @@
 import BackButton from "../components/backButton";
-import DefaultLayout from "../layouts/default";
+import DefaultLayout from "../components/defaultLayout";
 
 export default function Custom404() {
   return (

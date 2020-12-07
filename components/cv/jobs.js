@@ -5,8 +5,8 @@ import Block from "./block";
 import { formatYear } from "../date";
 
 export default function Jobs({ data }) {
-  const renderedJobs = data.data.body.map((job) => (
-    <div className="pb-2">
+  const renderedJobs = data.data.body.map((job, idx) => (
+    <div className="pb-2" key={idx}>
       <div className="text-base inline-block">
         {RichText.asText(job.primary.title)},{" "}
         {RichText.asText(job.primary.employer)}

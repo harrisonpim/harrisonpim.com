@@ -1,6 +1,0 @@
-[dev]
-  publish = "out"
-
-[template.environment]
-  PRISMIC_REPO_NAME=""
-  PRISMIC_ACCESS_TOKEN=""

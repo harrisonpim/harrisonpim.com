@@ -1,4 +1,4 @@
-import Favicon from "../components/favicon";
+import Favicon from "./favicon";
 
 export default function DefaultLayout({
   children,
@@ -14,7 +14,7 @@ export default function DefaultLayout({
   return (
     <div>
       <Favicon emoji={faviconEmoji} />
-      <main className={style}>{children}</main>
+      <div className={style}>{children}</div>
     </div>
   );
 }
