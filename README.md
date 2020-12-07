@@ -1,4 +1,4 @@
-# [harrisonpim.com](harrisonpim.com)
+# [harrisonpim.com](https://harrisonpim.com/)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/d0515f06-3d98-4a50-9ecc-d74c635a27c0/deploy-status)](https://app.netlify.com/sites/happy-goldwasser-d738cd/deploys)
 
