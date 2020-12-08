@@ -9,9 +9,9 @@ import DefaultLayout from "../../components/defaultLayout";
 const Blog = ({ blog, posts }) => {
   const title = RichText.asText(blog.data.title);
   const description = RichText.asText(blog.data.description);
-  const emoji = RichText.asText(blog.data.favicon);
+  const favicon = RichText.asText(blog.data.favicon);
   return (
-    <DefaultLayout faviconEmoji={emoji}>
+    <DefaultLayout favicon={favicon}>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />

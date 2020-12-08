@@ -15,7 +15,7 @@ const CV = ({ overview, jobs, tools, education, projects, other }) => {
   const favicon = RichText.asText(overview.data.favicon);
 
   return (
-    <DefaultLayout wide faviconEmoji={favicon}>
+    <DefaultLayout wide favicon={favicon}>
       <Head>
         <title>CV - {title}</title>
         <meta

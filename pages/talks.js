@@ -4,7 +4,6 @@ import { RichText } from "prismic-reactjs";
 import BackButton from "../components/backButton";
 import Talk from "../components/talk";
 import DefaultLayout from "../components/defaultLayout";
-import Favicon from "../components/favicon";
 
 const Talks = ({ talks }) => {
   const title = RichText.asText(talks.data.title);
@@ -12,7 +11,7 @@ const Talks = ({ talks }) => {
   const favicon = RichText.asText(talks.data.favicon);
 
   return (
-    <DefaultLayout faviconEmoji={favicon}>
+    <DefaultLayout favicon={favicon}>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />

@@ -1,10 +1,11 @@
+import Head from "next/head";
 import Favicon from "./favicon";
 
 export default function DefaultLayout({
   children,
   wide = false,
   debug = false,
-  faviconEmoji = "👋",
+  favicon,
 }) {
   const style = [
     `${wide ? "" : "max-w-measure"}`,
@@ -13,7 +14,7 @@ export default function DefaultLayout({
 
   return (
     <div>
-      <Favicon emoji={faviconEmoji} />
+      <Favicon emoji={favicon ? favicon : "👋"} />
       <div className={style}>{children}</div>
     </div>
   );

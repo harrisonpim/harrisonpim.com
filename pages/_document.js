@@ -9,10 +9,9 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head>
-          <Html lang="en" />
-          <meta charSet="utf-8" />
+          <meta charset="utf-8" />
         </Head>
         <body className="p-4 lg:px-12 font-sans">
           <Main />

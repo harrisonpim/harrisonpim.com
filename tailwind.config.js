@@ -2,7 +2,6 @@ module.exports = {
   future: {},
   purge: [
     "./components/**/*.{html,js,ts,jsx,tsx}",
-    "./layouts/**/*.{html,js,ts,jsx,tsx}",
     "./pages/**/*.{html,js,ts,jsx,tsx}",
   ],
   theme: {

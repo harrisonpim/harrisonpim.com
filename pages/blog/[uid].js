@@ -11,10 +11,10 @@ const Post = ({ post }) => {
   const title = RichText.asText(post.data.title);
   const description = RichText.asText(post.data.standfirst);
   const date = formatDate(post.data.date);
-  const emoji = RichText.asText(post.data.favicon);
+  const favicon = RichText.asText(post.data.favicon);
 
   return (
-    <DefaultLayout faviconEmoji={emoji}>
+    <DefaultLayout favicon={favicon}>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />

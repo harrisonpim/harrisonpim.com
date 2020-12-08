@@ -6,7 +6,7 @@ import SliceZone from "../components/slicezone";
 
 const Index = ({ index }) => {
   return (
-    <DefaultLayout faviconEmoji={RichText.asText(index.data.favicon)}>
+    <DefaultLayout favicon={RichText.asText(index.data.favicon)}>
       <Head>
         <title>{RichText.asText(index.data.title)}</title>
         <meta
