@@ -15,6 +15,7 @@ module.exports = {
       },
       textColor: {
         gray: "#aaa",
+        "light-gray": "#ddd",
       },
     },
   },

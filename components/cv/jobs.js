@@ -1,5 +1,4 @@
 import { RichText } from "prismic-reactjs";
-import { customLink } from "../../prismic/helpers";
 import { linkResolver } from "../../prismic/resolvers";
 import Block from "./block";
 import { formatYear } from "../date";
@@ -19,7 +18,6 @@ export default function Jobs({ data }) {
         <RichText
           render={job.primary.responsibilities}
           linkResolver={linkResolver}
-          serializeHyperlink={customLink}
         />
       </div>
     </div>

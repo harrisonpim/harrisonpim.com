@@ -1,5 +1,4 @@
 import { RichText } from "prismic-reactjs";
-import { customLink } from "../prismic/helpers";
 import { linkResolver } from "../prismic/resolvers";
 import CodeSnippet from "./codeSnippet";
 import ImageWithCaption from "./imageWithCaption";
@@ -22,7 +21,6 @@ export default function SliceZone({ sliceZone }) {
             <RichText
               render={slice.primary.text}
               linkResolver={linkResolver}
-              serializeHyperlink={customLink}
             />
           </div>
         );
