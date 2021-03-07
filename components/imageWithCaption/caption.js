@@ -1,5 +1,4 @@
 import { RichText } from "prismic-reactjs";
-import { customLink } from "../../prismic/helpers";
 import { linkResolver } from "../../prismic/resolvers";
 
 export default function Caption({ caption }) {
@@ -9,7 +8,6 @@ export default function Caption({ caption }) {
         <RichText
           render={caption}
           linkResolver={linkResolver}
-          serializeHyperlink={customLink}
         />
       </figcaption>
     );

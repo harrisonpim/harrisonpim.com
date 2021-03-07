@@ -1,7 +1,6 @@
 import Head from "next/head";
-import Link from "next/link";
 import { RichText } from "prismic-reactjs";
-import Client, { customLink } from "../prismic/helpers";
+import Client from "../prismic/helpers";
 import Jobs from "../components/cv/jobs";
 import Education from "../components/cv/education";
 import Tools from "../components/cv/tools";
@@ -31,7 +30,6 @@ const CV = ({ overview, jobs, tools, education, projects, other }) => {
           <RichText
             render={overview.data.description}
             linkResolver={linkResolver}
-            serializeHyperlink={customLink}
           />
         </div>
         <div>
