@@ -1,6 +1,7 @@
+import Block from './block'
 import { RichText } from 'prismic-reactjs'
 import { formatYear } from '../date'
-import Block from './block'
+import { linkResolver } from '../../prismic/resolvers'
 
 export default function Projects({ data }) {
   const renderedProjects = data.data.body.map((project, idx) => (
@@ -10,7 +11,10 @@ export default function Projects({ data }) {
         {formatYear(project.primary.date)}
       </div>
       <div className="text-xs">
-        {RichText.asText(project.primary.description)}
+        <RichText
+          render={project.primary.description}
+          linkResolver={linkResolver}
+        />
       </div>
     </div>
   ))

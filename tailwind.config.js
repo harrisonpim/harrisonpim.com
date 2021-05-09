@@ -14,7 +14,8 @@ module.exports = {
         measure: '34em',
       },
       textColor: {
-        gray: '#aaa',
+        gray: "#aaa",
+        "light-gray": "#ddd",
       },
     },
   },

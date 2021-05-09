@@ -1,11 +1,10 @@
-import { RichText } from 'prismic-reactjs'
-import { customLink } from '../prismic/helpers'
-import { linkResolver } from '../prismic/resolvers'
 import CodeSnippet from './codeSnippet'
 import ImageWithCaption from './imageWithCaption'
-import { useEffect } from 'react'
+import { RichText } from 'prismic-reactjs'
 import hljs from 'highlight.js'
+import { linkResolver } from '../prismic/resolvers'
 import python from 'highlight.js/lib/languages/python'
+import { useEffect } from 'react'
 
 hljs.registerLanguage('python', python)
 
@@ -19,11 +18,7 @@ export default function SliceZone({ sliceZone }) {
       case 'text':
         return (
           <div key={idx}>
-            <RichText
-              render={slice.primary.text}
-              linkResolver={linkResolver}
-              serializeHyperlink={customLink}
-            />
+            <RichText render={slice.primary.text} linkResolver={linkResolver} />
           </div>
         )
       case 'image_with_caption':

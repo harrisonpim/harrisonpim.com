@@ -1,8 +1,7 @@
-import { RichText } from 'prismic-reactjs'
-import { customLink } from '../../prismic/helpers'
-import { linkResolver } from '../../prismic/resolvers'
-import { formatYear } from '../date'
 import Block from './block'
+import { RichText } from 'prismic-reactjs'
+import { formatYear } from '../date'
+import { linkResolver } from '../../prismic/resolvers'
 
 export default function Education({ data }) {
   const renderedEducation = data.data.body.map((school, idx) => (
@@ -18,7 +17,6 @@ export default function Education({ data }) {
         <RichText
           render={school.primary.qualifications}
           linkResolver={linkResolver}
-          serializeHyperlink={customLink}
         />
       </div>
     </div>

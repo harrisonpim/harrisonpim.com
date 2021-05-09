@@ -1,8 +1,7 @@
-import { RichText } from 'prismic-reactjs'
-import { customLink } from '../../prismic/helpers'
-import { linkResolver } from '../../prismic/resolvers'
 import Block from './block'
+import { RichText } from 'prismic-reactjs'
 import { formatYear } from '../date'
+import { linkResolver } from '../../prismic/resolvers'
 
 export default function Jobs({ data }) {
   const renderedJobs = data.data.body.map((job, idx) => (
@@ -19,7 +18,6 @@ export default function Jobs({ data }) {
         <RichText
           render={job.primary.responsibilities}
           linkResolver={linkResolver}
-          serializeHyperlink={customLink}
         />
       </div>
     </div>

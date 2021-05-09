@@ -1,14 +1,13 @@
-import Head from 'next/head'
-import Link from 'next/link'
-import { RichText } from 'prismic-reactjs'
-import Client, { customLink } from '../prismic/helpers'
-import Jobs from '../components/cv/jobs'
-import Education from '../components/cv/education'
-import Tools from '../components/cv/tools'
-import Projects from '../components/cv/projects'
-import Other from '../components/cv/other'
-import { linkResolver } from '../prismic/resolvers'
+import Client from '../prismic/helpers'
 import DefaultLayout from '../components/defaultLayout'
+import Education from '../components/cv/education'
+import Head from 'next/head'
+import Jobs from '../components/cv/jobs'
+import Other from '../components/cv/other'
+import Projects from '../components/cv/projects'
+import { RichText } from 'prismic-reactjs'
+import Tools from '../components/cv/tools'
+import { linkResolver } from '../prismic/resolvers'
 
 const CV = ({ overview, jobs, tools, education, projects, other }) => {
   const title = RichText.asText(overview.data.title)
@@ -31,7 +30,6 @@ const CV = ({ overview, jobs, tools, education, projects, other }) => {
           <RichText
             render={overview.data.description}
             linkResolver={linkResolver}
-            serializeHyperlink={customLink}
           />
         </div>
         <div>
