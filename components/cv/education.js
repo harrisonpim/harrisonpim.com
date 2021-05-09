@@ -1,7 +1,7 @@
-import { RichText } from "prismic-reactjs";
-import { linkResolver } from "../../prismic/resolvers";
-import { formatYear } from "../date";
-import Block from "./block";
+import Block from './block'
+import { RichText } from 'prismic-reactjs'
+import { formatYear } from '../date'
+import { linkResolver } from '../../prismic/resolvers'
 
 export default function Education({ data }) {
   const renderedEducation = data.data.body.map((school, idx) => (
@@ -10,8 +10,8 @@ export default function Education({ data }) {
         {RichText.asText(school.primary.name)}
       </div>
       <div className="text-base block lg:inline-block lg:float-right">
-        {formatYear(school.primary["start-date"])}-
-        {formatYear(school.primary["end-date"])}
+        {formatYear(school.primary['start-date'])}-
+        {formatYear(school.primary['end-date'])}
       </div>
       <div className="text-xs">
         <RichText
@@ -20,6 +20,6 @@ export default function Education({ data }) {
         />
       </div>
     </div>
-  ));
-  return <Block heading="Education" data={renderedEducation} />;
+  ))
+  return <Block heading="Education" data={renderedEducation} />
 }

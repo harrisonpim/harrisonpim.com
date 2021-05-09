@@ -1,18 +1,18 @@
-import { RichText } from "prismic-reactjs";
-import { linkResolver } from "../../prismic/resolvers";
-import Block from "./block";
-import { formatYear } from "../date";
+import Block from './block'
+import { RichText } from 'prismic-reactjs'
+import { formatYear } from '../date'
+import { linkResolver } from '../../prismic/resolvers'
 
 export default function Jobs({ data }) {
   const renderedJobs = data.data.body.map((job, idx) => (
     <div className="pb-2" key={idx}>
       <div className="text-base inline-block">
-        {RichText.asText(job.primary.title)},{" "}
+        {RichText.asText(job.primary.title)},{' '}
         {RichText.asText(job.primary.employer)}
       </div>
       <div className="text-base block lg:inline-block lg:float-right">
-        {formatYear(job.primary["start-date"])}-
-        {formatYear(job.primary["end-date"])}
+        {formatYear(job.primary['start-date'])}-
+        {formatYear(job.primary['end-date'])}
       </div>
       <div className="text-xs">
         <RichText
@@ -21,6 +21,6 @@ export default function Jobs({ data }) {
         />
       </div>
     </div>
-  ));
-  return <Block heading="Jobs" data={renderedJobs} />;
+  ))
+  return <Block heading="Jobs" data={renderedJobs} />
 }

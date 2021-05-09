@@ -1,8 +1,8 @@
-import Head from "next/head";
-import { Client } from "../prismic/helpers";
-import { RichText } from "prismic-reactjs";
-import DefaultLayout from "../components/defaultLayout";
-import SliceZone from "../components/slicezone";
+import Head from 'next/head'
+import { Client } from '../prismic/helpers'
+import { RichText } from 'prismic-reactjs'
+import DefaultLayout from '../components/defaultLayout'
+import SliceZone from '../components/slicezone'
 
 const Index = ({ index }) => {
   return (
@@ -16,16 +16,16 @@ const Index = ({ index }) => {
       </Head>
       <SliceZone sliceZone={index.data.body} />
     </DefaultLayout>
-  );
-};
+  )
+}
 
 export async function getStaticProps() {
-  const index = (await Client().getByUID("page", "index")) || {};
+  const index = (await Client().getByUID('page', 'index')) || {}
   return {
     props: {
       index,
     },
-  };
+  }
 }
 
-export default Index;
+export default Index

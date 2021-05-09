@@ -1,10 +1,10 @@
-import Document, { Html, Head, Main, NextScript } from "next/document";
-import { PrismicScript } from "../prismic/configuration";
+import Document, { Html, Head, Main, NextScript } from 'next/document'
+import { PrismicScript } from '../prismic/configuration'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx);
-    return { ...initialProps };
+    const initialProps = await Document.getInitialProps(ctx)
+    return { ...initialProps }
   }
 
   render() {
@@ -19,8 +19,8 @@ class MyDocument extends Document {
           <PrismicScript />
         </body>
       </Html>
-    );
+    )
   }
 }
 
-export default MyDocument;
+export default MyDocument

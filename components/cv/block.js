@@ -8,5 +8,5 @@ export default function Block({ heading, data }) {
         {data}
       </div>
     </div>
-  );
+  )
 }

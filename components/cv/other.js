@@ -1,6 +1,6 @@
-import { RichText } from "prismic-reactjs";
-import { linkResolver } from "../../prismic/resolvers";
-import Block from "./block";
+import Block from './block'
+import { RichText } from 'prismic-reactjs'
+import { linkResolver } from '../../prismic/resolvers'
 
 export default function Other({ data }) {
   const renderedOther = data.data.body.map((thing, idx) => (
@@ -13,7 +13,7 @@ export default function Other({ data }) {
         />
       </div>
     </div>
-  ));
+  ))
 
-  return <Block heading="Other Stuff" data={renderedOther} />;
+  return <Block heading="Other Stuff" data={renderedOther} />
 }
