@@ -15,5 +15,5 @@ export default function Projects({ data }) {
     </div>
   ));
 
-  return <Block heading="Notable Projects" data={renderedProjects} />;
+  return <Block heading="Recent Projects" data={renderedProjects} />;
 }

@@ -9,5 +9,5 @@ export default function Tools({ data }) {
     </div>
   ));
 
-  return <Block heading="Tools I Use" data={renderedTools} />;
+  return <Block heading="Skills & Tools" data={renderedTools} />;
 }
