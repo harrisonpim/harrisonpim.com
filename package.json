@@ -23,8 +23,10 @@
     "typescript": "^4.2.3"
   },
   "devDependencies": {
+    "@prismicio/client": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
+    "dotenv": "^8.2.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
@@ -33,6 +35,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.23.1",
     "eslint": "^7.12.1",
+    "globby": "11.0.2",
     "prettier": "2.2.1",
     "ts-node": "^9.1.1",
     "vercel": "^21.2.3"
