@@ -1,4 +1,4 @@
-import Caption from "./caption";
+import Caption from './caption'
 
 export default function ImageWithCaption({ slice }) {
   return (
@@ -10,5 +10,5 @@ export default function ImageWithCaption({ slice }) {
       />
       <Caption caption={slice.primary.caption} />
     </figure>
-  );
+  )
 }

@@ -1,17 +1,17 @@
-import Head from "next/head";
-import { RichText } from "prismic-reactjs";
-import { queryRepeatableDocuments } from "../../prismic/queries";
-import { Client } from "../../prismic/helpers";
-import SliceZone from "../../components/slicezone";
-import BackButton from "../../components/backButton";
-import { formatDate } from "../../components/date";
-import DefaultLayout from "../../components/defaultLayout";
+import Head from 'next/head'
+import { RichText } from 'prismic-reactjs'
+import { queryRepeatableDocuments } from '../../prismic/queries'
+import { Client } from '../../prismic/helpers'
+import SliceZone from '../../components/slicezone'
+import BackButton from '../../components/backButton'
+import { formatDate } from '../../components/date'
+import DefaultLayout from '../../components/defaultLayout'
 
 const Post = ({ post }) => {
-  const title = RichText.asText(post.data.title);
-  const description = RichText.asText(post.data.standfirst);
-  const date = formatDate(post.data.date);
-  const favicon = RichText.asText(post.data.favicon);
+  const title = RichText.asText(post.data.title)
+  const description = RichText.asText(post.data.standfirst)
+  const date = formatDate(post.data.date)
+  const favicon = RichText.asText(post.data.favicon)
 
   return (
     <DefaultLayout favicon={favicon}>
@@ -28,34 +28,34 @@ const Post = ({ post }) => {
         <SliceZone sliceZone={post.data.body} />
       </div>
     </DefaultLayout>
-  );
-};
+  )
+}
 
 export async function getStaticProps({
   params,
   preview = null,
   previewData = {},
 }) {
-  const { ref } = previewData;
+  const { ref } = previewData
   const post =
-    (await Client().getByUID("blog-post", params.uid, ref ? { ref } : null)) ||
-    {};
+    (await Client().getByUID('blog-post', params.uid, ref ? { ref } : null)) ||
+    {}
   return {
     props: {
       preview,
       post,
     },
-  };
+  }
 }
 
 export async function getStaticPaths() {
   const documents = await queryRepeatableDocuments(
-    (doc) => doc.type === "blog-post"
-  );
+    (doc) => doc.type === 'blog-post'
+  )
   return {
     paths: documents.map((doc) => `/blog/${doc.uid}`),
     fallback: false,
-  };
+  }
 }
 
-export default Post;
+export default Post

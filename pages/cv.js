@@ -1,18 +1,18 @@
-import Head from "next/head";
-import Link from "next/link";
-import { RichText } from "prismic-reactjs";
-import Client, { customLink } from "../prismic/helpers";
-import Jobs from "../components/cv/jobs";
-import Education from "../components/cv/education";
-import Tools from "../components/cv/tools";
-import Projects from "../components/cv/projects";
-import Other from "../components/cv/other";
-import { linkResolver } from "../prismic/resolvers";
-import DefaultLayout from "../components/defaultLayout";
+import Head from 'next/head'
+import Link from 'next/link'
+import { RichText } from 'prismic-reactjs'
+import Client, { customLink } from '../prismic/helpers'
+import Jobs from '../components/cv/jobs'
+import Education from '../components/cv/education'
+import Tools from '../components/cv/tools'
+import Projects from '../components/cv/projects'
+import Other from '../components/cv/other'
+import { linkResolver } from '../prismic/resolvers'
+import DefaultLayout from '../components/defaultLayout'
 
 const CV = ({ overview, jobs, tools, education, projects, other }) => {
-  const title = RichText.asText(overview.data.title);
-  const favicon = RichText.asText(overview.data.favicon);
+  const title = RichText.asText(overview.data.title)
+  const favicon = RichText.asText(overview.data.favicon)
 
   return (
     <DefaultLayout wide favicon={favicon}>
@@ -43,16 +43,16 @@ const CV = ({ overview, jobs, tools, education, projects, other }) => {
         </div>
       </div>
     </DefaultLayout>
-  );
-};
+  )
+}
 export async function getStaticProps() {
-  const client = Client();
-  const overview = await client.getByUID("page", "cv");
-  const jobs = await client.getSingle("cv-jobs");
-  const tools = await client.getSingle("cv-tools");
-  const education = await client.getSingle("cv-education");
-  const projects = await client.getSingle("cv-projects");
-  const other = await client.getSingle("cv-other");
+  const client = Client()
+  const overview = await client.getByUID('page', 'cv')
+  const jobs = await client.getSingle('cv-jobs')
+  const tools = await client.getSingle('cv-tools')
+  const education = await client.getSingle('cv-education')
+  const projects = await client.getSingle('cv-projects')
+  const other = await client.getSingle('cv-other')
   return {
     props: {
       overview,
@@ -62,7 +62,7 @@ export async function getStaticProps() {
       projects,
       other,
     },
-  };
+  }
 }
 
-export default CV;
+export default CV

@@ -1,12 +1,12 @@
-import Link from "next/link";
-import { RichText } from "prismic-reactjs";
-import { linkResolver } from "../prismic/resolvers";
-import { formatDate } from "../components/date";
+import Link from 'next/link'
+import { RichText } from 'prismic-reactjs'
+import { linkResolver } from '../prismic/resolvers'
+import { formatDate } from '../components/date'
 
 export default function Post({ post }) {
-  const title = RichText.asText(post.data.title);
-  const date = formatDate(post.data.date);
-  const standfirst = RichText.asText(post.data.standfirst);
+  const title = RichText.asText(post.data.title)
+  const date = formatDate(post.data.date)
+  const standfirst = RichText.asText(post.data.standfirst)
 
   return (
     <div className="py-4">
@@ -18,5 +18,5 @@ export default function Post({ post }) {
         <div>{standfirst}</div>
       </div>
     </div>
-  );
+  )
 }

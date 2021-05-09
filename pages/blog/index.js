@@ -1,15 +1,15 @@
-import Head from "next/head";
-import { RichText } from "prismic-reactjs";
-import { queryRepeatableDocuments } from "../../prismic/queries";
-import { Client } from "../../prismic/helpers";
-import BackButton from "../../components/backButton";
-import Post from "../../components/post";
-import DefaultLayout from "../../components/defaultLayout";
+import Head from 'next/head'
+import { RichText } from 'prismic-reactjs'
+import { queryRepeatableDocuments } from '../../prismic/queries'
+import { Client } from '../../prismic/helpers'
+import BackButton from '../../components/backButton'
+import Post from '../../components/post'
+import DefaultLayout from '../../components/defaultLayout'
 
 const Blog = ({ blog, posts }) => {
-  const title = RichText.asText(blog.data.title);
-  const description = RichText.asText(blog.data.description);
-  const favicon = RichText.asText(blog.data.favicon);
+  const title = RichText.asText(blog.data.title)
+  const description = RichText.asText(blog.data.description)
+  const favicon = RichText.asText(blog.data.favicon)
   return (
     <DefaultLayout favicon={favicon}>
       <Head>
@@ -28,21 +28,21 @@ const Blog = ({ blog, posts }) => {
           ))}
       </div>
     </DefaultLayout>
-  );
-};
+  )
+}
 
 export async function getStaticProps() {
-  const blog = await Client().getByUID("page", "blog");
+  const blog = await Client().getByUID('page', 'blog')
   const posts = await queryRepeatableDocuments(
-    (doc) => doc.type === "blog-post"
-  );
+    (doc) => doc.type === 'blog-post'
+  )
 
   return {
     props: {
       blog,
       posts: posts,
     },
-  };
+  }
 }
 
-export default Blog;
+export default Blog
