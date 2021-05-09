@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { RichText } from 'prismic-reactjs'
-import { linkResolver } from '../prismic/resolvers'
 import { formatDate } from '../components/date'
+import { linkResolver } from '../prismic/resolvers'
 
 export default function Post({ post }) {
   const title = RichText.asText(post.data.title)
@@ -9,7 +9,7 @@ export default function Post({ post }) {
   const standfirst = RichText.asText(post.data.standfirst)
 
   return (
-    <div className="py-4">
+    <div className="py-4" key={title}>
       <Link as={linkResolver(post)} href={linkResolver(post)} passHref>
         <a className="no-underline pb-none">{title}</a>
       </Link>

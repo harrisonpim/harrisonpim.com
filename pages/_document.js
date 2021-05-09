@@ -1,4 +1,5 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, { Head, Html, Main, NextScript } from 'next/document'
+
 import { PrismicScript } from '../prismic/configuration'
 
 class MyDocument extends Document {
@@ -11,7 +12,7 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <meta charset="utf-8" />
+          <meta charSet="utf-8" />
         </Head>
         <body className="p-4 lg:px-12 font-sans">
           <Main />

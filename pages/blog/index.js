@@ -1,12 +1,16 @@
+import BackButton from '../../components/backButton'
+import { Client } from '../../prismic/helpers'
+import DefaultLayout from '../../components/defaultLayout'
 import Head from 'next/head'
+import Post from '../../components/post'
 import { RichText } from 'prismic-reactjs'
 import { queryRepeatableDocuments } from '../../prismic/queries'
-import { Client } from '../../prismic/helpers'
-import BackButton from '../../components/backButton'
-import Post from '../../components/post'
-import DefaultLayout from '../../components/defaultLayout'
 
 const Blog = ({ blog, posts }) => {
+  const sortedPosts = posts.sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  )
+
   const title = RichText.asText(blog.data.title)
   const description = RichText.asText(blog.data.description)
   const favicon = RichText.asText(blog.data.favicon)
@@ -18,14 +22,9 @@ const Blog = ({ blog, posts }) => {
       </Head>
       <BackButton />
       <div>
-        {posts
-          .slice(0) // prismic returns the oldest posts first, so we reverse
-          .reverse() // the order to put the most recent ones at the top
-          .map((thisPost, idx) => (
-            <div key={idx}>
-              <Post post={thisPost} />
-            </div>
-          ))}
+        {sortedPosts.map((post) => (
+          <Post post={post} />
+        ))}
       </div>
     </DefaultLayout>
   )
