@@ -1,11 +1,11 @@
+import BackButton from '../../components/backButton'
+import { Client } from '../../prismic/helpers'
+import DefaultLayout from '../../components/defaultLayout'
 import Head from 'next/head'
 import { RichText } from 'prismic-reactjs'
-import { queryRepeatableDocuments } from '../../prismic/queries'
-import { Client } from '../../prismic/helpers'
 import SliceZone from '../../components/slicezone'
-import BackButton from '../../components/backButton'
 import { formatDate } from '../../components/date'
-import DefaultLayout from '../../components/defaultLayout'
+import { queryRepeatableDocuments } from '../../prismic/queries'
 
 const Post = ({ post }) => {
   const title = RichText.asText(post.data.title)
@@ -22,7 +22,7 @@ const Post = ({ post }) => {
       <div>
         <BackButton text="back to the blog" href="/blog" />
         <div className="py-4">
-          <h1>{title}</h1>
+          <h1 className="leading-snug pb-2">{title}</h1>
           <div className="text-gray">{date}</div>
         </div>
         <SliceZone sliceZone={post.data.body} />

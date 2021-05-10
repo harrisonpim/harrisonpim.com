@@ -5,7 +5,7 @@ export default function CodeSnippet({ slice }) {
   const hasLanguage = slice.primary.language[0]
   const language = hasLanguage ? `${hasLanguage.text}` : 'plaintext'
   return (
-    <pre>
+    <pre className="text-xs">
       <code className={language}>{code}</code>
     </pre>
   )

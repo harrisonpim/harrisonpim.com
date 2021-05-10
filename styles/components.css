@@ -16,9 +16,11 @@
 .prose ul {margin-left: 1rem}
 
 .prose .code {
-    background-color: #ddd;
-    border-radius: 0.2rem;
-    padding: 0.15em;
+    @apply px-1;
+    @apply bg-light-gray;
+    @apply rounded;
+    @apply text-xs;
     @apply font-mono;
-    @apply text-sm;
+    padding-top: 0.125rem;
+    padding-bottom: 0.125rem;
 }
