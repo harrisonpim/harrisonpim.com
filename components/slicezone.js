@@ -3,14 +3,11 @@ import ImageWithCaption from './imageWithCaption'
 import { RichText } from 'prismic-reactjs'
 import hljs from 'highlight.js'
 import { linkResolver } from '../prismic/resolvers'
-import python from 'highlight.js/lib/languages/python'
 import { useEffect } from 'react'
-
-hljs.registerLanguage('python', python)
 
 export default function SliceZone({ sliceZone }) {
   useEffect(() => {
-    hljs.initHighlighting()
+    hljs.highlightAll()
   }, [])
 
   const slices = sliceZone.map((slice, idx) => {

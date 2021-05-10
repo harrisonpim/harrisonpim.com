@@ -13,9 +13,9 @@ module.exports = {
       maxWidth: {
         measure: '34em',
       },
-      textColor: {
-        gray: "#aaa",
-        "light-gray": "#ddd",
+      colors: {
+        gray: '#999',
+        'light-gray': '#e0e0e0',
       },
     },
   },
