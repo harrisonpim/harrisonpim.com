@@ -1,16 +1,34 @@
+import { RichText, RichTextBlock } from 'prismic-reactjs'
+
 import Block from './block'
-import { RichText } from 'prismic-reactjs'
-import { formatYear } from '../date'
+import { FC } from 'react'
+import { formatYear } from 'components/date'
 import { linkResolver } from '../../prismic/resolvers'
 
-export default function Projects({ data }) {
+type Project = {
+  primary: {
+    title: RichTextBlock[]
+    description: RichTextBlock[]
+    date: string
+  }
+}
+
+type Props = {
+  data: {
+    data: {
+      body: Project[]
+    }
+  }
+}
+
+const Projects: FC<Props> = ({ data }) => {
   const renderedProjects = data.data.body.map((project, idx) => (
     <div className="pb-2" key={idx}>
-      <div className="text-base">
+      <div>
         {RichText.asText(project.primary.title)},{' '}
         {formatYear(project.primary.date)}
       </div>
-      <div className="text-xs">
+      <div className="text-sm">
         <RichText
           render={project.primary.description}
           linkResolver={linkResolver}
@@ -21,3 +39,5 @@ export default function Projects({ data }) {
 
   return <Block heading="Recent Projects" data={renderedProjects} />
 }
+
+export default Projects

@@ -14,24 +14,18 @@ export default function SliceZone({ sliceZone }) {
     switch (slice.slice_type) {
       case 'text':
         return (
-          <div key={idx}>
-            <RichText render={slice.primary.text} linkResolver={linkResolver} />
-          </div>
+          <RichText
+            render={slice.primary.text}
+            linkResolver={linkResolver}
+            key={idx}
+          />
         )
       case 'image_with_caption':
-        return (
-          <div key={idx}>
-            <ImageWithCaption slice={slice} />
-          </div>
-        )
+        return <ImageWithCaption slice={slice} key={idx} />
       case 'code_snippet':
-        return (
-          <div key={idx}>
-            <CodeSnippet slice={slice} />
-          </div>
-        )
+        return <CodeSnippet slice={slice} key={idx} />
       default:
-        return <div key={idx} />
+        return null
     }
   })
 

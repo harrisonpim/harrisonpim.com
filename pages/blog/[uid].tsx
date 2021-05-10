@@ -1,9 +1,11 @@
+import { GetStaticPaths, GetStaticProps } from 'next'
+
 import BackButton from '../../components/backButton'
 import { Client } from '../../prismic/helpers'
-import DefaultLayout from '../../components/defaultLayout'
 import Head from 'next/head'
+import Layout from '../../components/defaultLayout'
 import { RichText } from 'prismic-reactjs'
-import SliceZone from '../../components/slicezone'
+import SliceZone from '../../components/sliceZone'
 import { formatDate } from '../../components/date'
 import { queryRepeatableDocuments } from '../../prismic/queries'
 
@@ -14,7 +16,7 @@ const Post = ({ post }) => {
   const favicon = RichText.asText(post.data.favicon)
 
   return (
-    <DefaultLayout favicon={favicon}>
+    <Layout favicon={favicon}>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -27,28 +29,17 @@ const Post = ({ post }) => {
         </div>
         <SliceZone sliceZone={post.data.body} />
       </div>
-    </DefaultLayout>
+    </Layout>
   )
 }
 
-export async function getStaticProps({
-  params,
-  preview = null,
-  previewData = {},
-}) {
-  const { ref } = previewData
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const post =
-    (await Client().getByUID('blog-post', params.uid, ref ? { ref } : null)) ||
-    {}
-  return {
-    props: {
-      preview,
-      post,
-    },
-  }
+    (await Client().getByUID('blog-post', params.uid as string, {})) || {}
+  return { props: { post } }
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const documents = await queryRepeatableDocuments(
     (doc) => doc.type === 'blog-post'
   )

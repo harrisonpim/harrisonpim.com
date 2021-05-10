@@ -1,7 +1,8 @@
 import BackButton from '../../components/backButton'
 import { Client } from '../../prismic/helpers'
-import DefaultLayout from '../../components/defaultLayout'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
+import Layout from '../../components/defaultLayout'
 import Link from 'next/link'
 import { RichText } from 'prismic-reactjs'
 import { formatDate } from '../../components/date'
@@ -17,7 +18,7 @@ const Blog = ({ blog, posts }) => {
   const description = RichText.asText(blog.data.description)
   const favicon = RichText.asText(blog.data.favicon)
   return (
-    <DefaultLayout favicon={favicon}>
+    <Layout favicon={favicon}>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -36,12 +37,12 @@ const Blog = ({ blog, posts }) => {
           </div>
         ))}
       </div>
-    </DefaultLayout>
+    </Layout>
   )
 }
 
-export async function getStaticProps() {
-  const blog = await Client().getByUID('page', 'blog')
+export const getStaticProps: GetStaticProps = async () => {
+  const blog = await Client().getByUID('page', 'blog', {})
   const posts = await queryRepeatableDocuments(
     (doc) => doc.type === 'blog-post'
   )

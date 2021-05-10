@@ -20,7 +20,6 @@
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
-    "**/*.json",
   ],
   "exclude": ["node_modules"]
 }
