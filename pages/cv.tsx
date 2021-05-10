@@ -1,5 +1,6 @@
 import Client from '../prismic/helpers'
 import Education from '../components/cv/education'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Jobs from '../components/cv/jobs'
 import Layout from '../components/defaultLayout'
@@ -43,24 +44,15 @@ const CV = ({ overview, jobs, tools, education, projects, other }) => {
     </Layout>
   )
 }
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const client = Client()
-  const overview = await client.getByUID('page', 'cv')
-  const jobs = await client.getSingle('cv-jobs')
-  const tools = await client.getSingle('cv-tools')
-  const education = await client.getSingle('cv-education')
-  const projects = await client.getSingle('cv-projects')
-  const other = await client.getSingle('cv-other')
-  return {
-    props: {
-      overview,
-      jobs,
-      tools,
-      education,
-      projects,
-      other,
-    },
-  }
+  const overview = await client.getByUID('page', 'cv', {})
+  const jobs = await client.getSingle('cv-jobs', {})
+  const tools = await client.getSingle('cv-tools', {})
+  const education = await client.getSingle('cv-education', {})
+  const projects = await client.getSingle('cv-projects', {})
+  const other = await client.getSingle('cv-other', {})
+  return { props: { overview, jobs, tools, education, projects, other } }
 }
 
 export default CV

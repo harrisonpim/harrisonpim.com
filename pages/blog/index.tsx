@@ -1,5 +1,6 @@
 import BackButton from '../../components/backButton'
 import { Client } from '../../prismic/helpers'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Layout from '../../components/defaultLayout'
 import Link from 'next/link'
@@ -40,8 +41,8 @@ const Blog = ({ blog, posts }) => {
   )
 }
 
-export async function getStaticProps() {
-  const blog = await Client().getByUID('page', 'blog')
+export const getStaticProps: GetStaticProps = async () => {
+  const blog = await Client().getByUID('page', 'blog', {})
   const posts = await queryRepeatableDocuments(
     (doc) => doc.type === 'blog-post'
   )

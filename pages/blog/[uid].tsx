@@ -1,3 +1,5 @@
+import { GetStaticPaths, GetStaticProps } from 'next'
+
 import BackButton from '../../components/backButton'
 import { Client } from '../../prismic/helpers'
 import Head from 'next/head'
@@ -31,24 +33,13 @@ const Post = ({ post }) => {
   )
 }
 
-export async function getStaticProps({
-  params,
-  preview = null,
-  previewData = {},
-}) {
-  const { ref } = previewData
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const post =
-    (await Client().getByUID('blog-post', params.uid, ref ? { ref } : null)) ||
-    {}
-  return {
-    props: {
-      preview,
-      post,
-    },
-  }
+    (await Client().getByUID('blog-post', params.uid as string, {})) || {}
+  return { props: { post } }
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const documents = await queryRepeatableDocuments(
     (doc) => doc.type === 'blog-post'
   )

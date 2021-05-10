@@ -1,5 +1,6 @@
 import BackButton from '../components/backButton'
 import { Client } from '../prismic/helpers'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Layout from '../components/defaultLayout'
 import Link from 'next/link'
@@ -40,8 +41,8 @@ const Talks = ({ talks }) => {
   )
 }
 
-export async function getStaticProps() {
-  const talks = (await Client().getSingle('talks')) || {}
+export const getStaticProps: GetStaticProps = async () => {
+  const talks = (await Client().getSingle('talks', {})) || {}
   return {
     props: {
       talks,

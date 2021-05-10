@@ -1,4 +1,5 @@
 import { Client } from '../prismic/helpers'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Layout from '../components/defaultLayout'
 import { RichText } from 'prismic-reactjs'
@@ -19,13 +20,9 @@ const Index = ({ index }) => {
   )
 }
 
-export async function getStaticProps() {
-  const index = (await Client().getByUID('page', 'index')) || {}
-  return {
-    props: {
-      index,
-    },
-  }
+export const getStaticProps: GetStaticProps = async () => {
+  const index = (await Client().getByUID('page', 'index', {})) || {}
+  return { props: { index } }
 }
 
 export default Index
