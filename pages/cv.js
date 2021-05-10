@@ -1,8 +1,8 @@
 import Client from '../prismic/helpers'
-import DefaultLayout from '../components/defaultLayout'
 import Education from '../components/cv/education'
 import Head from 'next/head'
 import Jobs from '../components/cv/jobs'
+import Layout from '../components/defaultLayout'
 import Other from '../components/cv/other'
 import Projects from '../components/cv/projects'
 import { RichText } from 'prismic-reactjs'
@@ -14,7 +14,7 @@ const CV = ({ overview, jobs, tools, education, projects, other }) => {
   const favicon = RichText.asText(overview.data.favicon)
 
   return (
-    <DefaultLayout wide favicon={favicon}>
+    <Layout wide favicon={favicon}>
       <Head>
         <title>CV - {title}</title>
         <meta
@@ -40,7 +40,7 @@ const CV = ({ overview, jobs, tools, education, projects, other }) => {
           <Other data={other} />
         </div>
       </div>
-    </DefaultLayout>
+    </Layout>
   )
 }
 export async function getStaticProps() {

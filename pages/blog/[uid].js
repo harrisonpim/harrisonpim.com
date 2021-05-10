@@ -1,9 +1,9 @@
 import BackButton from '../../components/backButton'
 import { Client } from '../../prismic/helpers'
-import DefaultLayout from '../../components/defaultLayout'
 import Head from 'next/head'
+import Layout from '../../components/defaultLayout'
 import { RichText } from 'prismic-reactjs'
-import SliceZone from '../../components/slicezone'
+import SliceZone from '../../components/sliceZone'
 import { formatDate } from '../../components/date'
 import { queryRepeatableDocuments } from '../../prismic/queries'
 
@@ -14,7 +14,7 @@ const Post = ({ post }) => {
   const favicon = RichText.asText(post.data.favicon)
 
   return (
-    <DefaultLayout favicon={favicon}>
+    <Layout favicon={favicon}>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -27,7 +27,7 @@ const Post = ({ post }) => {
         </div>
         <SliceZone sliceZone={post.data.body} />
       </div>
-    </DefaultLayout>
+    </Layout>
   )
 }
 

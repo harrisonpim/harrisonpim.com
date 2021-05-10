@@ -22,15 +22,15 @@
     <loc>http://localhost:3000/blog</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/blog/anti-racism</loc>
+  </url>
+  <url>
     <loc
       >http://localhost:3000/blog/automating-tests-with-vercel-and-github-actions</loc
     >
   </url>
   <url>
     <loc>http://localhost:3000/blog/def-from-above</loc>
-  </url>
-  <url>
-    <loc>http://localhost:3000/blog/anti-racism</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/favicon-emoji-magic</loc>

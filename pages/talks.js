@@ -1,7 +1,7 @@
 import BackButton from '../components/backButton'
 import { Client } from '../prismic/helpers'
-import DefaultLayout from '../components/defaultLayout'
 import Head from 'next/head'
+import Layout from '../components/defaultLayout'
 import Link from 'next/link'
 import { RichText } from 'prismic-reactjs'
 import { formatDate } from '../components/date'
@@ -13,7 +13,7 @@ const Talks = ({ talks }) => {
   const favicon = RichText.asText(talks.data.favicon)
 
   return (
-    <DefaultLayout favicon={favicon}>
+    <Layout favicon={favicon}>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -36,7 +36,7 @@ const Talks = ({ talks }) => {
           </div>
         ))}
       </div>
-    </DefaultLayout>
+    </Layout>
   )
 }
 

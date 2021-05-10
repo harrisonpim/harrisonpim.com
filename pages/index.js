@@ -1,12 +1,12 @@
-import Head from 'next/head'
 import { Client } from '../prismic/helpers'
+import Head from 'next/head'
+import Layout from '../components/defaultLayout'
 import { RichText } from 'prismic-reactjs'
-import DefaultLayout from '../components/defaultLayout'
-import SliceZone from '../components/slicezone'
+import SliceZone from '../components/sliceZone'
 
 const Index = ({ index }) => {
   return (
-    <DefaultLayout favicon={RichText.asText(index.data.favicon)}>
+    <Layout favicon={RichText.asText(index.data.favicon)}>
       <Head>
         <title>{RichText.asText(index.data.title)}</title>
         <meta
@@ -15,7 +15,7 @@ const Index = ({ index }) => {
         />
       </Head>
       <SliceZone sliceZone={index.data.body} />
-    </DefaultLayout>
+    </Layout>
   )
 }
 
