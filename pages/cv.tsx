@@ -1,9 +1,8 @@
 import Client from '../prismic/helpers'
 import Education from '../components/cv/education'
 import { GetStaticProps } from 'next'
-import Head from 'next/head'
 import Jobs from '../components/cv/jobs'
-import Layout from '../components/defaultLayout'
+import Layout from '../components/layout'
 import Other from '../components/cv/other'
 import Projects from '../components/cv/projects'
 import { RichText } from 'prismic-reactjs'
@@ -11,21 +10,16 @@ import Tools from '../components/cv/tools'
 import { linkResolver } from '../prismic/resolvers'
 
 const CV = ({ overview, jobs, tools, education, projects, other }) => {
-  const title = RichText.asText(overview.data.title)
-  const favicon = RichText.asText(overview.data.favicon)
-
   return (
-    <Layout wide favicon={favicon}>
-      <Head>
-        <title>CV - {title}</title>
-        <meta
-          name="description"
-          content={RichText.asText(overview.data.description)}
-        />
-      </Head>
+    <Layout
+      title={RichText.asText(overview.data.title)}
+      description={RichText.asText(overview.data.description)}
+      wide
+      favicon={RichText.asText(overview.data.favicon)}
+    >
       <div className="max-w-2xl">
         <a className="no-underline" href="/">
-          <h1>{title}</h1>
+          <h1>{RichText.asText(overview.data.title)}</h1>
         </a>
         <div className="text-sm py-4">
           <RichText

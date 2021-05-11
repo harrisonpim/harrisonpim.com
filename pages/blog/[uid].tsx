@@ -2,30 +2,26 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 
 import BackButton from '../../components/backButton'
 import { Client } from '../../prismic/helpers'
-import Head from 'next/head'
-import Layout from '../../components/defaultLayout'
+import Layout from '../../components/layout'
 import { RichText } from 'prismic-reactjs'
 import SliceZone from '../../components/sliceZone'
 import { formatDate } from '../../components/date'
 import { queryRepeatableDocuments } from '../../prismic/queries'
 
 const Post = ({ post }) => {
-  const title = RichText.asText(post.data.title)
-  const description = RichText.asText(post.data.standfirst)
-  const date = formatDate(post.data.date)
-  const favicon = RichText.asText(post.data.favicon)
-
   return (
-    <Layout favicon={favicon}>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </Head>
+    <Layout
+      title={RichText.asText(post.data.title)}
+      description={RichText.asText(post.data.standfirst)}
+      favicon={RichText.asText(post.data.favicon)}
+    >
       <div>
         <BackButton text="back to the blog" href="/blog" />
         <div className="py-4">
-          <h1 className="leading-snug pb-2">{title}</h1>
-          <div className="text-gray">{date}</div>
+          <h1 className="leading-snug pb-2">
+            {RichText.render(post.data.title)}
+          </h1>
+          <div className="text-gray">{formatDate(post.data.date)}</div>
         </div>
         <SliceZone sliceZone={post.data.body} />
       </div>

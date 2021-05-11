@@ -1,24 +1,19 @@
 import BackButton from '../components/backButton'
 import { Client } from '../prismic/helpers'
 import { GetStaticProps } from 'next'
-import Head from 'next/head'
-import Layout from '../components/defaultLayout'
+import Layout from '../components/layout'
 import Link from 'next/link'
 import { RichText } from 'prismic-reactjs'
 import { formatDate } from '../components/date'
 import { linkResolver } from '../prismic/resolvers'
 
 const Talks = ({ talks }) => {
-  const title = RichText.asText(talks.data.title)
-  const description = RichText.asText(talks.data.description)
-  const favicon = RichText.asText(talks.data.favicon)
-
   return (
-    <Layout favicon={favicon}>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </Head>
+    <Layout
+      title={RichText.asText(talks.data.title)}
+      description={RichText.asText(talks.data.description)}
+      favicon={RichText.asText(talks.data.favicon)}
+    >
       <BackButton />
       <div>
         {talks.data.body.map((talk, i) => (
