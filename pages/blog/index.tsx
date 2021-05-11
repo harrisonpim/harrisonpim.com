@@ -1,8 +1,7 @@
 import BackButton from '../../components/backButton'
 import { Client } from '../../prismic/helpers'
 import { GetStaticProps } from 'next'
-import Head from 'next/head'
-import Layout from '../../components/defaultLayout'
+import Layout from '../../components/layout'
 import Link from 'next/link'
 import { RichText } from 'prismic-reactjs'
 import { formatDate } from '../../components/date'
@@ -14,15 +13,12 @@ const Blog = ({ blog, posts }) => {
     (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
   )
 
-  const title = RichText.asText(blog.data.title)
-  const description = RichText.asText(blog.data.description)
-  const favicon = RichText.asText(blog.data.favicon)
   return (
-    <Layout favicon={favicon}>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </Head>
+    <Layout
+      title={RichText.asText(blog.data.title)}
+      description={RichText.asText(blog.data.description)}
+      favicon={RichText.asText(blog.data.favicon)}
+    >
       <BackButton />
       <div>
         {sortedPosts.map((post) => (
