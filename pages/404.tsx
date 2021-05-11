@@ -5,7 +5,7 @@ export default function Custom404() {
   return (
     <Layout title="404" description="Page not found" favicon="😬">
       <BackButton />
-      <h1>😬 404 - Page Not Found</h1>
+      <h1 className="py-4">😬 404 - Page Not Found</h1>
     </Layout>
   )
 }
