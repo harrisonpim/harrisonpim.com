@@ -50,27 +50,25 @@ async function queryRepeatableDocuments(filter) {
   ).map((doc) => `/blog/${doc.uid}`)
 
   const pages = [...localPages, ...rootPages, ...blogPages]
-  const urls = pages
-    .map((page) => {
-      const path = page
-        .replace('pages', '')
-        .replace('.tsx', '')
-        .replace('.jsx', '')
-        .replace('.ts', '')
-        .replace('.js', '')
-        .replace('.html', '')
-        .replace('/index', '')
-      return `<url>
-              <loc>${baseUrl}${path}</loc>
-          </url>
-      `
-    })
-    .join('')
+  const urls = pages.map((page) => {
+    const path = page
+      .replace('pages', '')
+      .replace('.tsx', '')
+      .replace('.jsx', '')
+      .replace('.ts', '')
+      .replace('.js', '')
+      .replace('.html', '')
+      .replace('/index', '')
+      .replace('/404', '')
+    return baseUrl + path
+  })
+
+  const uniqueUrls = urls.filter((x, i, a) => a.indexOf(x) === i)
 
   const sitemap = `
   <?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ${urls}
+  ${uniqueUrls.map((url) => `<url><loc>${url}</loc></url>`).join('')}
   </urlset>`
 
   const formatted = prettier.format(sitemap, {
