@@ -17,7 +17,6 @@ class MyDocument extends Document {
         <body className="p-4 lg:px-12 font-sans">
           <Main />
           <NextScript />
-          <PrismicScript />
         </body>
       </Html>
     )
