@@ -29,7 +29,11 @@ const Layout: FC<Props> = ({
         <title>{title}</title>
         <meta name="description" content={description} />
       </Head>
-      <div className={`${wide ? '' : 'max-w-measure'} ${debug ? 'debug' : ''}`}>
+      <div
+        className={`${wide ? '' : 'max-w-measure'} ${
+          debug ? 'debug' : ''
+        } antialiased`}
+      >
         {children}
       </div>
     </div>

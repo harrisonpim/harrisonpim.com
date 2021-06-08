@@ -1,8 +1,9 @@
-import { accessToken, apiEndpoint } from './configuration'
-
 import Prismic from 'prismic-javascript'
 
-// Client method to query documents from the Prismic repo
+export const repoName = process.env.PRISMIC_REPO_NAME
+export const apiEndpoint = `https://${repoName}.cdn.prismic.io/api/v2`
+export const accessToken = process.env.PRISMIC_ACCESS_TOKEN
+
 export const Client = (req = null) =>
   Prismic.client(apiEndpoint, createClientOptions(req, accessToken))
 
