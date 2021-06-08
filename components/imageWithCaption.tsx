@@ -1,6 +1,7 @@
 import { RichText, RichTextBlock } from 'prismic-reactjs'
 
 import { FC } from 'react'
+import Image from 'next/image'
 import { linkResolver } from '../prismic/resolvers'
 
 type Props = {
@@ -9,6 +10,10 @@ type Props = {
       image: {
         url: string
         alt: string
+        dimensions: {
+          width: number
+          height: number
+        }
       }
       caption?: RichTextBlock[]
     }
@@ -16,21 +21,25 @@ type Props = {
 }
 
 const ImageWithCaption: FC<Props> = ({ slice }) => {
-  const hasCaption = RichText.asText(slice.primary.caption) !== ''
-  const caption = hasCaption ? (
-    <figcaption className="pt-1 mx-auto w-4/5 text-gray text-xs text-center">
-      <RichText render={slice.primary.caption} linkResolver={linkResolver} />
-    </figcaption>
-  ) : null
-
   return (
-    <figure className="mx-auto w-full lg:w-4/5">
-      <img
-        className="mx-auto"
+    <figure className="w-full lg:w-4/5 h-auto mx-auto text-center pb">
+      <Image
+        className="rounded-sm"
+        layout="responsive"
         src={slice.primary.image.url}
         alt={slice.primary.image.alt}
+        height={slice.primary.image.dimensions.height}
+        width={slice.primary.image.dimensions.width}
+        quality={100}
       />
-      {caption}
+      {RichText.asText(slice.primary.caption) ? (
+        <figcaption className="pt-1 mx-auto w-4/5 text-gray text-xs text-center">
+          <RichText
+            render={slice.primary.caption}
+            linkResolver={linkResolver}
+          />
+        </figcaption>
+      ) : null}
     </figure>
   )
 }
