@@ -1,5 +1,5 @@
 :root {
-    font-size: 22px;
+    font-size: 20px;
 }
 
 a {text-decoration: underline;}
@@ -11,5 +11,4 @@ ul {
     padding-left: 1rem;
 ;}
 
-h1,h2,h3,h4,h5,h6 {font-weight: bold;}
-
+h1,h2,h3,h4,h5,h6 { @apply font-semibold; }
