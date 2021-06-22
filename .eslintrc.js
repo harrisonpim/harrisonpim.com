@@ -9,6 +9,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'standard',
     'plugin:prettier/recommended',
+    'next',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -22,6 +23,7 @@ module.exports = {
   rules: {
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
   settings: {
     react: {
