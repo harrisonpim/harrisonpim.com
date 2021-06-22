@@ -10,6 +10,7 @@ module.exports = {
       xl: '1200px',
     },
     extend: {
+      visibility: ['hover', 'group-hover'],
       maxWidth: {
         measure: '34em',
       },
@@ -20,6 +21,8 @@ module.exports = {
       },
     },
   },
-  variants: {},
+  variants: {
+    visibility: ['group-hover'],
+  },
   plugins: [],
 }
