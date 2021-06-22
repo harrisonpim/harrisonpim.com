@@ -3,6 +3,7 @@ import Education from '../components/cv/education'
 import { GetStaticProps } from 'next'
 import Jobs from '../components/cv/jobs'
 import Layout from '../components/layout'
+import Link from 'next/link'
 import Other from '../components/cv/other'
 import Projects from '../components/cv/projects'
 import { RichText } from 'prismic-reactjs'
@@ -18,9 +19,11 @@ const CV = ({ overview, jobs, tools, education, projects, other }) => {
       favicon={RichText.asText(overview.data.favicon)}
     >
       <div className="max-w-2xl">
-        <a className="no-underline" href="/">
-          <h1>{RichText.asText(overview.data.title)}</h1>
-        </a>
+        <Link href="/">
+          <a className="no-underline">
+            <h1>{RichText.asText(overview.data.title)}</h1>
+          </a>
+        </Link>
         <div className="text-sm py-4">
           <RichText
             render={overview.data.description}
