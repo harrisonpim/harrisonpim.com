@@ -24,13 +24,13 @@ const CV = ({ overview, jobs, tools, education, projects, other }) => {
             <h1>{RichText.asText(overview.data.title)}</h1>
           </a>
         </Link>
-        <div className="text-sm py-4">
+        <div className="text-sm pb-4 py-2">
           <RichText
             render={overview.data.description}
             linkResolver={linkResolver}
           />
         </div>
-        <div>
+        <div className="space-y-4">
           <Jobs data={jobs} />
           <Education data={education} />
           <Tools data={tools} />

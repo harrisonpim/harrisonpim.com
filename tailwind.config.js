@@ -15,7 +15,8 @@ module.exports = {
         measure: '34em',
       },
       colors: {
-        gray: '#999',
+        black: '#121212',
+        gray: '#666',
         'light-gray': '#e0e0e0',
         'code-background': '#282c34',
       },

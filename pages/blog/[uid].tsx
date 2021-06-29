@@ -17,11 +17,9 @@ const Post = ({ post }) => {
     >
       <div>
         <BackButton text="back to the blog" href="/blog" />
-        <div className="py-4">
-          <h1 className="leading-snug pb-2">
-            {RichText.render(post.data.title)}
-          </h1>
-          <div className="text-gray">{formatDate(post.data.date)}</div>
+        <div className="pt-4 pb-2">
+          <h1 className="leading-snug">{RichText.render(post.data.title)}</h1>
+          <p className="text-gray">{formatDate(post.data.date)}</p>
         </div>
         <SliceZone sliceZone={post.data.body} />
       </div>

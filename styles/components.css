@@ -1,3 +1,5 @@
+/* PROSE */
+
 .prose h1,
 .prose h2,
 .prose h3,
@@ -5,22 +7,27 @@
 .prose h5,
 .prose h6,
 .prose figure,
-.prose blockquote,
-.prose pre {margin-top: 1rem; margin-bottom: 1rem}
+.prose blockquote {
+  @apply pt-3;
+}
 
 .prose p,
 .prose ul,
 .prose dl,
-.prose dd {margin-bottom: 1rem}
+.prose dd {
+  @apply py-1.5;
+}
 
-.prose ul {margin-left: 1rem}
+.prose ul {
+  @apply ml-1;
+}
 
 .prose .code {
-    @apply px-1;
-    @apply bg-light-gray;
-    @apply rounded;
-    @apply text-xs;
-    @apply font-mono;
-    padding-top: 0.125rem;
-    padding-bottom: 0.125rem;
+  @apply px-1;
+  @apply bg-light-gray;
+  @apply rounded;
+  @apply text-xs;
+  @apply font-mono;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
 }

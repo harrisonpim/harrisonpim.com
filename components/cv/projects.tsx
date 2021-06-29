@@ -37,7 +37,7 @@ const Projects: FC<Props> = ({ data }) => {
     </div>
   ))
 
-  return <Block heading="Recent Projects" data={renderedProjects} />
+  return <Block heading="Projects" data={renderedProjects} />
 }
 
 export default Projects

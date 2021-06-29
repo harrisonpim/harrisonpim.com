@@ -12,10 +12,9 @@ Built and deployed with [jamstack](https://jamstack.org/) principles in mind, us
 ## Developing
 
 - Clone this repo
-- Run `yarn install --include=dev` to install dependencies.
-- I use [the vercel cli](https://vercel.com/docs/cli) for local development. Run `vercel link` to link your local repo to the project on vercel
-- Run `vercel env pull` to populate a local `.env` file with dev versions of all of the project's secrets.
-- Finally, run `vercel dev` to get a local version of the site running.
+- Run `yarn` to install dependencies.
+- Run `yarn env` to link your local repo to the project on vercel and populate a local `.env` file with dev versions of all of the project's secrets.
+- Finally, run `yarn dev` to get a local version of the site running.
 
 ## Deploying
 

@@ -20,18 +20,18 @@ const Blog = ({ blog, posts }) => {
       favicon={RichText.asText(blog.data.favicon)}
     >
       <BackButton />
-      <div>
+      <div className="space-y-6 py-4">
         {sortedPosts.map((post) => (
-          <div className="py-4" key={RichText.asText(post.data.title)}>
+          <div key={RichText.asText(post.data.title)}>
             <Link as={linkResolver(post)} href={linkResolver(post)}>
-              <a className="no-underline pb-none leading-tight">
-                <h3>{RichText.asText(post.data.title)}</h3>
+              <a className="no-underline leading-tight">
+                <h2 className="text-xl">{RichText.asText(post.data.title)}</h2>
+                <div className="text-sm">
+                  <p className="text-gray">{formatDate(post.data.date)}</p>
+                  {RichText.asText(post.data.standfirst)}
+                </div>
               </a>
             </Link>
-            <span className="text-gray ">{formatDate(post.data.date)}</span>
-            <div className="text-sm">
-              {RichText.asText(post.data.standfirst)}
-            </div>
           </div>
         ))}
       </div>

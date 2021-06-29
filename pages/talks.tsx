@@ -15,20 +15,26 @@ const Talks = ({ talks }) => {
       favicon={RichText.asText(talks.data.favicon)}
     >
       <BackButton />
-      <div>
+      <div className="space-y-6 pt-4">
         {talks.data.body.map((talk, i) => (
-          <div className="py-4" key={i}>
+          <div key={i}>
             <Link
               as={linkResolver(talk.primary.url)}
               href={linkResolver(talk.primary.url)}
             >
               <a className="no-underline pb-none font-normal">
-                <h3>{RichText.asText(talk.primary.title)}</h3>
+                <h2 className="text-xl">
+                  {RichText.asText(talk.primary.title)}
+                </h2>
+                <div className="text-sm">
+                  <div className="text-gray">
+                    {formatDate(talk.primary.date)}
+                  </div>
+                  <div>{RichText.asText(talk.primary.host)}</div>
+                  <div>{RichText.asText(talk.primary.location)}</div>
+                </div>
               </a>
             </Link>
-            <div className="text-gray">{formatDate(talk.primary.date)}</div>
-            <div>{RichText.asText(talk.primary.host)}</div>
-            <div>{RichText.asText(talk.primary.location)}</div>
           </div>
         ))}
       </div>
