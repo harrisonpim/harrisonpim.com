@@ -1,6 +1,6 @@
 :root {
+  @apply text-black dark:bg-dark-gray dark:text-white;
   font-size: 20px;
-  @apply text-black;
 }
 
 a {
@@ -20,8 +20,7 @@ h3 {
 }
 
 ul {
-  @apply list-disc;
-  @apply pl-4;
+  @apply list-disc pl-4;
 }
 
 h1,

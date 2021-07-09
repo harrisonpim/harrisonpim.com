@@ -23,11 +23,7 @@
 }
 
 .prose .code {
-  @apply px-1;
-  @apply bg-light-gray;
-  @apply rounded;
-  @apply text-xs;
-  @apply font-mono;
+  @apply px-1 bg-light-gray dark:bg-gray rounded text-xs font-mono;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
 }

@@ -27,11 +27,11 @@ const Talks = ({ talks }) => {
                   {RichText.asText(talk.primary.title)}
                 </h2>
                 <div className="text-sm">
-                  <div className="text-gray">
-                    {formatDate(talk.primary.date)}
+                  <div className="text-gray dark:text-light-gray">
+                    <div>{formatDate(talk.primary.date)}</div>
+                    <div>{RichText.asText(talk.primary.host)}</div>
+                    <div>{RichText.asText(talk.primary.location)}</div>
                   </div>
-                  <div>{RichText.asText(talk.primary.host)}</div>
-                  <div>{RichText.asText(talk.primary.location)}</div>
                 </div>
               </a>
             </Link>
