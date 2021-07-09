@@ -1,14 +1,27 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { RichText, RichTextBlock } from 'prismic-reactjs'
 
 import BackButton from '../../components/backButton'
 import { Client } from '../../prismic/helpers'
+import { FC } from 'react'
 import Layout from '../../components/layout'
-import { RichText } from 'prismic-reactjs'
 import SliceZone from '../../components/sliceZone'
 import { formatDate } from '../../components/date'
 import { queryRepeatableDocuments } from '../../prismic/queries'
 
-const Post = ({ post }) => {
+type PostType = {
+  post: {
+    data: {
+      title: RichTextBlock[]
+      standfirst?: RichTextBlock[]
+      favicon?: RichTextBlock[]
+      date: string
+      body: { slice: unknown[] }
+    }
+  }
+}
+
+const Post: FC<PostType> = ({ post }) => {
   return (
     <Layout
       title={RichText.asText(post.data.title)}
@@ -19,7 +32,9 @@ const Post = ({ post }) => {
         <BackButton text="back to the blog" href="/blog" />
         <div className="pt-4 pb-2">
           <h1 className="leading-snug">{RichText.render(post.data.title)}</h1>
-          <p className="text-gray">{formatDate(post.data.date)}</p>
+          <p className="text-gray dark:text-light-gray">
+            {formatDate(post.data.date)}
+          </p>
         </div>
         <SliceZone sliceZone={post.data.body} />
       </div>

@@ -33,7 +33,7 @@ const ImageWithCaption: FC<Props> = ({ slice }) => {
         quality={100}
       />
       {RichText.asText(slice.primary.caption) ? (
-        <figcaption className="pt-1 mx-auto w-4/5 text-gray text-xs text-center">
+        <figcaption className="pt-1 mx-auto w-4/5 text-gray dark:text-light-gray text-xs text-center">
           <RichText
             render={slice.primary.caption}
             linkResolver={linkResolver}

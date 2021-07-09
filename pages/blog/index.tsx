@@ -27,8 +27,10 @@ const Blog = ({ blog, posts }) => {
               <a className="no-underline leading-tight">
                 <h2 className="text-xl">{RichText.asText(post.data.title)}</h2>
                 <div className="text-sm">
-                  <p className="text-gray">{formatDate(post.data.date)}</p>
-                  {RichText.asText(post.data.standfirst)}
+                  <p className="text-gray dark:text-light-gray">
+                    <div>{formatDate(post.data.date)}</div>
+                    <div>{RichText.asText(post.data.standfirst)}</div>
+                  </p>
                 </div>
               </a>
             </Link>
