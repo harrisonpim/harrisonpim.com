@@ -28,7 +28,7 @@ const CodeSnippet: FC<Props> = ({ slice }) => {
             </CopyToClipboard>
           </div>
         </div>
-        <pre className="text-xs overflow-x-scroll pl-2 py-1">
+        <pre className="text-xs overflow-x-scroll pl-2 py-1 text-white">
           <code className={language}>{code}</code>
         </pre>
       </div>
