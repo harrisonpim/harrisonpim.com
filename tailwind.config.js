@@ -11,10 +11,9 @@ module.exports = {
       xl: '1200px',
     },
     extend: {
+      screens: { print: { raw: 'print' } },
       visibility: ['hover', 'group-hover'],
-      maxWidth: {
-        measure: '34em',
-      },
+      maxWidth: { measure: '34em' },
       colors: {
         white: '#f7f7f7',
         black: '#121212',

@@ -36,6 +36,9 @@ const CV = ({ overview, jobs, tools, education, other }) => {
           <Other data={other} />
         </div>
       </div>
+      <div className="pt-4 text-sm text-gray dark:text-light-gray print:hidden">
+        <a href="javascript:window.print()">Download this as a PDF</a>
+      </div>
     </Layout>
   )
 }
