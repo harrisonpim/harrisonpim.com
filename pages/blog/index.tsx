@@ -24,13 +24,13 @@ const Blog = ({ blog, posts }) => {
         {sortedPosts.map((post) => (
           <div key={RichText.asText(post.data.title)}>
             <Link as={linkResolver(post)} href={linkResolver(post)}>
-              <a className="no-underline leading-tight">
+              <a className="no-underline">
                 <h2 className="text-xl">{RichText.asText(post.data.title)}</h2>
                 <div className="text-sm">
-                  <p className="text-gray dark:text-light-gray">
+                  <div className="text-gray dark:text-light-gray">
                     <div>{formatDate(post.data.date)}</div>
                     <div>{RichText.asText(post.data.standfirst)}</div>
-                  </p>
+                  </div>
                 </div>
               </a>
             </Link>
