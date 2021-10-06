@@ -22,7 +22,7 @@ const Talks = ({ talks }) => {
               as={linkResolver(talk.primary.url)}
               href={linkResolver(talk.primary.url)}
             >
-              <a className="no-underline pb-none font-normal">
+              <a className="no-underline">
                 <h2 className="text-xl">
                   {RichText.asText(talk.primary.title)}
                 </h2>
