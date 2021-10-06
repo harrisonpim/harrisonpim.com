@@ -26,7 +26,7 @@ const Tools: FC<Props> = ({ data }) => {
     </div>
   ))
 
-  return <Block heading="Skills & Tools" data={renderedTools} />
+  return <Block heading="Skills + Tools" data={renderedTools} />
 }
 
 export default Tools

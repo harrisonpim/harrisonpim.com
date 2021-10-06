@@ -42,7 +42,7 @@ const Jobs: FC<Props> = ({ data }) => {
       </div>
     </div>
   ))
-  return <Block heading="Jobs" data={renderedJobs} />
+  return <Block heading="Experience" data={renderedJobs} />
 }
 
 export default Jobs
