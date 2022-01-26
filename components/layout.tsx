@@ -15,7 +15,6 @@ const Layout: FC<Props> = ({
   children,
   title,
   description,
-  wide = false,
   debug = false,
   favicon,
 }) => {
@@ -30,9 +29,9 @@ const Layout: FC<Props> = ({
         <meta name="description" content={description} />
       </Head>
       <div
-        className={`${wide ? '' : 'max-w-measure'} ${
+        className={`${
           debug ? 'debug' : ''
-        } antialiased`}
+        } max-w-2xl print:max-w-3xl antialiased`}
       >
         {children}
       </div>

@@ -15,7 +15,7 @@
 .prose ul,
 .prose dl,
 .prose dd {
-  @apply py-1.5;
+  @apply pt-3;
 }
 
 .prose ul {

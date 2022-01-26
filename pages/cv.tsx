@@ -14,10 +14,9 @@ const CV = ({ overview, jobs, tools, education, other }) => {
     <Layout
       title={RichText.asText(overview.data.title)}
       description={RichText.asText(overview.data.description)}
-      wide
       favicon={RichText.asText(overview.data.favicon)}
     >
-      <div className="max-w-2xl">
+      <div>
         <Link href="/">
           <a className="no-underline">
             <h1>{RichText.asText(overview.data.title)}</h1>
