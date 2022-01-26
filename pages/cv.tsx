@@ -14,10 +14,9 @@ const CV = ({ overview, jobs, tools, education, other }) => {
     <Layout
       title={RichText.asText(overview.data.title)}
       description={RichText.asText(overview.data.description)}
-      wide
       favicon={RichText.asText(overview.data.favicon)}
     >
-      <div className="max-w-2xl">
+      <div>
         <Link href="/">
           <a className="no-underline">
             <h1>{RichText.asText(overview.data.title)}</h1>
@@ -37,7 +36,9 @@ const CV = ({ overview, jobs, tools, education, other }) => {
         </div>
       </div>
       <div className="pt-4 text-sm text-gray dark:text-light-gray print:hidden">
-        <a href="javascript:window.print()">Download this as a PDF</a>
+        <Link href="/cv.pdf">
+          <a>Download this as a PDF</a>
+        </Link>
       </div>
     </Layout>
   )

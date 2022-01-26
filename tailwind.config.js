@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   future: {},
   darkMode: 'media',
@@ -21,6 +23,10 @@ module.exports = {
         'light-gray': '#e0e0e0',
         'dark-gray': '#343434',
         'code-background': '#282c34',
+      },
+
+      fontFamily: {
+        sans: ['Inter', ...defaultTheme.fontFamily.sans],
       },
     },
   },

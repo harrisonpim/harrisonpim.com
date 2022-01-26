@@ -11,6 +11,10 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta charSet="utf-8" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <body className="p-4 lg:px-12 font-sans">
           <Main />
