@@ -2,12 +2,10 @@ name: Check site for broken links
 on:
   schedule:
     - cron: "0 0 * * 0"
-    # every Sunday at midnight
-    # see https://crontab.guru/#0_0_*_*_0
 jobs:
   check-site-for-broken-links:
     runs-on: ubuntu-latest
     steps:
-      - uses: harrisonpim/broken-link-checker
+      - uses: harrisonpim/broken-link-checker@0.1.0
         with:
           sitemap: https://harrisonpim.com/sitemap.xml"
