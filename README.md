@@ -21,6 +21,6 @@ Built and deployed with [jamstack](https://jamstack.org/) principles in mind, us
 The site is rebuilt and deployed automatically by vercel whenever changes are detected in:
 
 - the content in prismic (Ideally, changes are bundled together into a release)
-- the master branch of this repo (new PRs will generate a build which is deployed to a preview URL)
+- the `main` branch of this repo (new PRs will generate a build which is deployed to a preview URL)
 
 As changes on either side are relatively infrequent compared to the build time, there's no problem with rebuilding the site from scratch on every change.
