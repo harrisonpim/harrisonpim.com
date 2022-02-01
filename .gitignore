@@ -1,8 +1,3 @@
-
-.DS_Store
-
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 node_modules
 /.pnp
@@ -37,8 +32,8 @@ yarn-error.log*
 # vercel
 .vercel
 
-
-# Local Netlify folder
-.netlify
+# project specific
 *.pdf
 pages/cover-letter.tsx
+public/*
+!public/robots.txt

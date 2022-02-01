@@ -31,7 +31,7 @@ const Layout: FC<Props> = ({
       <div
         className={`${
           debug ? 'debug' : ''
-        } max-w-2xl print:max-w-3xl antialiased`}
+        } max-w-2xl antialiased print:max-w-3xl`}
       >
         {children}
       </div>

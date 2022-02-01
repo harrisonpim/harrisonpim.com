@@ -6,7 +6,7 @@ type Props = {
 }
 
 const BackButton: FC<Props> = ({ href = '/', text = 'back home' }) => (
-  <a className="no-underline text-gray dark:text-light-gray" href={href}>
+  <a className="text-gray no-underline dark:text-light-gray" href={href}>
     ← {text}
   </a>
 )

@@ -11,8 +11,4 @@ module.exports = {
       },
     ]
   },
-  webpack: (config) => {
-    require('./scripts/generate-sitemap')
-    return config
-  },
 }
