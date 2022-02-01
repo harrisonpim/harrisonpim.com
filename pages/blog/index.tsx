@@ -25,12 +25,12 @@ const Blog = ({ blog, posts }) => {
           <div key={RichText.asText(post.data.title)}>
             <Link as={linkResolver(post)} href={linkResolver(post)}>
               <a className="no-underline">
-                <h2 className="text-xl">{RichText.asText(post.data.title)}</h2>
-                <div className="text-sm">
-                  <div className="text-gray dark:text-light-gray">
-                    <div>{formatDate(post.data.date)}</div>
-                    <div>{RichText.asText(post.data.standfirst)}</div>
-                  </div>
+                <h2 className="text-xl font-medium">
+                  {RichText.asText(post.data.title)}
+                </h2>
+                <div className="text-sm text-gray dark:text-light-gray">
+                  <div>{formatDate(post.data.date)}</div>
+                  <div>{RichText.asText(post.data.standfirst)}</div>
                 </div>
               </a>
             </Link>

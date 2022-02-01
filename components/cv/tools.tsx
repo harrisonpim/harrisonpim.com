@@ -2,6 +2,7 @@ import { RichText, RichTextBlock } from 'prismic-reactjs'
 
 import Block from './block'
 import { FC } from 'react'
+import { linkResolver } from 'prismic/resolvers'
 
 type Tool = {
   primary: {
@@ -20,9 +21,11 @@ type Props = {
 
 const Tools: FC<Props> = ({ data }) => {
   const renderedTools = data.data.body.map((tool, idx) => (
-    <div className="pb-2" key={idx}>
+    <div key={idx}>
       <h3>{RichText.asText(tool.primary.category)}</h3>
-      <div className="text-sm">{RichText.asText(tool.primary.set)}</div>
+      <div className="text-sm">
+        <RichText render={tool.primary.set} linkResolver={linkResolver} />
+      </div>
     </div>
   ))
 

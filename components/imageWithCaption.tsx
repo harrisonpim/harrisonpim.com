@@ -22,7 +22,7 @@ type Props = {
 
 const ImageWithCaption: FC<Props> = ({ slice }) => {
   return (
-    <figure className="pb mx-auto h-auto w-full text-center lg:w-4/5">
+    <figure className="mx-auto h-auto w-full py-3 text-center lg:w-4/5">
       <Image
         className="rounded-sm"
         layout="responsive"
@@ -32,14 +32,9 @@ const ImageWithCaption: FC<Props> = ({ slice }) => {
         width={slice.primary.image.dimensions.width}
         quality={100}
       />
-      {RichText.asText(slice.primary.caption) ? (
-        <figcaption className="mx-auto w-4/5 pt-1 text-center text-xs text-gray dark:text-light-gray">
-          <RichText
-            render={slice.primary.caption}
-            linkResolver={linkResolver}
-          />
-        </figcaption>
-      ) : null}
+      <figcaption className="mx-auto w-4/5 text-center text-sm text-gray dark:text-light-gray">
+        <RichText render={slice.primary.caption} linkResolver={linkResolver} />
+      </figcaption>
     </figure>
   )
 }

@@ -30,15 +30,15 @@ const Post: FC<PostType> = ({ post }) => {
     >
       <div>
         <BackButton text="back to the blog" href="/blog" />
-        <div className="pt-4 pb-2">
-          <h1 className="text-3xl font-semibold leading-snug">
-            {RichText.render(post.data.title)}
-          </h1>
-          <p className="text-gray dark:text-light-gray">
-            {formatDate(post.data.date)}
-          </p>
+        <h1 className="leading pt-3 text-3xl font-medium">
+          {RichText.render(post.data.title)}
+        </h1>
+        <p className="pt-1 text-gray dark:text-light-gray">
+          {formatDate(post.data.date)}
+        </p>
+        <div className="prose">
+          <SliceZone sliceZone={post.data.body} />
         </div>
-        <SliceZone sliceZone={post.data.body} />
       </div>
     </Layout>
   )

@@ -11,7 +11,9 @@ const Index = ({ index }) => {
       favicon={RichText.asText(index.data.favicon)}
       description={RichText.asText(index.data.description)}
     >
-      <SliceZone sliceZone={index.data.body} />
+      <div className="prose">
+        <SliceZone sliceZone={index.data.body} />
+      </div>
     </Layout>
   )
 }

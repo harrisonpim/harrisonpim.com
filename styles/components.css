@@ -1,21 +1,15 @@
 /* PROSE */
 
-.prose h1,
 .prose h2,
 .prose h3,
 .prose h4,
 .prose h5,
-.prose h6,
-.prose figure,
-.prose blockquote {
-  @apply pt-3;
+.prose h6 {
+  @apply pt-1;
 }
 
-.prose p,
-.prose ul,
-.prose dl,
-.prose dd {
-  @apply pt-3;
+.prose {
+  @apply my-3 space-y-3;
 }
 
 .prose ul {
@@ -29,7 +23,7 @@
 }
 
 .prose h1 {
-  @apply text-3xl;
+  @apply text-3xl font-semibold leading-tight;
 }
 
 .prose h2 {
@@ -37,14 +31,17 @@
 }
 
 .prose h3 {
+  @apply text-xl;
+}
+
+.prose h4 {
   @apply text-lg;
 }
 
-.prose h1,
 .prose h2,
 .prose h3,
 .prose h4,
 .prose h5,
 .prose h6 {
-  @apply font-semibold;
+  @apply font-medium;
 }

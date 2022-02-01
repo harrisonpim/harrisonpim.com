@@ -24,24 +24,28 @@ type Props = {
 }
 
 const Jobs: FC<Props> = ({ data }) => {
-  const renderedJobs = data.data.body.map((job, idx) => (
-    <div className="pb-2" key={idx}>
-      <h3 className="inline-block">
-        {RichText.asText(job.primary.title)},{' '}
-        {RichText.asText(job.primary.employer)}
-      </h3>
-      <div className="block text-sm lg:float-right lg:inline-block lg:text-base">
-        {formatYear(job.primary['start-date'])}-
-        {formatYear(job.primary['end-date'])}
-      </div>
-      <div className="text-sm">
-        <RichText
-          render={job.primary.responsibilities}
-          linkResolver={linkResolver}
-        />
-      </div>
-    </div>
-  ))
+  const renderedJobs = (
+    <ul className="list-none space-y-3 pl-0">
+      {data.data.body.map((job, idx) => (
+        <li key={idx}>
+          <h3 className="inline-block">
+            {RichText.asText(job.primary.title)},{' '}
+            {RichText.asText(job.primary.employer)}
+          </h3>
+          <p className="block lg:float-right lg:inline-block">
+            {formatYear(job.primary['start-date'])}-
+            {formatYear(job.primary['end-date'])}
+          </p>
+          <div className="text-sm">
+            <RichText
+              render={job.primary.responsibilities}
+              linkResolver={linkResolver}
+            />
+          </div>
+        </li>
+      ))}
+    </ul>
+  )
   return <Block heading="Experience" data={renderedJobs} />
 }
 

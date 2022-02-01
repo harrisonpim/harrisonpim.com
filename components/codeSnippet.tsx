@@ -19,7 +19,7 @@ const CodeSnippet: FC<Props> = ({ slice }) => {
   const hasLanguage = slice.primary.language[0]
   const language = hasLanguage ? `${hasLanguage.text}` : 'plaintext'
   return (
-    <div className="py-1.5">
+    <div className="pt-3">
       <div className="group relative rounded bg-code-background p-1">
         <div className="invisible group-hover:visible">
           <div className="absolute top-0 right-0 pr-2 pt-1">

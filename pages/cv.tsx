@@ -16,31 +16,32 @@ const CV = ({ overview, jobs, tools, education, other }) => {
       description={RichText.asText(overview.data.description)}
       favicon={RichText.asText(overview.data.favicon)}
     >
-      <div>
-        <Link href="/">
-          <a className="no-underline">
-            <h1 className="text-3xl font-semibold">
-              {RichText.asText(overview.data.title)}
-            </h1>
-          </a>
-        </Link>
-        <div className="prose pb-4 text-sm">
-          <RichText
-            render={overview.data.description}
-            linkResolver={linkResolver}
-          />
+      <div className="space-y-4">
+        <div className="prose">
+          <Link href="/">
+            <a className="no-underline">
+              <h1>{RichText.asText(overview.data.title)}</h1>
+            </a>
+          </Link>
+          <div className="text-sm">
+            <RichText
+              render={overview.data.description}
+              linkResolver={linkResolver}
+            />
+          </div>
         </div>
-        <div className="space-y-4">
-          <Jobs data={jobs} />
-          <Education data={education} />
-          <Tools data={tools} />
-          <Other data={other} />
-        </div>
-      </div>
-      <div className="pt-4 text-sm text-gray dark:text-light-gray print:hidden">
-        <Link href="/cv.pdf">
-          <a>Download this as a PDF</a>
-        </Link>
+
+        <Jobs data={jobs} />
+        <Education data={education} />
+        <Tools data={tools} />
+        <Other data={other} />
+        <section>
+          <Link href="/cv.pdf">
+            <a className="text-sm text-gray dark:text-light-gray print:hidden">
+              Download this as a PDF
+            </a>
+          </Link>
+        </section>
       </div>
     </Layout>
   )
