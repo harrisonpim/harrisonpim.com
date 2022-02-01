@@ -31,7 +31,9 @@ const Post: FC<PostType> = ({ post }) => {
       <div>
         <BackButton text="back to the blog" href="/blog" />
         <div className="pt-4 pb-2">
-          <h1 className="leading-snug">{RichText.render(post.data.title)}</h1>
+          <h1 className="leading-snug text-3xl font-semibold">
+            {RichText.render(post.data.title)}
+          </h1>
           <p className="text-gray dark:text-light-gray">
             {formatDate(post.data.date)}
           </p>

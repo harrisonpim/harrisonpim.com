@@ -22,7 +22,7 @@ type Props = {
 const Other: FC<Props> = ({ data }) => {
   const renderedOther = data.data.body.map((thing, idx) => (
     <div className="pb-2" key={idx}>
-      <div>{RichText.asText(thing.primary.title)}</div>
+      <h3>{RichText.asText(thing.primary.title)}</h3>
       <div className="text-sm">
         <RichText
           render={thing.primary.description}

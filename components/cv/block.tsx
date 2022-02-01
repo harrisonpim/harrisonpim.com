@@ -8,7 +8,7 @@ type Props = {
 const Block: FC<Props> = ({ heading, data }) => {
   return (
     <div className="flow-root">
-      <h2 className="block float-left w-full lg:w-1/6 lg:pr-3 text-lg lg:text-base">
+      <h2 className="block float-left w-full lg:w-1/6 lg:pr-3 text-lg lg:text-base font-semibold">
         {heading}
       </h2>
       <div className="block float-left lg:float-right w-full lg:w-5/6 pt-1 lg:pt-0">

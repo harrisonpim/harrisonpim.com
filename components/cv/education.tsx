@@ -26,9 +26,9 @@ const Education: FC<Props> = ({ data }) => {
   const renderedEducation = data.data.body.map((school, idx) => {
     return (
       <div className="pb-2" key={idx}>
-        <div className="text-base inline-block">
+        <h3 className="text-base inline-block">
           {RichText.asText(school.primary.name)}
-        </div>
+        </h3>
         <div className="text-sm block lg:text-base lg:inline-block lg:float-right">
           {formatYear(school.primary['start-date'])}-
           {formatYear(school.primary['end-date'])}

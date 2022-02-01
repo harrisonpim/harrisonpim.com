@@ -19,10 +19,12 @@ const CV = ({ overview, jobs, tools, education, other }) => {
       <div>
         <Link href="/">
           <a className="no-underline">
-            <h1>{RichText.asText(overview.data.title)}</h1>
+            <h1 className="font-semibold text-3xl">
+              {RichText.asText(overview.data.title)}
+            </h1>
           </a>
         </Link>
-        <div className="text-sm pb-4 py-2">
+        <div className="text-sm pb-4 prose">
           <RichText
             render={overview.data.description}
             linkResolver={linkResolver}

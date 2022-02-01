@@ -21,7 +21,7 @@ type Props = {
 const Tools: FC<Props> = ({ data }) => {
   const renderedTools = data.data.body.map((tool, idx) => (
     <div className="pb-2" key={idx}>
-      <div>{RichText.asText(tool.primary.category)}</div>
+      <h3>{RichText.asText(tool.primary.category)}</h3>
       <div className="text-sm">{RichText.asText(tool.primary.set)}</div>
     </div>
   ))
