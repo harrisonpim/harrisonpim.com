@@ -1,11 +1,11 @@
 name: Check site for broken links
 on:
   schedule:
-    - cron: "0 0 * * 0"
+    - cron: "0 14 * * 0"
 jobs:
   check-site-for-broken-links:
     runs-on: ubuntu-latest
     steps:
-      - uses: harrisonpim/broken-link-checker@0.1.0
+      - uses: harrisonpim/broken-link-checker@0.1.2
         with:
           sitemap: https://harrisonpim.com/sitemap.xml"
