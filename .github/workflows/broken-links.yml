@@ -14,4 +14,4 @@ jobs:
     steps:
       - uses: harrisonpim/broken-link-checker@0.2.0
         with:
-          sitemap: https://harrisonpim.com/sitemap.xml"
+          sitemap: https://harrisonpim.com/sitemap.xml
