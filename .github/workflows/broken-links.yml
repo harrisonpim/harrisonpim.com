@@ -2,10 +2,16 @@ name: Check site for broken links
 on:
   schedule:
     - cron: "0 14 * * 0"
+  workflow_dispatch: 
+    inputs: 
+      logLevel: 
+        default: warning
+        description: "Log level"
+        required: true
 jobs:
   check-site-for-broken-links:
     runs-on: ubuntu-latest
     steps:
-      - uses: harrisonpim/broken-link-checker@0.1.2
+      - uses: harrisonpim/broken-link-checker@0.2.0-alpha
         with:
           sitemap: https://harrisonpim.com/sitemap.xml"
