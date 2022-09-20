@@ -6,13 +6,13 @@ const resolver = (doc, uid) => {
     return `/${uid}`
   }
   if (doc.type === 'blog-post') {
-    return `blog/${uid}`
+    return `/blog/${uid}`
   }
   if (doc.type === 'blog') {
-    return `blog`
+    return `/blog`
   }
   if (doc.type === 'talks') {
-    return 'talks'
+    return '/talks'
   }
   return '/'
 }
