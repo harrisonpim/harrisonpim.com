@@ -23,16 +23,19 @@ const Blog = ({ blog, posts }) => {
       <div className="space-y-6 py-4">
         {sortedPosts.map((post) => (
           <div key={RichText.asText(post.data.title)}>
-            <Link as={linkResolver(post)} href={linkResolver(post)}>
-              <a className="no-underline">
-                <h2 className="text-xl font-medium">
-                  {RichText.asText(post.data.title)}
-                </h2>
-                <div className="text-sm text-gray dark:text-light-gray">
-                  <div>{formatDate(post.data.date)}</div>
-                  <div>{RichText.asText(post.data.standfirst)}</div>
-                </div>
-              </a>
+            <Link
+              as={linkResolver(post)}
+              href={linkResolver(post)}
+              className="no-underline"
+              passHref
+            >
+              <h2 className="text-xl font-medium">
+                {RichText.asText(post.data.title)}
+              </h2>
+              <div className="text-sm text-gray dark:text-light-gray">
+                <div>{formatDate(post.data.date)}</div>
+                <div>{RichText.asText(post.data.standfirst)}</div>
+              </div>
             </Link>
           </div>
         ))}

@@ -18,10 +18,8 @@ const CV = ({ overview, jobs, tools, education, other }) => {
     >
       <div className="space-y-4">
         <div className="prose">
-          <Link href="/">
-            <a className="no-underline">
-              <h1>{RichText.asText(overview.data.title)}</h1>
-            </a>
+          <Link href="/" className="no-underline" passHref>
+            <h1>{RichText.asText(overview.data.title)}</h1>
           </Link>
           <div className="text-sm">
             <RichText
@@ -36,10 +34,12 @@ const CV = ({ overview, jobs, tools, education, other }) => {
         <Tools data={tools} />
         <Other data={other} />
         <section>
-          <Link href="/cv.pdf">
-            <a className="text-sm text-gray dark:text-light-gray print:hidden">
-              Download this as a PDF
-            </a>
+          <Link
+            href="/cv.pdf"
+            passHref
+            className="no-underline text-sm text-gray dark:text-light-gray print:hidden"
+          >
+            Download this as a PDF
           </Link>
         </section>
       </div>

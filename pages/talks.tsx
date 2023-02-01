@@ -21,19 +21,19 @@ const Talks = ({ talks }) => {
             <Link
               as={linkResolver(talk.primary.url)}
               href={linkResolver(talk.primary.url)}
+              className="no-underline"
+              passHref
             >
-              <a className="no-underline">
-                <h2 className="text-xl font-medium">
-                  {RichText.asText(talk.primary.title)}
-                </h2>
-                <div className="text-sm">
-                  <div className="text-gray dark:text-light-gray">
-                    <div>{formatDate(talk.primary.date)}</div>
-                    <div>{RichText.asText(talk.primary.host)}</div>
-                    <div>{RichText.asText(talk.primary.location)}</div>
-                  </div>
+              <h2 className="text-xl font-medium">
+                {RichText.asText(talk.primary.title)}
+              </h2>
+              <div className="text-sm">
+                <div className="text-gray dark:text-light-gray">
+                  <div>{formatDate(talk.primary.date)}</div>
+                  <div>{RichText.asText(talk.primary.host)}</div>
+                  <div>{RichText.asText(talk.primary.location)}</div>
                 </div>
-              </a>
+              </div>
             </Link>
           </div>
         ))}
