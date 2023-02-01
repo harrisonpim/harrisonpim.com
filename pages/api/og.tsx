@@ -8,7 +8,7 @@ export const config = {
 
 // fetch inter from google fonts as an array buffer
 const font = fetch(
-  new URL('../../public/Inter-Black.ttf', import.meta.url)
+  (new URL('../../public/Inter-Black.ttf', import.meta.url)).href
 ).then((res) => res.arrayBuffer())
 
 export default async function handler(req: NextRequest) {
