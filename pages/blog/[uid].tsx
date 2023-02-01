@@ -10,12 +10,6 @@ import SliceZone from '../../components/sliceZone'
 import { formatDate } from '../../components/date'
 import { queryRepeatableDocuments } from '../../prismic/queries'
 
-const baseUrl = {
-  production: 'https://harrisonpim.com',
-  preview: process.env.VERCEL_URL,
-  development: 'http://localhost:3000',
-}[process.env.VERCEL_ENV]
-
 type PostType = {
   post: {
     data: {
@@ -26,9 +20,10 @@ type PostType = {
       body: { slice: unknown[] }
     }
   }
+  uid: string
 }
 
-const Post: FC<PostType> = ({ post }) => {
+const Post: FC<PostType> = ({ post, uid }) => {
   return (
     <Layout
       title={RichText.asText(post.data.title)}
@@ -36,7 +31,7 @@ const Post: FC<PostType> = ({ post }) => {
       favicon={RichText.asText(post.data.favicon)}
     >
       <Head>
-        <meta property="og:image" content={`${baseUrl}/api/og?title=${RichText.asText(post.data.title)}&emoji=${RichText.asText(post.data.favicon)}`} />
+        <meta property="og:image" content={`/open-graph-images/${uid}.png`} />
       </Head>
       <div>
         <BackButton text="back to the blog" href="/blog" />
@@ -57,7 +52,7 @@ const Post: FC<PostType> = ({ post }) => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const post =
     (await Client().getByUID('blog-post', params.uid as string, {})) || {}
-  return { props: { post } }
+  return { props: { post, uid: params.uid } }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

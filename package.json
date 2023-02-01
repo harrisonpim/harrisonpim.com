@@ -10,13 +10,13 @@
     "start": "next build && next start",
     "generate-cv": "node scripts/generate-cv.js",
     "generate-sitemap": "node scripts/generate-sitemap.js",
-    "postbuild": "yarn generate-cv && yarn generate-sitemap"
+    "generate-open-graph-images": "node scripts/generate-open-graph-images.js",
+    "postbuild": "yarn generate-cv && yarn generate-sitemap && yarn generate-open-graph-images"
   },
   "dependencies": {
     "@types/node": "^14.14.31",
     "@types/react": "^17.0.2",
     "@types/react-copy-to-clipboard": "^5.0.0",
-    "@vercel/og": "^0.0.27",
     "autoprefixer": "^10.4.13",
     "highlight.js": "^11.0.1",
     "next": "^13.1.6",
