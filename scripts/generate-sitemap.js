@@ -78,5 +78,5 @@ async function queryRepeatableDocuments(filter) {
 
   fs.writeFileSync('public/sitemap.xml', formatted)
 
-  console.log('✨ Generated sitemap')
+  console.log('📍  Generated sitemap')
 })()

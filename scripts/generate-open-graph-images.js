@@ -10,11 +10,15 @@ const client = prismic.client(
   }
 )
 
-function openGraphImage(title) {
+function openGraphImage(title, emoji) {
+  const imageURL = emoji
+    ? `https://emojicdn.elk.sh/${emoji}`
+    : 'https://github.com/harrisonpim.png'
+
+  const imageClass = emoji ? '' : 'rounded-full shadow-xl'
   return `
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <meta charSet="utf-8" />
@@ -26,7 +30,7 @@ function openGraphImage(title) {
         body {
             font-family: 'Inter', sans-serif;
         }
-        </style>
+    </style>
     <script>
         tailwind.config = {
             theme: {
@@ -39,14 +43,10 @@ function openGraphImage(title) {
         }
     </script>
 </head>
-
 <body class="bg-nice-gray">
     <div class="h-screen w-screen flex flex-row justify-center items-center p-10 gap-10">
-        <div class="w-1/3">
-            <img
-            class="rounded-full shadow-xl"
-            src="https://github.com/harrisonpim.png"
-            >
+        <div class="w-1/3 relative">
+            <img class="h-auto w-full items-center float-right ${imageClass}" src="${imageURL}" />
         </div>
         <div class="w-2/3">
             <h1 class="text-6xl text-white uppercase">${title}</h1>
@@ -54,7 +54,6 @@ function openGraphImage(title) {
     </div>
 </body>
 </html>
-
   `
 }
 
@@ -83,10 +82,11 @@ async function queryRepeatableDocuments(filter) {
   }
 
   const layouts = blogPages.map((page) => {
-    return openGraphImage(page.data.title[0].text)
+    const title = page.data.title[0].text
+    const emoji = page.data.favicon[0] ? page.data.favicon[0].text : null
+    return openGraphImage(title, emoji)
   })
 
-  // load the browser
   const browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox'],
@@ -105,7 +105,7 @@ async function queryRepeatableDocuments(filter) {
       fullPage: true,
     })
 
-    console.log(`✨ Generated open graph image for ${blogPages[i].uid}`)
+    console.log(`🖼️   Generated open graph image for ${blogPages[i].uid}`)
   }
   await page.close()
 
