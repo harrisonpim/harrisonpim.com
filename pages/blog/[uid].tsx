@@ -4,6 +4,7 @@ import { RichText, RichTextBlock } from 'prismic-reactjs'
 import BackButton from '../../components/backButton'
 import { Client } from '../../prismic/helpers'
 import { FC } from 'react'
+import Head from 'next/head'
 import Layout from '../../components/layout'
 import SliceZone from '../../components/sliceZone'
 import { formatDate } from '../../components/date'
@@ -19,15 +20,19 @@ type PostType = {
       body: { slice: unknown[] }
     }
   }
+  uid: string
 }
 
-const Post: FC<PostType> = ({ post }) => {
+const Post: FC<PostType> = ({ post, uid }) => {
   return (
     <Layout
       title={RichText.asText(post.data.title)}
       description={RichText.asText(post.data.standfirst)}
       favicon={RichText.asText(post.data.favicon)}
     >
+      <Head>
+        <meta property="og:image" content={`/open-graph-images/${uid}.png`} />
+      </Head>
       <div>
         <BackButton text="back to the blog" href="/blog" />
         <h1 className="leading pt-3 text-3xl font-medium">
@@ -47,7 +52,7 @@ const Post: FC<PostType> = ({ post }) => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const post =
     (await Client().getByUID('blog-post', params.uid as string, {})) || {}
-  return { props: { post } }
+  return { props: { post, uid: params.uid } }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
