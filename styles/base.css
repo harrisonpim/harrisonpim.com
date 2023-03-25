@@ -16,3 +16,7 @@ h2 {
   @apply font-space-grotesk;
 }
 
+pre,
+.code {
+  font-variant-ligatures: none;
+}
