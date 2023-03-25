@@ -8,9 +8,9 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next build && next start",
-    "generate-cv": "node scripts/generate-cv.js",
-    "generate-sitemap": "node scripts/generate-sitemap.js",
-    "generate-open-graph-images": "node scripts/generate-open-graph-images.js",
+    "generate-cv": "ts-node --project tsconfig-node.json scripts/generate-cv.ts",
+    "generate-sitemap": "ts-node --project tsconfig-node.json scripts/generate-sitemap.ts",
+    "generate-open-graph-images": "ts-node --project tsconfig-node.json scripts/generate-open-graph-images.ts",
     "postbuild": "yarn generate-cv && yarn generate-sitemap && yarn generate-open-graph-images"
   },
   "dependencies": {
@@ -42,7 +42,7 @@
     "prettier": "2.2.1",
     "prettier-plugin-tailwindcss": "^0.1.4",
     "puppeteer": "^10.4.0",
-    "ts-node": "^9.1.1",
+    "ts-node": "^10.9.1",
     "vercel": "^28.7.0"
   },
   "license": "MIT"

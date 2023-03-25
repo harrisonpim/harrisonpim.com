@@ -1,13 +1,11 @@
-const prismic = require('@prismicio/client')
-const puppeteer = require('puppeteer')
+import fs from 'fs'
+import prismic from '@prismicio/client'
+import puppeteer from 'puppeteer'
 require('dotenv').config()
-const fs = require('fs')
 
 const client = prismic.client(
   `https://${process.env.PRISMIC_REPO_NAME}.cdn.prismic.io/api/v2`,
-  {
-    accessToken: process.env.PRISMIC_ACCESS_TOKEN,
-  }
+  { accessToken: process.env.PRISMIC_ACCESS_TOKEN }
 )
 
 function openGraphImage(title, emoji) {
@@ -63,7 +61,7 @@ async function fetchDocs(page = 1, routes = []) {
   if (response.results_size + routes.length < response.total_results_size) {
     return fetchDocs(page + 1, allRoutes)
   }
-  return [...new Set(allRoutes)]
+  return allRoutes
 }
 
 async function queryRepeatableDocuments(filter) {
@@ -101,7 +99,7 @@ async function queryRepeatableDocuments(filter) {
     await page.evaluateHandle('document.fonts.ready')
 
     await page.screenshot({
-      path: `public//open-graph-images/${blogPages[i].uid}.png`,
+      path: `public/open-graph-images/${blogPages[i].uid}.png`,
       fullPage: true,
     })
 

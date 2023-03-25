@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2018",
+        "lib": [
+            "es2018",
+            "dom"
+        ],
+        "esModuleInterop": true,
+    },
+    "include": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.js",
+        "**/*.jsx",
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

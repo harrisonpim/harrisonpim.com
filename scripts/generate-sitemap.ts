@@ -1,8 +1,10 @@
-const fs = require('fs')
-const globby = require('globby')
-const prettier = require('prettier')
-const prismic = require('@prismicio/client')
-require('dotenv').config()
+import dotenv from 'dotenv'
+import fs from 'fs'
+import globby from 'globby'
+import prettier from 'prettier'
+import prismic from '@prismicio/client'
+
+dotenv.config()
 
 const baseUrl = {
   production: 'https://harrisonpim.com',
@@ -23,7 +25,7 @@ async function fetchDocs(page = 1, routes = []) {
   if (response.results_size + routes.length < response.total_results_size) {
     return fetchDocs(page + 1, allRoutes)
   }
-  return [...new Set(allRoutes)]
+  return allRoutes
 }
 
 async function queryRepeatableDocuments(filter) {
@@ -31,7 +33,7 @@ async function queryRepeatableDocuments(filter) {
   return allRoutes.filter(filter)
 }
 
-;(async () => {
+async function generateSitemap() {
   const prettierConfig = await prettier.resolveConfig('./.prettierrc.js')
 
   const localPages = await globby([
@@ -79,4 +81,6 @@ async function queryRepeatableDocuments(filter) {
   fs.writeFileSync('public/sitemap.xml', formatted)
 
   console.log('📍  Generated sitemap')
-})()
+}
+
+generateSitemap()
