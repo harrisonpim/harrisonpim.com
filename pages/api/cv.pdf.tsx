@@ -7,10 +7,10 @@ export default async function handler(req, res) {
   const root =
     process.env.VERCEL_ENV === 'development'
       ? 'http://localhost:3000'
-      : process.env.VERCEL_URL
+      : `https://${process.env.VERCEL_URL}`
 
   await page.goto(`${root}/cv`, {
-    waitUntil: 'networkidle2',
+    waitUntil: 'networkidle0',
   })
 
   const pdf = await page.pdf({
