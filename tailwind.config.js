@@ -25,9 +25,16 @@ module.exports = {
         'code-background': '#282c34',
         'code-text': '#abb2bf',
       },
-
       fontFamily: {
-        sans: ['Inter', ...defaultTheme.fontFamily.sans],
+        sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
+        'space-grotesk': [
+          'var(--font-space-grotesk)',
+          ...defaultTheme.fontFamily.sans,
+        ],
+        'space-mono': [
+          'var(--font-space-mono)',
+          ...defaultTheme.fontFamily.mono,
+        ],
       },
     },
   },

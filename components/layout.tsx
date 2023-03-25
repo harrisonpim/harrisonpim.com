@@ -22,7 +22,7 @@ const Layout: FC<Props> = ({
     favicon && favicon !== '' ? favicon : '👋'
   }</text></svg>`
   return (
-    <div>
+    <>
       <Head>
         <link rel="icon" href={emojiSvg} />
         <title>{title}</title>
@@ -35,7 +35,7 @@ const Layout: FC<Props> = ({
       >
         {children}
       </div>
-    </div>
+    </>
   )
 }
 export default Layout

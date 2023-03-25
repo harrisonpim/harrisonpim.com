@@ -24,7 +24,7 @@ const Talks = ({ talks }) => {
               className="no-underline"
               passHref
             >
-              <h2 className="text-xl font-medium">
+              <h2 className="text-xl">
                 {RichText.asText(talk.primary.title)}
               </h2>
               <div className="text-sm">

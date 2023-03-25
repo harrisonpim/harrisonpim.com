@@ -1,4 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
+import { inter, space_grotesk, space_mono } from './_app'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -8,19 +9,12 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang="en">
+      <Html
+        lang="en"
+        className={`${inter.variable} ${space_grotesk.variable} ${space_mono.variable}`}
+      >
         <Head>
           <meta charSet="utf-8" />
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link
-            rel="preconnect"
-            href="https://fonts.gstatic.com"
-            crossOrigin="true"
-          />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
-            rel="stylesheet"
-          />
         </Head>
         <body className="p-4 font-sans lg:px-12">
           <Main />

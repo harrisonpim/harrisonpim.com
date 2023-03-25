@@ -4,9 +4,15 @@
 }
 
 a {
-  @apply underline;
+  @apply underline underline-offset-[3px] decoration-1;
 }
 
 ul {
   @apply list-disc pl-4;
 }
+
+h1,
+h2 {
+  @apply font-space-grotesk;
+}
+

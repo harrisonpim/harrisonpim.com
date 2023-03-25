@@ -5,11 +5,11 @@
 .prose h4,
 .prose h5,
 .prose h6 {
-  @apply pt-1;
+  @apply pt-2;
 }
 
 .prose {
-  @apply my-3 space-y-3;
+  @apply py-2 space-y-3;
 }
 
 .prose ul {
@@ -17,13 +17,11 @@
 }
 
 .prose .code {
-  @apply rounded bg-light-gray px-1 font-mono text-xs dark:bg-gray;
-  padding-top: 0.2rem;
-  padding-bottom: 0.2rem;
+  @apply rounded bg-light-gray px-1 font-space-mono text-sm dark:bg-gray;
 }
 
 .prose h1 {
-  @apply text-3xl font-semibold leading-tight;
+  @apply text-3xl leading-tight;
 }
 
 .prose h2 {

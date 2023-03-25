@@ -34,7 +34,7 @@ const CodeSnippet: FC<Props> = ({ slice }) => {
         </div>
         <pre className="text-code-text overflow-x-scroll py-1 pl-2 text-xs">
           <code
-            className={language}
+            className={`${language} font-space-mono `}
             dangerouslySetInnerHTML={{
               __html: highlightedCode.value,
             }}

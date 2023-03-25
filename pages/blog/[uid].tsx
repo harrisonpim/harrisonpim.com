@@ -35,7 +35,7 @@ const Post: FC<PostType> = ({ post, uid }) => {
       </Head>
       <div>
         <BackButton text="back to the blog" href="/blog" />
-        <h1 className="leading pt-3 text-3xl font-medium">
+        <h1 className="leading pt-3 text-3xl">
           {RichText.asText(post.data.title)}
         </h1>
         <p className="pt-1 text-gray dark:text-light-gray">

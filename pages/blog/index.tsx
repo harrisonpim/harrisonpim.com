@@ -29,7 +29,7 @@ const Blog = ({ blog, posts }) => {
               className="no-underline"
               passHref
             >
-              <h2 className="text-xl font-medium">
+              <h2 className="text-xl">
                 {RichText.asText(post.data.title)}
               </h2>
               <div className="text-sm text-gray dark:text-light-gray">
