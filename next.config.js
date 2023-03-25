@@ -2,12 +2,11 @@ module.exports = {
   images: {
     domains: ['images.prismic.io', 'harrisonpim.cdn.prismic.io'],
   },
-  async redirects() {
+  async rewrites() {
     return [
       {
-        source: '/blog/favicon-emoji-magic',
-        destination: '/blog/using-emoji-as-favicons',
-        permanent: true,
+        source: '/cv.pdf',
+        destination: '/api/cv.pdf',
       },
     ]
   },

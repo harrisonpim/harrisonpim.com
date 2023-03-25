@@ -3,7 +3,6 @@ import 'highlight.js/styles/atom-one-dark.css'
 
 import { Inter, Space_Grotesk, Space_Mono } from 'next/font/google'
 
-import { AppProps } from 'next/app'
 import Head from 'next/head'
 
 const inter = Inter({
@@ -26,7 +25,7 @@ const space_mono = Space_Mono({
   weight: '400',
 })
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
