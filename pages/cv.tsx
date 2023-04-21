@@ -34,18 +34,18 @@ const CV = ({ overview, jobs, tools, education, other }) => {
         <Tools data={tools} />
         <Other data={other} />
         <section>
-          <Link
-            href="/cv.pdf"
-            passHref
-            className="no-underline text-sm text-gray dark:text-light-gray print:hidden"
+          <a
+            href="javascript:window.print()"
+            className="text-sm text-gray no-underline dark:text-light-gray print:hidden"
           >
             Download this as a PDF
-          </Link>
+          </a>
         </section>
       </div>
     </Layout>
   )
 }
+
 export const getStaticProps: GetStaticProps = async () => {
   const client = Client()
   const overview = await client.getByUID('page', 'cv', {})

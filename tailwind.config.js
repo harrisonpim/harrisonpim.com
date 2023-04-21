@@ -23,7 +23,7 @@ module.exports = {
         'light-gray': '#e0e0e0',
         'dark-gray': '#343434',
         'code-background': '#282c34',
-        'code-text': '#abb2bf',
+        'code-text': '#abb2bf'
       },
       fontFamily: {
         sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],

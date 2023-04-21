@@ -32,7 +32,7 @@ const Jobs: FC<Props> = ({ data }) => {
             {RichText.asText(job.primary.title)},{' '}
             {RichText.asText(job.primary.employer)}
           </h3>
-          <p className="block lg:float-right lg:inline-block">
+          <p className="block lg:float-right lg:inline-block print:float-right print:inline-block">
             {formatYear(job.primary['start-date'])}-
             {formatYear(job.primary['end-date'])}
           </p>

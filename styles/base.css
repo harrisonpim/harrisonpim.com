@@ -3,8 +3,16 @@
   font-size: 20px;
 }
 
+@media print {
+  html{zoom: 0.67;}
+  @page {
+    size: A4;
+    margin: 1cm;
+  }
+}
+
 a {
-  @apply underline underline-offset-[3px] decoration-1;
+  @apply underline decoration-1 underline-offset-[3px];
 }
 
 ul {
