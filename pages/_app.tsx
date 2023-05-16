@@ -1,5 +1,5 @@
 import '../styles/app.css'
-import 'highlight.js/styles/atom-one-dark.css'
+import '../styles/highlight.css'
 
 import { Inter, Space_Grotesk, Space_Mono } from 'next/font/google'
 
