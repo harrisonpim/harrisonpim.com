@@ -17,7 +17,7 @@
 }
 
 .prose .code {
-  @apply rounded bg-light-gray px-1 font-space-mono text-sm dark:bg-gray;
+  @apply rounded bg-light-gray px-1 font-roboto-mono text-sm dark:bg-gray;
 }
 
 .prose h1 {

@@ -31,7 +31,7 @@ const Education: FC<Props> = ({ data }) => {
             <h3 className="inline-block">
               {RichText.asText(school.primary.name)}
             </h3>
-            <p className="block lg:float-right lg:inline-block">
+            <p className="block lg:float-right print:float-right print:inline-block lg:inline-block">
               {formatYear(school.primary['start-date'])}-
               {formatYear(school.primary['end-date'])}
             </p>

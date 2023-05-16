@@ -31,8 +31,8 @@ module.exports = {
           'var(--font-space-grotesk)',
           ...defaultTheme.fontFamily.sans,
         ],
-        'space-mono': [
-          'var(--font-space-mono)',
+        'roboto-mono': [
+          'var(--font-roboto-mono)',
           ...defaultTheme.fontFamily.mono,
         ],
       },

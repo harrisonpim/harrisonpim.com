@@ -1,8 +1,9 @@
 import '../styles/app.css'
 import '../styles/highlight.css'
 
-import { Inter, Space_Grotesk, Space_Mono } from 'next/font/google'
+import { Inter, Roboto_Mono, Space_Grotesk } from 'next/font/google'
 
+import { Analytics } from '@vercel/analytics/react'
 import Head from 'next/head'
 
 const inter = Inter({
@@ -18,8 +19,8 @@ const space_grotesk = Space_Grotesk({
   weight: ['600'],
 })
 
-const space_mono = Space_Mono({
-  variable: '--font-space-mono',
+const roboto_mono = Roboto_Mono({
+  variable: '--font-roboto-mono',
   display: 'swap',
   subsets: ['latin'],
   weight: '400',
@@ -32,8 +33,9 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Component {...pageProps} />
+      <Analytics />
     </>
   )
 }
 
-export { inter, space_grotesk, space_mono }
+export { inter, space_grotesk, roboto_mono }

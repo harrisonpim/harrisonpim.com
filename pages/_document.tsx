@@ -1,5 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
-import { inter, space_grotesk, space_mono } from './_app'
+import { inter, roboto_mono, space_grotesk } from './_app'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -11,7 +11,7 @@ class MyDocument extends Document {
     return (
       <Html
         lang="en"
-        className={`${inter.variable} ${space_grotesk.variable} ${space_mono.variable}`}
+        className={`${inter.variable} ${space_grotesk.variable} ${roboto_mono.variable}`}
       >
         <Head>
           <meta charSet="utf-8" />
