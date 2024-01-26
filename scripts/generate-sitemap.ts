@@ -73,7 +73,7 @@ async function generateSitemap() {
   ${uniqueUrls.map((url) => `<url><loc>${url}</loc></url>`).join('')}
   </urlset>`
 
-  const formatted = prettier.format(sitemap, {
+  const formatted = await prettier.format(sitemap, {
     ...prettierConfig,
     parser: 'html',
   })
