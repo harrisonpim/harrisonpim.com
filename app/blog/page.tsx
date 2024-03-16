@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   icons: faviconEmoji('✏️'),
 }
 
-export const postsDirectory = 'app/blog/(posts)'
+const postsDirectory = 'app/blog/(posts)'
 
 export default async function Blog() {
   const slugs = (await readdir(postsDirectory, { withFileTypes: true })).filter(

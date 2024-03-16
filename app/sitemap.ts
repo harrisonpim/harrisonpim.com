@@ -1,32 +1,23 @@
 import { MetadataRoute } from 'next'
+import globby from 'globby'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const localPages = await globby([
-    'pages/*.{html,js,ts,jsx,tsx}',
-    '!pages/_*.{html,js,ts,jsx,tsx}',
-    '!pages/**/*[uid].{html,js,ts,jsx,tsx}',
-    '!pages/api',
-  ])
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+  const pages = await globby(['app/**/page.{html,js,ts,jsx,tsx,mdx}'])
 
-  const rootPages = (
-    await queryRepeatableDocuments((doc) => doc.type === 'page')
-  ).map((doc) => `/${doc.uid}`)
-
-  const blogPages = (
-    await queryRepeatableDocuments((doc) => doc.type === 'blog-post')
-  ).map((doc) => `/blog/${doc.uid}`)
-
-  const pages = [...localPages, ...rootPages, ...blogPages]
   const urls = pages.map((page) => {
     const path = page
-      .replace('pages', '')
+      .replace('app', '')
       .replace('.tsx', '')
       .replace('.jsx', '')
       .replace('.ts', '')
       .replace('.js', '')
       .replace('.html', '')
+      .replace('.mdx', '')
       .replace('/index', '')
       .replace('/404', '')
+      .replace('/page', '')
+      .replace('/(posts)', '')
     return baseUrl + path
   })
 

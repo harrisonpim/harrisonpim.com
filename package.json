@@ -8,10 +8,7 @@
     "env": "vercel link && vercel env pull",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next build && next start",
-    "generate-sitemap": "ts-node --project tsconfig-node.json scripts/generate-sitemap.ts",
-    "generate-open-graph-images": "ts-node --project tsconfig-node.json scripts/generate-open-graph-images.ts",
-    "postbuild": "yarn generate-sitemap"
+    "start": "next build && next start"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.0.1",
