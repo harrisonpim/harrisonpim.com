@@ -1,23 +1,27 @@
 /* PROSE */
 
+.prose h1 {
+  @apply pt-4;
+}
+
 .prose h2,
-.prose h3,
-.prose h4,
-.prose h5,
-.prose h6 {
+h3,
+h4,
+h5,
+h6 {
   @apply pt-2;
+}
+
+.prose time {
+  @apply pt-2 text-gray dark:text-light-gray;
 }
 
 .prose {
   @apply py-2 space-y-3;
 }
 
-.prose ul {
-  @apply ml-1;
-}
-
-.prose .code {
-  @apply rounded bg-light-gray px-1 font-roboto-mono text-sm dark:bg-gray;
+.prose p code {
+  @apply rounded bg-light-gray px-1 dark:bg-gray text-sm py-0.5;
 }
 
 .prose h1 {
@@ -37,9 +41,13 @@
 }
 
 .prose h2,
-.prose h3,
-.prose h4,
-.prose h5,
-.prose h6 {
+h3,
+h4,
+h5,
+h6 {
   @apply font-medium;
+}
+
+.prose blockquote {
+  @apply border-l-4 pl-2;
 }

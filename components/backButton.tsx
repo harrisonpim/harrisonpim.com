@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import Link from 'next/link'
 
 type Props = {
   href?: string
@@ -6,9 +7,12 @@ type Props = {
 }
 
 const BackButton: FC<Props> = ({ href = '/', text = 'back home' }) => (
-  <a className="text-gray no-underline dark:text-light-gray font-space-grotesk" href={href}>
+  <Link
+    className="text-gray no-underline dark:text-light-gray font-space-grotesk"
+    href={href}
+  >
     ← {text}
-  </a>
+  </Link>
 )
 
 export default BackButton

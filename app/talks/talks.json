@@ -1,5 +1,12 @@
 [
     {
+        "title": "Measuring domain shifts in climate NLP",
+        "url": "https://2024.appliedmldays.org/",
+        "host": "AMLD 2024",
+        "location": "Lausanne, Switzerland",
+        "date": "2024-04-25"
+    },
+    {
         "title": "Search and sensitivity at Wellcome Collection",
         "url": "https://larca.u-paris.fr/en/news/photosensible-photographie-et-passes-controverses-a-lage-numerique-musee-du-quai-branly-jacques-chirac-9-et-10-juin-2002-2/",
         "host": "Eycon",
@@ -27,7 +34,7 @@
     {
         "title": "Wikidata, concepts, etc. at Wellcome Collection",
         "url": "https://thesciencemuseum.github.io/heritageconnector/events/2020/06/22/wikidata-and-cultural-heritage-collections-webinar/",
-        "host": "Science Museum",
+        "host": "Science Museum, London",
         "date": "2020-06-19"
     },
     {

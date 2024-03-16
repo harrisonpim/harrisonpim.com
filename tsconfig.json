@@ -18,14 +18,21 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "strictNullChecks": true
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
-    "**/*.jsx"
-  ],
+    "**/*.jsx",
+    ".next/types/**/*.ts"
+, "app/blog/(posts)/lsh/page.mdx", "app/blog/(posts)/pos/page.mdx"  ],
   "exclude": [
     "node_modules"
   ]

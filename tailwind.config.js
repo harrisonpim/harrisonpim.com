@@ -5,7 +5,7 @@ module.exports = {
   darkMode: 'media',
   content: [
     './components/**/*.{html,js,ts,jsx,tsx}',
-    './pages/**/*.{html,js,ts,jsx,tsx}',
+    './app/**/*.{html,js,ts,jsx,tsx}',
   ],
   theme: {
     screens: {
@@ -20,7 +20,7 @@ module.exports = {
         white: '#f7f7f7',
         black: '#121212',
         gray: '#666',
-        'light-gray': '#e0e0e0',
+        'light-gray': '#d1d1d1',
         'dark-gray': '#343434',
         'code-background': '#282c34',
         'code-text': '#d9dce2',

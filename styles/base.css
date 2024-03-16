@@ -4,10 +4,16 @@
 }
 
 @media print {
-  html{zoom: 0.67;}
+  html {
+    zoom: 0.67;
+  }
   @page {
     size: A4;
-    margin: 1cm;
+    format: A4;
+    margin-top: 7mm;
+    margin-bottom: 7mm;
+    margin-left: 2cm;
+    margin-right: 2cm;
   }
 }
 
@@ -19,12 +25,17 @@ ul {
   @apply list-disc pl-4;
 }
 
+ol {
+  @apply list-decimal list-inside;
+}
+
 h1,
 h2 {
   @apply font-space-grotesk;
 }
 
 pre,
+code,
 .code {
   font-variant-ligatures: none;
 }

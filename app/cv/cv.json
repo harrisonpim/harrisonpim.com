@@ -3,38 +3,41 @@
     "experience": [
         {
             "organisation": "Climate Policy Radar",
+            "url": "https://climatepolicyradar.org/",
             "roles": [
                 {
                     "title": "Senior Data Scientist",
-                    "start-date": "2023",
+                    "start-date": "2023-09-11",
                     "description": "Building a search engine, knowledge graph, and ML models for climate policy documents"
                 }
             ]
         },
         {
             "organisation": "Wellcome",
+            "url": "https://wellcomecollection.org/",
             "roles": [
                 {
                     "title": "Senior Data Scientist",
-                    "start-date": "2022",
-                    "end-date": "2023",
+                    "start-date": "2022-01-01",
+                    "end-date": "2023-09-11",
                     "description": "Building the next generation of search and discovery on wellcomecollection.org, including experiments with knowledge graphs, multi-modal search, and semantic search"
                 },
                 {
                     "title": "Data Scientist",
-                    "start-date": "2018",
-                    "end-date": "2021",
+                    "start-date": "2018-03-01",
+                    "end-date": "2022-01-01",
                     "description": "Prototyping and productionising computer vision pipelines, novel NLP models, and core search algorithms to help researchers find things on wellcomecollection.org."
                 }
             ]
         },
         {
             "organisation": "The British Museum",
+            "url": "https://www.britishmuseum.org/",
             "roles": [
                 {
                     "title": "Data Analyst",
-                    "start-date": "2016",
-                    "end-date": "2018",
+                    "start-date": "2016-09-01",
+                    "end-date": "2018-03-01",
                     "description": "Produced ML-heavy analyses of huge datasets, distilling visitors' motivations, expectations, and needs when visiting the museum online and IRL."
                 }
             ]
@@ -44,8 +47,8 @@
             "roles": [
                 {
                     "title": "Data Science Intern",
-                    "start-date": "2015",
-                    "end-date": "2015",
+                    "start-date": "2015-06-01",
+                    "end-date": "2015-09-01",
                     "description": "Built a matching/recommendation system for an app with hundreds of thousands of users around the world."
                 }
             ]
@@ -54,21 +57,21 @@
     "education": [
         {
             "institution": "University College London (UCL)",
-            "degree": "MSci Physics",
+            "qualification": "MSci Physics",
             "grade": "2:1",
-            "start-date": "2012",
-            "end-date": "2016",
+            "start-date": "2012-09-01",
+            "end-date": "2016-06-01",
             "description": "Thesis: Correlations between water fragments on silicon"
         }
     ],
     "skills": {
-        "machine learning": [
+        "Machine learning": [
             "pytorch",
             "scikit-learn",
             "tensorflow",
             "wandb"
         ],
-        "data science": [
+        "Data science": [
             "jupyter",
             "pandas",
             "numpy",
@@ -81,7 +84,7 @@
             "pyspark",
             "SQL"
         ],
-        "web development": [
+        "Web development": [
             "typescript",
             "javascript",
             "node.js",
@@ -94,7 +97,7 @@
             "fastapi",
             "flask"
         ],
-        "deployment": [
+        "Deployment": [
             "AWS",
             "terraform",
             "docker",
@@ -107,8 +110,8 @@
         ]
     },
     "other": {
-        "teaching and mentoring": "I try to share what I've learned through blog posts, reusable code, and/or talks at conferences and universities.\nI've also mentored and advised first-time conference speakers, artists, researchers in industry and academia, grant funding applicants, and students all the way from GCSE to PhD.",
-        "open source software development": "I've built a lot of open source tools, sites, and services outside of work to sharpen my own development skills and experiment with new technologies.",
-        "cycling and outdoor swimming": "I like swimming outdoors, especially through the winter. I've been cycling in London for ten years and I've only been hit by four cabs."
+        "Teaching and mentoring": "I try to share what I've learned through blog posts, reusable code, and/or talks at conferences and universities.\nI've also mentored and advised first-time conference speakers, artists, researchers in industry and academia, grant funding applicants, and students all the way from GCSE to PhD.",
+        "Open source software development": "I've built a lot of open source tools, sites, and services outside of work to sharpen my own development skills and experiment with new technologies.",
+        "Cycling and outdoor swimming": "I like swimming outdoors, especially through the winter. I've been cycling in London for ten years and I've only been hit by four cabs."
     }
 }
