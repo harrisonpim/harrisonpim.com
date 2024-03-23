@@ -51,7 +51,7 @@ export default async function Blog() {
               className="no-underline"
               passHref
             >
-              <h2 className="text-xl">{post.title}</h2>
+              <h2 className="text-lg">{post.title}</h2>
               <div className="text-sm text-gray dark:text-light-gray">
                 <time dateTime={post.date}>{formatDate(post.date)}</time>
                 <p>{post.description}</p>
