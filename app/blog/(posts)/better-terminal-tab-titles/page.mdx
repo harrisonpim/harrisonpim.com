@@ -1,0 +1,58 @@
+import { faviconEmoji } from 'lib/emoji'
+import { formatDate } from 'lib/date'
+
+export const metadata = {
+  title: "Better terminal tab titles",
+  description: "Making my terminal tabs more readable with git and zsh",
+  date: "2021-05-28",
+  icons: faviconEmoji('🏷️'),
+}
+
+One of the simplest and subtlest improvements I've made to my shell configuration over the last few years was a tweak to my tab titles.
+
+By default, tabs are titled according to the shell's current working directory. If I find myself working across multiple services at once, it's easy to lose track of what's going on where.
+
+Imagine for example, locally developing a couple of APIs which all need to communicate with one another. Each API runs in its own tab, outputting its logs as the services chatter.  
+If something goes wrong, jumping between logs in tabs which are all called `api` can quickly become disorientating.
+
+_Within_ each project, it might make perfect sense to call each of those directories `api`, but in situations like this I'm missing useful context. Ideally, I'd just like to headline the name of the git repo which each tab is running in.
+
+To achieve that effect, I've added the snippet below to my `.zshrc` file.
+
+```zsh
+DISABLE_AUTO_TITLE="true"
+is_git() {
+  [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true ]]
+}
+tab_title() {
+  local "BETTER_PWD"
+  if is_git; then
+   BETTER_PWD=$(git rev-parse --show-toplevel)
+  else
+    BETTER_PWD=$(PWD)
+  fi
+  
+  echo -ne "\e]1;${BETTER_PWD##*/}\a"
+}
+add-zsh-hook precmd tab_title
+```
+
+
+First, we disable the tab's default title when the tab is created.
+
+Then, in the `tab_title()` function, we begin by setting a variable called `BETTER_PWD`. We check whether the current directory is a git repo by running `git rev-parse --is-inside-work-tree`.  
+If the current directory _is_ within a repo, we set `BETTER_PWD` to the repo's top level path; If not, we discard the error message and we set `BETTER_PWD` as the regular `PWD` output.
+
+Finally, we select the final node in `BETTER_PWD` with `${BETTER_PWD##\*/}`, and set that value as the tab title by echoing it between a couple of special characters.
+
+This little process is run before every prompt, as a [zsh pre-command hook](https://zsh.sourceforge.io/Doc/Release/Functions.html#Hook-Functions).
+
+![A terminal window with four tabs open. Each one is titled according to the repo it's running in.](/images/better-terminal-tab-titles/screenshot.png)
+
+It works! Even though the terminal above is working in the `pages/blog/` directory, the tab's title is `harrisonpim.com`, ie the name of the repo. More importantly though, it's very easy to parse which project each of the other tabs is concerned with, no matter where they are within that repo.
+
+Obviously, the benefit here is derived from a good separation of services into their own repos - this would be a disaster for [monorepo](https://en.wikipedia.org/wiki/Monorepo) enthusiasts.
+
+[Tmux](https://en.wikipedia.org/wiki/Tmux) might be suggested as alternative solution to this problem, but personally, I've never enjoyed the experience of using multiplexed terminals.
+
+This is a very straightforward, lightweight solution, and it's worked very well for me over the last couple of years!

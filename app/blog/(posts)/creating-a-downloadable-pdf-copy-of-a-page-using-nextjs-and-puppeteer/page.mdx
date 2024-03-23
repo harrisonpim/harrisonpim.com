@@ -1,0 +1,190 @@
+import { faviconEmoji } from 'lib/emoji'
+import { formatDate } from 'lib/date'
+
+export const metadata = {
+  title: "Creating a downloadable .pdf copy of a page using next.js and puppeteer",
+  description: "My CV is written and styled to be viewed on the web, but some clever javascript creates a downloadable PDF version automatically, every time the site is built!",
+  date: "2022-01-27",
+  icons: faviconEmoji('📝'),
+}
+
+
+Coming from a background in physics, I used to write my CV in [LaTeX](https://en.wikipedia.org/wiki/LaTeX), the typesetting tool of choice for dorks everywhere. But in the years since, I'd grown frustrated with the ugly language, the fiddly and never-ending typesetting tweaks, and the archaic versioning, compiling, and publishing patterns.
+
+I decided to scrap the LaTeX version, and moved the content into a framework which matched the rest of this website. HTML, CSS, and typescript might have their own problems, but at least I had some use for them in other areas of my life.
+
+[You can see the result here](https://harrisonpim.com/cv), which I was very happy with!  
+It's clean, concise, fast, and accessible. The content is all written and stored in [prismic](https://prismic.io/), and is then structured and styled for my site by [next.js](https://nextjs.org/) and [tailwind CSS](https://tailwindcss.com/) respectively. The design is responsive, so it's readable on any device. Updating the CV is now just as easy as editing or publishing a new blog post, and any improvements I make to my site also carry over to the CV. Making it available online as rich, indexable HTML also makes it much easier to find by people searching for me or my skillset!
+
+However, for one reason or another, CVs are one of the last documents in my life which people insist must conform to a standard printable paper size. Application forms almost always requires a PDF copy of a CV, so without a PDF option, a pretty page of HTML isn't enough.
+
+Rather than maintaining two versions of the same content, I wanted to generate a PDF version of the CV using the HTML on the site.
+
+## A first pass
+
+The simplest change I could make was to add a link at the bottom of the page, which, when clicked, would instruct the user's browser to open the print dialog, from which they would be able to save the page as a pdf.
+
+```jsx
+<a href="javascript:window.print()">Download this as a PDF</a>
+```
+
+
+However, this solution came with all sorts of issues.  
+First, I couldn't guarantee that every user would know how to save a PDF from the print dialog. Users are also given a huge number of dials to tweak before saving, with options and defaults varying from systems to system and browser to browser! There was no way for me to enforce the style that I'd worked so hard on.
+
+![a browser window on harrisonpim.com/cv, with the print dialog open](/images/creating-a-downloadable-pdf-copy-of-a-page-using-nextjs-and-puppeteer/screenshot.png "Using the print command to generate a PDF defaults to a single column mobile layout, spread across two pages!")
+
+I wanted to make sure that the generated pdf would display the two-column desktop view, scaled so that it could fit on a single page of A4.  
+I also, crucially, didn't want to have to go through the steps to create that PDF myself every time I corrected a typo or tweaked a phrase.
+
+## Automating the process
+
+Instead, I wrote a script which generates that PDF for me whenever the site is built. After all of the site's code has been compiled, the script opens a headless browser using [puppeteer](https://github.com/puppeteer/puppeteer), loads the HTML/CSS version of the CV, and creates a PDF using my preferred settings. The generated file is then saved to the /public directory of the next.js project, making it available to any visitor to the site!
+
+The script in its entirety is below, followed by a breakdown of whats going on.
+
+```js
+const fs = require('fs')
+const puppeteer = require('puppeteer')
+
+;(async () => {
+  const HTMLcontent = fs.readFileSync('.next/server/pages/cv.html', 'utf8')
+  const CSSpath = '.next/static/css/'
+  const CSSfiles = fs.readdirSync(CSSpath).filter((fn) => fn.endsWith('.css'))
+  const CSScontent = fs.readFileSync(CSSpath + CSSfiles[0], 'utf8')
+
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--font-render-hinting=none',
+    ],
+  })
+  const page = await browser.newPage()
+  await page.setContent(HTMLcontent, {
+    waitUntil: ['networkidle0'],
+  })
+  await page.addStyleTag({ content: CSScontent })
+  await page.evaluateHandle('document.fonts.ready')
+
+  await page.pdf({
+    path: 'public/cv.pdf',
+    format: 'A4',
+    scale: 0.67,
+    margin: {
+      top: '10mm',
+      left: '10mm',
+      right: '10mm',
+      bottom: '10mm',
+    },
+  })
+  await browser.close()
+})()
+```
+
+
+### Breaking the script down
+
+First, we import fs and puppeteer - fs allows us to work with the file system, and puppeteer allows us to control a virtual chrome browser.
+
+```js
+const fs = require('fs')
+const puppeteer = require('puppeteer')
+```
+
+
+Then we create an async container for the script to actually run in
+
+Next, we load up the HTML and CSS content. Because this version of the site has been built but hasn't yet been deployed anywhere, the files have to be loaded in from the hidden /.next directory, where next stores the compiled files for deployment later on.
+
+```js
+const HTMLcontent = fs.readFileSync('.next/server/pages/cv.html', 'utf8')
+const CSSpath = '.next/static/css/'
+const CSSfiles = fs.readdirSync(CSSpath).filter((fn) => fn.endsWith('.css'))
+const CSScontent = fs.readFileSync(CSSpath + CSSfiles[0], 'utf8')
+```
+
+
+Next, we create a new page in our virtual browser and fill it with the HTML and CSS.
+
+```js
+const browser = await puppeteer.launch({
+  headless: true,
+  args: [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--font-render-hinting=none',
+  ],
+})
+const page = await browser.newPage()
+await page.setContent(HTMLcontent, {
+  waitUntil: ['networkidle0'],
+})
+await page.addStyleTag({ content: CSScontent })
+await page.evaluateHandle('document.fonts.ready')
+```
+
+
+When we're sure that all of the content is ready to be viewed, we can instruct the browser to generate that PDF according to our specifications!
+
+```js
+await page.pdf({
+  path: 'public/cv.pdf',
+  format: 'A4',
+  scale: 0.67,
+  margin: {
+    top: '10mm',
+    left: '10mm',
+    right: '10mm',
+    bottom: '10mm',
+  },
+})
+```
+
+
+Because the file is saved to the /public directory, any user of the deployed site should be able to access the file.
+
+Finally, we close the browser session and end the script.
+
+### Running the script as part of the build
+
+npm and yarn allow developers to define [pre- and post- script hooks](https://docs.npmjs.com/cli/v8/using-npm/scripts) in their package.json file, which are run before or after the referenced script. To make sure the CV is generated correctly, we call the generate-cv-pdf.js script immediately after the build has finished with a postbuild script.
+
+```json
+{  
+  "scripts": {
+    "build": "next build",
+    "postbuild": "node ./scripts/generate-cv-pdf.js"
+  }
+}
+```
+
+
+This works wherever yarn build is called - locally, or as part of the build on vercel which deploys the site.
+
+Finally, we can update the link on the /cv page's HTML to point to the generated file!
+
+```jsx
+<Link href="/cv.pdf">
+  <a>Download this as a PDF</a>
+</Link>
+```
+
+
+As a final touch, we can hide the redundant link to download the PDF in the generated version by using tailwind's print: modifier. The line is displayed on the web version (where people might want to download a PDF), but absent from the PDF itself.
+
+```jsx
+<div className="print:hidden">
+  <Link href="/cv.pdf">
+    <a>Download this as a PDF</a>
+  </Link>
+</div>
+```
+
+
+I now have a pdf version of my CV which matches the HTML version exactly, and will never go out of sync thanks to the build automation!
+
+Despite describing a very specific use-case, I think the techniques I've used here could applied in all sorts of situations. For example, I use a very similar process to create an xml sitemap for this site too, [as described in this post](https://harrisonpim.com/blog/automating-tests-with-vercel-and-github-actions).
+
+As always, [all of this code is freely available and openly licensed on github](https://github.com/harrisonpim/harrisonpim.com). Feel free to get in touch if you've made use of this pattern yourself!

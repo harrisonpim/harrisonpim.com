@@ -1,42 +1,37 @@
-import { RichText, RichTextBlock } from 'prismic-reactjs'
+'use client'
 
-import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { FC } from 'react'
 import hljs from 'highlight.js'
 
-type Props = {
-  slice: {
-    primary: {
-      code: RichTextBlock[]
-      language: {
-        text?: string
-      }
+export default function CodeBlock(props: {
+  children: {
+    props: {
+      children: string
+      className?: string
     }
   }
-}
-
-const CodeSnippet: FC<Props> = ({ slice }) => {
-  const code = RichText.asText(slice.primary.code).trim()
-  const language =
-    slice.primary.language[0] && slice.primary.language[0].text
-      ? slice.primary.language[0].text
-      : 'plaintext'
-  const highlightedCode = hljs.highlight(code, { language })
+}) {
+  const data = props.children.props
+  const code = data.children
+  const language = data.className?.replace('language-', '') || 'plaintext'
+  const highlightedCode = hljs.highlight(code, { language }).value
   return (
     <div className="pt-3">
       <div className="group relative rounded bg-code-background p-1">
         <div className="invisible group-hover:visible">
           <div className="absolute top-0 right-0 pr-2 pt-1">
-            <CopyToClipboard text={code}>
-              <button title="Copy this code block">📋</button>
-            </CopyToClipboard>
+            <button
+              title="Copy this code block"
+              onClick={() => navigator.clipboard.writeText(code)}
+            >
+              📋
+            </button>
           </div>
         </div>
-        <pre className="text-code-text overflow-x-scroll py-1 pl-2 text-xs">
+        <pre className="text-code-text overflow-x-scroll py-1 pl-2 text-xs font-roboto-mono">
           <code
-            className={`${language} font-roboto-mono `}
+            className={`${data.className} `}
             dangerouslySetInnerHTML={{
-              __html: highlightedCode.value,
+              __html: highlightedCode,
             }}
           />
         </pre>
@@ -44,5 +39,3 @@ const CodeSnippet: FC<Props> = ({ slice }) => {
     </div>
   )
 }
-
-export default CodeSnippet

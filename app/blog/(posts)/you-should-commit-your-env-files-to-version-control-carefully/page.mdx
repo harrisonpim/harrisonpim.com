@@ -1,0 +1,80 @@
+import { faviconEmoji } from 'lib/emoji'
+import { formatDate } from 'lib/date'
+
+export const metadata = {
+    title: "You should commit your .env files to version control (carefully)",
+    description: "Share your .env files without their secrets, using dotenv-stripout",
+    date: "2021-08-20",
+    icons: faviconEmoji('🙊'),
+}
+
+Many software projects require sensitive data which shouldn't be committed to version control. You don't want Bad Guys to read your usernames, passwords, API keys, etc.
+
+To get around this, many projects require that each collaborator creates a local `.env` file with a list of secret environment variables which are read by the code. The file is then [gitignored](https://git-scm.com/docs/gitignore) so that the sensitive values never appear on GitHub for malicious users to steal.
+
+But for well-intentioned new collaborators, the complete absence of a `.env` file means that the required secrets for a project are rarely obvious. It's easy for a project's code to fall out of sync with the instructions for creating a `.env`, and not knowing which secrets to provide can be a significant source of friction while trying to get started with a codebase.
+
+I _want_ to share my `.env` files with my collaborators, without sharing the secret bits.
+
+## dotenv-stripout
+
+In an attempt to improve this situation, I've built a python package called [dotenv-stripout](https://github.com/harrisonpim/dotenv-stripout).
+
+When `dotenv-stripout` is installed in a git repo, a filter cleans the sensitive values from your `.env` files as they're staged for commit, while keeping the _names_ of the secrets intact. For example:
+
+### Your local .env
+
+```plaintext
+MY_SECRET_USERNAME=something-very-secret
+MY_SECRET_PASSWORD=IqLTLrFviwHTDKWGZoR7uB2JtM1wjwE34MBwoztE
+```
+
+
+### Your .env on GitHub
+
+```plaintext
+MY_SECRET_USERNAME=
+MY_SECRET_PASSWORD=
+```
+
+The result for your collaborators is an always-up-to-date set of required secrets, in the actual `.env` file where they need to be filled out.
+
+## nbstripout
+
+`dotenv-stripout` is loosely inspired by [nbstripout](https://github.com/kynan/nbstripout): a package which I use daily as part of my work with [jupyter notebooks](https://jupyter.org/) and git. As notebooks are added to git, the output of each cell is removed, or 'stripped' from the file. The original file on my machine remains intact with all of its messy outputs, but the version which is pushed to GitHub looks like it has been never been run.
+
+This almost always makes notebooks more readable, but also limits the potential for large notebook outputs (eg high-resolution graphs or images) to bloat the size of a file. For some cells with stochastic/random outputs, stripping outputs is extra important: simply re-running a notebook without changing the code could generate huge diffs, despite not making any significant changes!
+
+The parallels to the `.env` problem felt obvious - all I had to do was build the solution.
+
+## Building dotenv-stripout
+
+To achieve the magic, invisible cleanup effect without affecting the local copy of a file, both `dotenv-stripout` and `nbstripout` make use of [git's "smudge" and "clean" filters](https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes) which specify commands to be run when a file is checked in or out of the repo's staging area. When installed in a repo, the filters and commands are written to the repo's hidden `.git/config` and `.git/info/attributes` (or `.gitattributes`) files.
+
+Those filters can also be set in the _global_ git configuration, affecting files in every repo. If you're interested in reading more, [the git documentation includes some great tips for tweaking and customising your git configuration](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration).
+
+The actual stripping work done by `dotenv-stripout` is considerably simpler than `nbstripout`. While `nbstripout` has to contend with the complex metadata and json structure of a jupyter notebook to determine whether something should be removed, `dotenv-stripout` simply goes through each matching file line-by-line, removing any characters appearing after an \=.
+
+The `dotenv-stripout` package also includes a friendly CLI (implemented with [typer](https://github.com/tiangolo/typer)) which lets you install, uninstall, or check the status of the filter in a repo (or globally). It also allows you to _actually_ strip the values from `.env` files in a repo.
+
+## Alternatives
+
+Of course, this isn't the only solution to this problem, nor is it the best one.
+
+As I mentioned earlier, the use of a blunt `.gitignore` file is a widely-accepted pattern which does enough to keep your secrets safe, but has some inherent problems.  
+Some projects choose instead to use a third-party secret store (eg [AWS secrets manager](https://aws.amazon.com/secrets-manager/), or [HashiCorp Vault](https://www.hashicorp.com/products/vault/secrets-management)) to hold their secrets, which are then fetched when the code runs. Using a third-party store often comes with lots of complexity and cost overhead.  
+In other projects, environment variables might only ever be necessary during builds, so managing them _within_ those build tools directly (eg with [vercel](https://vercel.com/docs/environment-variables), [netlify](https://docs.netlify.com/configure-builds/environment-variables/), or [github actions](https://docs.github.com/en/actions/reference/environment-variables)), might be the best solution.
+
+All of these options are sophisticated tools which cater to large projects with an emphasis on cloud computing and automation.
+
+In my mind, `dotenv-stripout` is positioned as a small improvement on the standard `.gitignore` approach, applicable to small projects where contributors are likely to run the code themselves or manually create their `.env` files.
+
+If you want to try working with `dotenv-stripout` in your own projects, just run
+
+```sh
+pip install dotenv-stripout
+dotenv-stripout install --global
+```
+
+
+[dotenv-stripout is openly licensed on GitHub](https://github.com/harrisonpim/dotenv-stripout) for anyone to use and adapt - come and take a look, or [contribute to its development](https://github.com/harrisonpim/dotenv-stripout/blob/main/CONTRIBUTING.md)!

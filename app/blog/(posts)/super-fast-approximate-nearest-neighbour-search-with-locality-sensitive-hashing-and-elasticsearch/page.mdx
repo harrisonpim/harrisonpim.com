@@ -1,0 +1,187 @@
+import { faviconEmoji } from 'lib/emoji'
+import { formatDate } from 'lib/date'
+
+export const metadata = {
+    title: "Super fast approximate nearest neighbour search with locality sensitive hashing and elasticsearch",
+    description: "This novel approach to approximate nearest neighbour search achieves super-fast query times by using elasticsearch to index and query the outputs of an LSH model. The cheap, scalable architecture for both hashing and querying make it an ideal approach for huge datasets in production environments.",
+    date: "2022-12-05",
+    icons: faviconEmoji('🕵️'),
+}
+
+Approximate nearest neighbour (ANN) search is a foundational task in data science and machine learning, where the goal is to efficiently find data points in a dataset that are most similar to a given query point. It's used all over the place, from [music recommendation](https://www.youtube.com/watch?v=QkCCyLW0ehU), to plagiarism detection, to [solving massive jigsaw puzzles](https://www.youtube.com/watch?v=WsPHBD5NsS0).
+
+While there are many algorithms for ANN search, one of the most effective is locality sensitive hashing (LSH), which allows for fast and approximate search by mapping similar data points to the same "buckets".
+
+In this blog post, I'll describe how to to implement a super fast, production-ready ANN search engine by training an LSH model, inferring hashes for new data, and indexing and querying those hashes with elasticsearch. Whether you're a seasoned data scientist or a newcomer to the field, I hope you'll learn something new from this post!
+
+First, let's define some key terms:
+
+## Approximate nearest neighbours
+
+An ANN search should produce a set of data points in a dataset that are closest to a given query point. These methods are called "approximate" because they use clever tricks to find an _approximate_ answer to the problem, rather than an exact answer.
+
+Allowing the calculated distances to be imprecise (particularly for matches which are far away from the query point) allows approximate methods to work much faster than traditional, exact methods for finding the nearest neighbours, which can be very slow for large datasets.
+
+## Elasticsearch
+
+
+Elasticsearch is a mature, open-source platform for building search engines, with a powerful, flexible query API. It uses some smart algorithmic magic behind the scenes to quickly and accurately find relevant results based on a user's search query.
+
+Term frequency-inverse document frequency, or TF-IDF, is the core method used by Elasticsearch to assign scores to matching documents by determining how often each words overlaps with the user's search terms, and the significance of those overlaps based on the rest of the documents in the index. The more unique a matched word is to a particular document, the higher its score will be. This allows Elasticsearch to prioritize and rank search results based on the relevance of specific words to the user's query.
+
+## Locality sensitive hashing
+
+
+Locality sensitive hashing (LSH) is a way of finding similar items in large datasets by creating a "hash" or unique identifier for each item. Typically, [hashing algorithms](https://en.m.wikipedia.org/wiki/Hash_function) are designed to minimise collisions; that is, different input data should always result in a different hash, no matter how similar the inputs are. In contrast, LSH methods are designed to _maximise_ collisions; items that are similar to each other should result in a similar set of strings, making it easy to find similar items without having to compare every single item in the dataset with an exact distance calculation.
+
+LSH models work by using a group of independent hash functions to map similar data points in a high-dimensional feature space into the same buckets, so that nearby points are more likely to be hashed to the same bucket. This allows for fast and approximate search, since we only need to compare the query point to the points in the same set of buckets, rather than the entire dataset.
+
+To use LSH, we first need to choose a set of hash functions that have the property of being "locality sensitive", meaning that they are more likely to hash similar points to the same bucket. There are many ways to construct such hash functions, but one of the most common is to use random projections. This involves projecting the data points onto a random vector, and then dividing the projection values by a chosen threshold to get the hash values. Alternatively, we could divide the complete feature space into a set of subspaces by randomly choosing groups of features, and then apply a clustering model (eg k-means or HDBSCAN) to each one, defining regions which share similar features.
+
+## Combining the concepts
+
+We can combine the ideas we've defined above to establish a new approximate nearest neighbour method: If we use an LSH model to produce a set of tokens which describe our data (in a way that maximises the chance of collisions for similar sets of features), we can then use TF-IDF to search and compare those hashes, returning the most relevant ones! In particular, elasticsearch's more\_like\_this query type will allow us to use a field from an existing document as the set of search terms for a new query, allowing us to make the ANN request without knowing the query document's features or hashes in advance.
+
+## Building a pipeline
+
+### Training LSH models
+
+Let's get started by creating an LSH model to hash our features. The inputs to our model should be set of arrays which precisely describe the source data - If we could use an exact NN method, these would be the features we'd use to calculate our distances.  
+For example, if we were building an image similarity service, these feature vectors might be the penultimate layer of of activations from a VGG16 model. Alternatively, working with text to produce article recommendations, they might be BERT sentence-embeddings. For simplicity, I'll just define a set of random 256-dimensional vectors in this example.
+
+```py
+import numpy as np
+
+# an array of 10,000 256-dimensional vectors
+features = np.random.rand(10_000, 256)
+```
+
+We're going to randomly select a set of 1,000 feature vectors to train with. We only have 10,000 total data points here, but in production settings we might need to train on a subset of the complete data. As long as the distribution of the training set matches that of the test set, this sampling method should be fine.
+
+After that, we split each of our training examples into 32 chunks. For each original 256 dimensional array, we'll end up with 32 8-dimensional arrays, each representing a different set of features and acting as its own subspace. Importantly, these smaller subspaces can be compared just like the original feature set.
+
+
+```py
+# a subset of 1000 of those vectors
+n_training_vectors = 1000
+random_indices = np.random.choice(
+    features.shape[0], n_training_vectors, replace=False
+)
+training_features = features[random_indices]
+
+def split_features(feature_vectors, n_groups):
+    return np.split(feature_vectors, indices_or_sections=n_groups, axis=1)
+
+n_groups = 32
+feature_groups = split_features(training_features, n_groups)
+```
+
+Next we'll fit a k-means model to each of those subspaces, dividing each one into 16 regions based on the clusters of features that it finds.
+
+```py
+from sklearn.cluster import KMeans
+
+def train_clusters(feature_group, m):
+    clustering_alg = KMeans(n_clusters=m, n_jobs=-1).fit(feature_group)
+    return clustering_alg
+
+m = 16
+models = [train_clusters(feature_group, m) for feature_group in feature_groups]
+```
+
+Taken in combination, this set of models is our complete LSH model! If we chunk every one of our original feature vectors the same way as we did for the training set, we can predict which of our buckets each chunk falls into, and thereby generate a meaningful hash!
+
+```py
+def hash_features(feature_vector, models):
+    feature_groups = split_features(feature_vector.reshape(1, -1), len(models))
+    clusters = [
+        model.predict(feature_group)
+        for model, feature_group in zip(models, feature_groups)
+    ]
+    return [f"{i}-{j}" for i, j in enumerate(clusters)]
+
+hashes = [
+    hash_features(feature_vector, models)
+    for feature_vector in features
+]
+```
+
+Here, each token (or 'word') in the hash is comprised of two parts: the index of the feature group / subspace we're considering, and the index of the cluster which that datapoint has been classified into. This gives us a set of n x m possible tokens. In this case, we have 32 subspaces, each divided into 16 clusters, so each document will be given a set of 32 tokens from of 512 possible tokens. Feature vectors which are close in the original feature space should share more of those tokens with one another than feature vectors which are far apart.
+
+In production settings, the dataset is likely to be higher-dimensional, and we're likely to have many more than 10,000 documents. At the scale of ~10,000 docs, computing the distances exactly might be sufficiently fast, without any need for LSH. A much more information-rich feature space like those found in the real world will probably require higher values of both n and m than the values we've used here.
+
+### Indexing hashes into elasticsearch
+
+Now all we need to do is index our hashes into an elasticsearch index, ready to be queried. We'll set the field type of the lsh field to keyword, and set the analyzer to whitespace so that our hashes remain intact and are not split apart by the hyphen in `{i}-{j}`.
+
+
+```py
+from elasticsearch import Elasticsearch
+
+# Create a client instance
+es = Elasticsearch()
+
+# Define the index settings and mapping
+index_settings = {
+    "settings": {
+        "number_of_shards": 1,
+        "number_of_replicas": 0
+    },
+    "mappings": {
+        "properties": {
+            "lsh": {
+                "type": "keyword",
+                "analyzer": "whitespace"
+            },
+        }
+    }
+}
+
+# Create the index
+es.indices.create(index="ann-search", **index_settings)
+```
+
+We can now index each of our documents into that newly defined mapping:
+
+
+```py
+for i, document_hashes in enumerate(hashes):
+    es.index(
+        index="ann-search",
+        id=i,
+        document={"lsh": document_hashes}
+    )
+```
+
+And finally, run a more\_like\_this query to see similar results! We use a random ID as the query, but we could use a specific one based on user requests if this were running in a production API accepting user queries, for example.
+
+
+```py
+random_id = np.random.randint(0, len(hashes))
+results = es.search(
+    index="ann-search",
+    query={
+        "more_like_this": {
+            "fields": ["lsh_features"],
+            "like": {
+                "_index": "ann-search",
+                "_id": random_id
+            },
+            "min_term_freq": 1,
+            "max_query_terms": 32
+        }
+    }
+)
+
+approximate_nearest_neighbours = [
+    hit["_id"] for hit in results["hits"]["hits"]
+]
+```
+Because of elasticsearch's powerful, flexible query API, we can also run more interesting searches! For our images example, if we also had additional text fields like titles or descriptions for each image, we could combine our nearest-neighbour queries with traditional searches in a single API call, eg "give me images whose features look like this one, but whose captions contain the word 'dog'". We could even work in a multi-modal way, and apply the same LSH process to features from the text as well as the image, querying both fields for documents which share text _and_ image features.
+
+This fundamental pattern is one I use all the time: working with a set of large, interesting, highly optimisable ML models behind the scenes with a simple, interpretable format for inferred data, subsequently stored in an index with powerful querying capabilities.
+
+## Deployment
+
+In a follow-up post, I'll walk through applying these ideas to a large image dataset, and architecting a system for deploying the resulting models and APIs in the real world for other people to use!
+
