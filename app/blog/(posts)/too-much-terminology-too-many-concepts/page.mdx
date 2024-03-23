@@ -1,0 +1,70 @@
+import { faviconEmoji } from 'lib/emoji'
+import { formatDate } from 'lib/date'
+
+export const metadata = {
+    title: "Too much terminology! Too many concepts! What's the difference between a knowledge graph, a controlled vocabulary, a knowledge base, an ontology, and a taxonomy?",
+    description: "In data science and machine learning, the structures we use to represent grounded knowledge are increasingly significant, but the corresponding names and often confused and conflated! In this post, I'll disambiguate a few of the most common terms, highlight their differences, and provide examples of how and where they can be applied.",
+    date: "2024-03-08",
+    icons: faviconEmoji('❓')
+}
+
+## Introduction
+
+With the rise of generative machine learning models and new approaches to information retrieval, structures for representing grounded knowledge are have become even more important than they were before. Knowledge representation was already a messy, intertwined field with lots of conflated and overloaded terms. With the recent growth, the terminology and concepts have become even more confusing!
+
+In this post, I'll try to clarify the differences between some of the most common terms in this field, and provide a few examples of each in the wild. Hopefully, by the end, you'll have a better understanding of the differences between these concepts and how they can be applied to your projects.
+
+## What's a knowledge graph?
+
+A knowledge graph is a specific type of knowledge representation that structures data as a graph, where nodes represent concepts, and edges represent the relationships between them.
+
+They're a bit like a social network, but all of the actors in the network represent distinct concepts. Nodes in a knowledge graph can have relationships to one another, just like people, and those relationships can be just as strictly and expressively typed as the nodes themselves.
+
+For example, one node might represent the concept for "horse", which is related to the concept for "mammal". The relationship between these two nodes might be "is a type of", which represents a hierarchical . This is a simple example, but knowledge graphs can represent much more rich relationships.
+
+These relationships are often represented as triples, which are a set of three values: a subject, a predicate, and an object. In the example above, the subject would be "horse", the predicate would be "is a", and the object would be "mammal". This is a simple example, but knowledge graphs can represent much more rich
+
+But knowledge graphs are more than just a flat database of triples. The networked structure of the information allows us to apply techniques from graph theory and graph ML to learn new information. For example, we might be able to infer that two members of a social network are likely to know each other in real life, based on their shared existing relationships. We can apply the same techniques to learn about new or unexpressed relationships between concepts!
+
+The structure of the metadata on each node/edge is usually limited to a particular set of fields and/or values. That strict structure makes them easy to query, while the graph nature of the relations makes them very expressive.
+
+In some cases, the knowledege graph might be managed through an interface referred to as a "concept store". This is a system that allows users to interact with the knowledge graph, and might include features like search, browsing, and editing. The concept store might also include a set of rules for how the graph is updated and maintained. The knowledge graph is the resulting artefact, while the concept store is the interface for interacting with it.
+
+You might have encountered knowledge graphs in the wild, like wikidata, the google knowledge graph, and dbpedia. They all involve a set of structured, controlled fields, and the relationships between nodes are just as important as the nodes themselves.
+
+
+## What's a controlled vocabulary?
+
+A controlled vocabulary is a structured set of preferred and alternative labels, not necessarily represented as a graph. Often part of larger systems which also represent a hierarchy between concepts.
+
+Structured set of preferred and alternative labels, not necessarily represented as a graph. Often part of larger systems which also represent a hierarchy between concepts.
+
+This term refers to a set of terms or phrases that have been pre-selected to promote consistency and accuracy in data retrieval and discovery. Libraries and databases typically use controlled vocabularies to categorize information to ensure users find what they're looking for, even if they aren't sure which keyword to use.
+
+For example, the Library of Congress Subjects Headings (LCSH) have an entry for
+
+Examples include controlled vocabularies like LCSH and MeSH. Wikidata could also be seen as a concept store. see wikibase.cloud)
+
+## What's a knowledge base?
+
+A knowledge base is a repository of structured and unstructured information that can be accessed, managed, and updated electronically. It typically contains facts, rules, definitions, and relationships between entities.
+
+A knowledge base is a repository of structured and unstructured information that can be accessed, managed, and updated electronically. It typically contains facts, rules, definitions, and relationships between entities.
+
+Knowledge bases are different because they can contain unstructured stuff as well as structured. Can be graphy but that's rare. Because of the lack of strict structure, they're great for writers but hard to develop on. Increasingly accessed through retrieval augmented generation (RAG) interfaces, that let users ask questions of the knowledge base which can be answered with natural language.
+
+Weak ontology
+
+Examples: wikipedia (and/or wikimedia), a company's internal documentation in Notion or Google Drive, a personal obsidian vault
+
+## What's an ontology?
+
+An ontology forms a framework for defining and categorizing things, highlighting their properties, and explaining how they relate or interact with one another.
+
+In the context of computer science and information science, an ontology forms a framework for defining and categorizing things, highlighting their properties, and explaining how they relate or interact with one another. For example, in biology, an ontology would detail how 'mammals' relate to 'animals' and distinct mammal classes.
+
+## What's a taxonomy?
+
+A taxonomy is a system or scheme of classification that organizes concepts or objects hierarchically, usually according to their main common features.
+
+This is a system or scheme of classification that organizes concepts or objects hierarchically, usually according to their main common features. Taxonomies cover the relationships between things and can be used in various fields like biology (to classify living organisms), computer science (to arrange data types), etc.
