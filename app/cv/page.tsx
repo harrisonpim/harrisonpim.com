@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 const Block: FC<BlockProps> = ({ heading, children }) => {
   return (
     <section className="flow-root">
-      <h2 className="float-left w-full text-base lg:w-1/6 lg:pr-3 lg:font-medium print:w-1/6 print:pr-3 print:font-medium pt-1">
+      <h2 className="float-left w-full text-lg lg:w-1/6 lg:pr-3 lg:font-medium print:w-1/6 print:pr-3 print:font-medium pt-1">
         {heading}
       </h2>
       <div className="float-left w-full space-y-3 pt-1 lg:float-right lg:w-5/6 lg:pt-0 print:float-right print:w-5/6 print:pt-0">
@@ -33,20 +33,20 @@ const Block: FC<BlockProps> = ({ heading, children }) => {
 export default async function CV() {
   const cv = await import('./cv.json').then((m) => m.default)
   return (
-    <div className="space-y-3 ">
+    <div className="space-y-3">
       <Link href="/" className="no-underline">
         <h1 className="text-3xl leading-tight">Harrison Pim</h1>
       </Link>
-      <div className="text-xs space-y-1">
+      <div className="text-sm space-y-1">
         {cv.description.split('\n').map((p, idx) => (
           <p key={idx}>{p}</p>
         ))}
       </div>
       <Block heading="Experience">
-        <ul className="list-none space-y-3 pl-0">
+        <ul className="list-none space-y-2 pl-0">
           {cv.experience.map((job, idx) => (
             <li key={idx}>
-              <h3 className="pt-1 text-base">
+              <h3 className="pt-1 text-lg">
                 {job.url ? (
                   <a href={job.url} className="no-underline">
                     {job.organisation}
@@ -60,7 +60,7 @@ export default async function CV() {
               <ul className="list-none pl-0">
                 {job.roles.map((role, idx) => (
                   <li key={idx}>
-                    <h4 className="text-sm pt-0.5">
+                    <h4 className="text-base pt-0.5">
                       {role.title}
                       {'  ·  '}
                       <span className=" font-light">
@@ -68,7 +68,7 @@ export default async function CV() {
                         {formatMonth(role['end-date'])}
                       </span>
                     </h4>
-                    <p className="text-xs ">{role.description}</p>
+                    <p className="text-sm ">{role.description}</p>
                   </li>
                 ))}
               </ul>
@@ -77,11 +77,11 @@ export default async function CV() {
         </ul>
       </Block>
       <Block heading="Education">
-        <ul className="list-none space-y-3 pl-0">
+        <ul className="list-none space-y-2 pl-0">
           {cv.education.map((education, idx) => (
             <li key={idx}>
-              <h3 className="pt-1 text-base">{education.institution}</h3>
-              <p className="text-sm">
+              <h3 className="pt-1 text-lg">{education.institution}</h3>
+              <p className="text-base">
                 {education.qualification}
                 {', '}
                 {education.grade}
@@ -91,31 +91,39 @@ export default async function CV() {
                   {formatMonth(education['end-date'])}
                 </span>
               </p>
-              <p className="text-xs ">{education.description}</p>
+              <p className="text-sm ">{education.description}</p>
             </li>
           ))}
         </ul>
       </Block>
       <Block heading="Skills + Tools">
-        <ul className="list-none space-y-3 pl-0">
+        <ul className="list-none space-y-2 pl-0">
           {Object.entries(cv.skills).map(([title, skills], idx) => (
             <li key={idx}>
-              <h3 className="pt-1 text-base">{title}</h3>
-              <p className="text-xs">{skills.join(', ')}</p>
+              <h3 className="pt-1 text-lg">{title}</h3>
+              <p className="text-sm">{skills.join(', ')}</p>
             </li>
           ))}
         </ul>
       </Block>
       <Block heading="Other Stuff">
-        <ul className="list-none space-y-3 pl-0">
+        <ul className="list-none space-y-2 pl-0">
           {Object.entries(cv.other).map(([title, content], idx) => (
             <li key={idx}>
-              <h3 className="pt-1 text-base">{title}</h3>
-              <p className="text-xs">{content}</p>
+              <h3 className="pt-1 text-lg">{title}</h3>
+              <p className="text-sm">{content}</p>
             </li>
           ))}
         </ul>
       </Block>
+      <section>
+        <a
+          href="javascript:window.print()"
+          className="text-base text-gray no-underline dark:text-light-gray print:hidden"
+        >
+          Download this as a PDF
+        </a>
+      </section>
     </div>
   )
 }
