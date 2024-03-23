@@ -1,0 +1,28 @@
+import { faviconEmoji } from 'lib/emoji'
+import { formatDate } from 'lib/date'
+
+export const metadata = {
+    title: "A custom keybinding to merge jupyter notebook cells in vscode",
+    description: "Merging cells with ⇧m",
+    date: "2023-03-08",
+    icons: faviconEmoji('📒'),
+}
+
+I really enjoy working with Jupyter notebooks. I used to exclusively use the JupyterLab UI, but lately I've been doing more of my notebook writing in VSCode. However, I've been missing some of the keybindings from JupyterLab which sped up my workflow, like the ability to merge cells with ⇧m. By default, VSCode users can only do this by awkwardly right-clicking the selected cells and choosing "Join selected cells".
+
+However, VSCode is super configurable and makes it very easy to add that shortcut back to your workflow. Here's how:
+
+- Open the command palette with `⌘⇧P`
+- Search for `Preferences: Open Keyboard Shortcuts (JSON)`
+- Paste the following into `keybindings.json`
+
+```json
+[
+    {
+        
+        "key": "shift+m",
+        "command": "notebook.cell.joinSelected",
+        "when": "notebookEditorFocused && !notebookEditorHasMultipleKernels && !inputFocus"
+    }
+]
+```

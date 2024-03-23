@@ -7,11 +7,12 @@ export default function middleware(request: NextRequest) {
 
   // If the request is for a blog post, set the x-next-blog-post-slug header
   // This is used in the blog layout to load the correct post metadata
-  if (request.nextUrl.pathname.startsWith('/blog/'))
+  if (request.nextUrl.pathname.startsWith('/blog/')) {
     requestHeaders.set(
       'x-next-blog-post-slug',
       request.nextUrl.pathname.replace('/blog/', ''),
     )
+  }
 
   return NextResponse.next({
     request: {

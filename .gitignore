@@ -33,8 +33,5 @@ yarn-error.log*
 .vercel
 
 # project specific
-*.pdf
-pages/cover-letter.tsx
-public/*
 !public/robots.txt
 .env*.local

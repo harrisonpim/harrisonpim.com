@@ -1,0 +1,46 @@
+import { faviconEmoji } from 'lib/emoji'
+import { formatDate } from 'lib/date'
+
+export const metadata = {
+    title: "A CLI alias for quick and easy passwords",
+    description: "Using python and zsh to create secure random strings whenever I need them",
+    date: "2021-06-22",
+    icons: faviconEmoji('🔐'),
+}
+
+I often need to generate quick, ephemeral secrets or passwords for things I'm working on locally. Instead of using something like "password123" every time, I've put together an alias command which outputs a reliably complex string.
+
+As long as I manage it well, I could confidently continue to use that password when the work makes its way out into the real world, without worrying that it might be easily cracked.
+
+![A terminal window. A line of input reads "generate-password", followed by a complex string output](/images/a-cli-alias-for-quick-and-easy-passwords/screenshot.png "The snippet in action")
+
+The core of the one-liner makes use of the [python 3 secrets module](https://docs.python.org/3/library/secrets.html#secrets.token_urlsafe). Right now, the` secrets.token_urlsafe()` function is the widely accepted best way of generating secure tokens or random strings in python.
+
+```python
+>>> import secrets
+>>> secrets.token_urlsafe(32)
+eGrKX8vNcuXe94BP--IJ8guSVZcLnrkzhocxWqcocuw
+```
+
+
+I _could_ open a python REPL and re-type those lines every time I need a new password, but ideally, I want to be able to run this code without thinking about what's going on under the hood.
+
+To do that, I need to be able to run that python snippet from the CLI, and rename it with a friendly, memorable alias.
+
+First, a python string can be executed from the cli by adding the `-c` flag (for _command_), eg:
+
+```sh
+python3 -c "import secrets; print(secrets.token_urlsafe(32))"
+```
+
+
+That whole line can be aliased with a memorable name like `generate-password` as follows:
+
+```sh
+alias generate-password='python3 -c "import secrets; print(secrets.token_urlsafe(32))"'
+```
+
+
+That's it!
+
+By adding that line to my config in `~/.zshrc`, the alias will be remembered every time a new session begins. I can now tap out a couple of characters, hit tab to autocomplete, and generate a reasonably strong password for whatever I'm working on!

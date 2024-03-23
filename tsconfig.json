@@ -32,7 +32,7 @@
     "**/*.js",
     "**/*.jsx",
     ".next/types/**/*.ts"
-, "app/blog/(posts)/lsh/page.mdx", "app/blog/(posts)/pos/page.mdx"  ],
+  ],
   "exclude": [
     "node_modules"
   ]

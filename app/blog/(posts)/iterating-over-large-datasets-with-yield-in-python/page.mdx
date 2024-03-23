@@ -1,0 +1,56 @@
+import { faviconEmoji } from 'lib/emoji'
+import { formatDate } from 'lib/date'
+
+export const metadata = {
+    title: "Iterating over large datasets with \"yield\" in python",
+    description: "Generators come to the rescue when your dataset is too big for your machine",
+    date: "2022-12-02",
+    icons: faviconEmoji('🔁'),
+}
+
+
+If you're getting started with data science work and python, you might have come across the `yield` keyword and wondered how or why it's used. Once you've got the hang of it, using `yield` can be a powerful technique for working efficiently with large datasets, without using up all your machine's memory.
+
+Let's say we have a huge dataset that we need to work through, line by line. To start, we might read the entire dataset into memory, and then loop through each line of the dataset to process it.
+
+```python
+with open("dataset.txt", "r") as f:
+    dataset = f.readlines()
+
+for line in dataset:
+    # Do something with each line of the dataset
+```
+
+
+This works well for small datasets, but it's not the most efficient approach. We're storing a complete copy of the dataset, despite only processing one line at a time! If our dataset is large, loading the whole thing ahead of time can quickly use up all of the available memory and crash our program.
+
+That's where yield comes in. yield allows us to create a _generator_ object which only produces the next item in the dataset when it's needed, instead of reading the entire thing into memory at once.
+
+Here's an example of how we might adapt the code above to use `yield`:
+
+```python
+def iterate_dataset():
+    with open("dataset.txt", "r") as dataset:
+        for line in dataset:
+            yield line
+
+for line in iterate_dataset():
+    # Do something with each line of the dataset
+```
+
+
+Instead of loading the whole dataset into memory at once, we're loading each line only when we're ready to process it, leaving us much more memory available for processing.
+
+Sometimes you might want to access a single item in a generator, without looping through the whole thing; to access the next item, we can use python's built-in `next` and `iter` functions:
+
+```python
+data_generator = iterate_dataset()
+next_item = next(iter(data_generator))
+```
+
+
+Being able to combine these techniques is super powerful, and makes lots of otherwise tricky work very simple!
+
+However, `yield` might not be the best tool in every situation. For example, it's worth remembering that using `yield` will create a _one-time_ iterator. That is, because it generates the next item in the dataset only when it's needed, you can only iterate over your dataset once. Once you've iterated over the entire dataset, the iterator is exhausted and you won't be able to do so again unless you recreate it. For the same reason, you can't index into a generator in the same way as you would a regular list.
+
+I hope you've found this post helpful, and you feel ready to experiment with `yield` in your own code!

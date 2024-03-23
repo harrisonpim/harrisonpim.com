@@ -8,7 +8,7 @@ export default function ImageWithCaption(props: {
       <img
         {...props}
         // if the page is in dark mode and the image is an svg, it should be inverted
-        className={`rounded-sm ${
+        className={`rounded-sm mx-auto ${
           props.src?.includes('.svg') ? 'dark:invert' : ''
         }`}
       />

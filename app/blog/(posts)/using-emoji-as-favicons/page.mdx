@@ -1,0 +1,140 @@
+import { faviconEmoji } from 'lib/emoji'
+import { formatDate } from 'lib/date'
+
+export const metadata = {
+    title: "Using Emoji as Favicons",
+    description: "How I set a unique emoji as the favicon for each page on this website",
+    date: "2020-12-05",
+    icons: faviconEmoji('✨'),
+}
+
+[Favicons](https://en.m.wikipedia.org/wiki/Favicon) are fun.
+
+They're a quirk in the otherwise dry list of rules which browsers obey. Every webpage is allowed to have a tiny picture associated with it, to be displayed alongside its title in tabs, bookmarks, shortcut icons, etc. They're similar to emoji - cute, bizarre bits of kitsch which have become ubiquitous across the internet.
+
+I decided to bring those two ideas together for this website, and set an appropriate emoji as the favicon for each page. The index page should get a 👋, the blog should get a ✏️, the list of recent talks should get a 👄, etc.
+
+## Some technical context
+
+I've built this website with [jamstack](https://jamstack.org/) principles in mind, using:
+
+- [next.js](https://nextjs.org/) for structuring the content
+- [tailwind css](https://tailwindcss.com/) for styling the content
+- [prismic](https://prismic.io/) for writing and managing the content
+- [vercel](https://vercel.com/) for hosting the site
+
+If you're interested, [all of the code is on github](https://github.com/harrisonpim/harrisonpim.github.io).
+
+## Emoji as favicons
+
+Favicons are typically set with `<link>` element in the page's `<head>`, pointing to one of the site's image assets:
+
+```jsx
+<head>
+  <link rel="icon" href="assets/favicon.png">
+</head>
+```
+
+Although it's less common, the link's href argument can be supplied SVG data directly instead. Additionally, unicode characters can be read by SVG elements if they're appropriately wrapped.
+
+[Lea Verou demonstrated this trick on twitter](https://twitter.com/LeaVerou/status/1241619866475474946) a few months ago using the example below.
+
+```jsx
+<svg xmlns="http://w3.org/2000/svg" viewBox="0 0 100 100">
+  <text y=".9em" font-size="90">💩</text>
+</svg>
+```
+
+
+Bringing all of this together, I created a new `Favicon` component for my site which populates an SVG string with a supplied emoji, and adds it to the `<head>` of whichever page it's used on:
+
+```jsx
+import Head from "next/head";
+
+export default function Favicon({ emoji }) {
+  const svg = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${emoji}</text></svg>`;
+
+  return (
+    <Head>
+      <link rel="icon" href={svg} />
+    </Head>
+  );
+}
+```
+
+
+I can now use the Favicon component in my website's default layout
+
+(n.b. I've cut out the actual layout stuff here for clarity's sake)
+
+```jsx
+import Favicon from "../components/favicon";
+
+export default function DefaultLayout({
+  children,
+  faviconEmoji = "👋",
+}) {
+  return (
+    <div>
+      <Favicon emoji={faviconEmoji} />
+      <main>{children}</main>
+    </div>
+  );
+}
+```
+
+
+The default layout comes with a default favicon (👋), but this can now be set according to the page. For example, on the 404 page:
+
+```jsx
+import BackButton from "../components/backButton";
+import DefaultLayout from "../layouts/default";
+
+export default function Custom404() {
+  return (
+    <DefaultLayout faviconEmoji="😬">
+      <BackButton />
+      <h1>404 - Page Not Found</h1>
+    </DefaultLayout>
+  );
+}
+```
+
+
+## Setting a unique emoji for every page
+
+The content for this site is all written in prismic, and each page's content is fetched from the prismic API when the site is built. I don't manage the code for individual pages - they're all abstracted into a generic `\[uid\].js` file.
+
+In principle, changing the favicon for each page should now be as simple as changing each page's title or description.
+
+To get this working, I added a favicon field to the generic page structure in prismic, and pulled the corresponding field from the response in the `\[uid\].js` file. Here's what a blog post looks like in code:
+
+```jsx
+const Post = ({ post }) => {
+  const title = RichText.asText(post.data.title);
+  const description = RichText.asText(post.data.standfirst);
+  const date = formatDate(post.data.date);
+  const emoji = RichText.asText(post.data.favicon);
+
+  return (
+    <DefaultLayout faviconEmoji={emoji}>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+      </Head>
+      <div>
+        <BackButton text="back to the blog" href="/blog" />
+        <h1 className="py-0">{title}</h1>
+        <div className="text-gray">{date}</div>
+        <SliceZone sliceZone={post.data.body} />
+      </div>
+    </DefaultLayout>
+  );
+};
+```
+
+Now, whenever I create a new page or blog post in prismic, I'm prompted to supply an emoji for the favicon
+
+![a prismic panel showing a field where the favicon can be set](/images/using-emoji-as-favicons/screenshot.png "Setting the emoji favicon for this page in prismic")
+
+Those few extra lines of code handle the rest!

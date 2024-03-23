@@ -1,0 +1,271 @@
+import { faviconEmoji } from 'lib/emoji'
+import { formatDate } from 'lib/date'
+
+export const metadata = {
+    title: "The best way to encode dates, times, and other cyclical features",
+    description: "A little bit of trigonometry is all you need to get the most from your datetime features",
+    date: "2023-05-14",
+    icons: faviconEmoji('🔄'),
+}
+
+## Garbage in, garbage out
+
+Feature engineering is often the most important part of a supervised learning project. It's how we translate our human-readable data into a machine-readable form. If we translate faithfully, the input features for our model should represent everything that a human could understand from each observation in the dataset. However, any mistranslations or wonky projection could hobble our model's performance before it's even started training.
+
+While over-compression or -interpretation can be dangerous, some deliberate massaging of the input data can be useful. For example, if we know that the raw representation of a variable is too granular, we might compress the representation by bucketing its values, reducing the number of input dimensions. Incorporating these inductive biases into our models usually allows them to train faster and raises the performance ceiling.
+
+## Intuitions about time
+
+Even at a glance, intuition can tell us a lot about a timestamp. When we look at a date or time, we sense that:
+
+- While each one is distinct, dates are not totally independent, and similar dates share similar properties. For example, the 1st June is more similar to the 2nd June than it is to the 1st December.
+- The same applies to times - 3am is more similar to 4am than it is to 3pm.
+- Dates repeat annually, and the weather on 2023-06-01 is likely to be similar to the weather on 2022-06-01.
+- Days repeat weekly, and most people are likely to have different habits on weekdays vs weekends.
+- Times repeat daily, and peoples habits are also correlated with these cycles, eg most people are probably asleep at 3am on any given day.
+
+Many of these patterns are based on the _cyclical_ nature of dates and times, and the correlated repetition of patterns in nature and human behaviour.
+
+However, these cyclical features are poorly expressed by the raw representations alone. Although a day starts at 00:00 and ends at 23:59, we know from experience that 00:01 is as similar to 23:59 as 16:29 is to 16:31. Although a year starts on 01-01 and ends on 12-31, in many respects the 1st January is as similar to 31st December as 1st June is to 2nd June.
+
+We have to rely on our experience to understand these features. An untrained model doesn't have that experience, and the raw representations make them hard to learn! Our own intuitions and experiences can (and should!) guide how we translate the raw data into a machine-readable form.
+
+## Typical strategies for datetime encoding
+
+### Extracting components
+
+As explored above, we know that a timestamp is comprised of many component parts (minutes, hours, days, weeks, months, years, etc). Those components can be extracted and used as individual features, in the hope that some of them might be correlated with our model's target variable.
+
+Pandas' [DatetimeIndex](https://pandas.pydata.org/docs/reference/api/pandas.DatetimeIndex.html) has a set of attributes which are commonly used for this purpose. If we start with a datetime column, we can define a new set of component columns based on the original:
+
+```python
+df['year'] = df['datetime'].dt.year
+df['month'] = df['datetime'].dt.month
+df['day'] = df['datetime'].dt.day
+df['day_of_week'] = df['datetime'].dt.day_of_week
+df['day_of_year'] = df['datetime'].dt.day_of_year
+df['minute_of_day'] = df['datetime'].dt.hour * 60 + df['datetime'].dt.minute
+df['quarter'] = df['datetime'].dt.quarter
+df['is_month_end'] = df['datetime'].dt.is_month_end
+df['is_leap_year'] = df['datetime'].dt.is_leap_year
+date_features = df[[
+    'year', 'month', 'day', 'day_of_week', 'day_of_year', 'minute_of_day', 
+    'quarter', 'is_month_end', 'is_leap_year'
+]].values
+```
+
+
+Great! We've gone from one value to many, each of which represents a different meaningful aspect of the original timestamp. If we're lucky, the model will be able to use some of these features to make predictions.
+
+However, these numbers aren't ideally formatted yet - we still need to translate these features into a more machine-readable form, ideally set in the unit interval (ie values between 0-1).
+
+### Ordinal encoding
+
+The simplest approach is to use an ordinal encoding, where each value is represented by a number. Ideally, the numbers should then be normalised to take values between 0-1.
+
+For example, pandas days of the week are given the following numbers:
+
+```json
+{
+    "Monday": 0,
+    "Tuesday": 1,
+    "Wednesday": 2,
+    "Thursday": 3,
+    "Friday": 4,
+    "Saturday": 5,
+    "Sunday": 6
+}
+```
+
+
+These can then be normalised by dividing by the maximum value:
+
+```python
+df['day_of_week'] = df['datetime'].dt.day_of_week / 6
+```
+
+
+```json
+{
+    "Monday": 0,
+    "Tuesday": 0.166,
+    "Wednesday": 0.333,
+    "Thursday": 0.5,
+    "Friday": 0.666,
+    "Saturday": 0.833,
+    "Sunday": 1
+}
+```
+
+
+By applying the same idea to our other values, we can create a feature vector which represents the component parts of our timestamp in a form which is suitable for an ML model.
+
+These values capture the fact that, for example, a week proceeds linearly from Monday to Sunday, and that a year proceeds linearly from January to December, with Tuesday being closer to Monday than it is to Sunday, and February being closer to January than it is to December.
+
+However, this approach has a major drawback. We've imposed a boundary between the maximum and minimum values, losing any of the cyclical features of the original timestamp!
+
+For example, our `minute_of_day` implies that 23:59 is as far as it is possible to be from 00:00, when in reality they're adjacent!
+
+### One hot encoding
+
+To shake off this boundary, people often reach for a one-hot encoding. This is a binary representation of each value, where each value is represented by a vector of length `n`, where `n` is the number of possible values. For example, the days of the week might be represented as follows:
+
+```json
+{
+    "Monday": [1, 0, 0, 0, 0, 0, 0],
+    "Tuesday": [0, 1, 0, 0, 0, 0, 0],
+    "Wednesday": [0, 0, 1, 0, 0, 0, 0],
+    "Thursday": [0, 0, 0, 1, 0, 0, 0],
+    "Friday": [0, 0, 0, 0, 1, 0, 0],
+    "Saturday": [0, 0, 0, 0, 0, 1, 0],
+    "Sunday": [0, 0, 0, 0, 0, 0, 1]
+}
+```
+
+
+By separating the possible value into linearly independent components, we've opened up the possibility for the model to learn about the circular nature of the data. However, this encoding scheme comes with a new set of drawbacks.
+
+This encoding is very inefficient, especially for higher-cardinality data. While our 7-day week introduces 7 new columns to our dataset, a `day_of_year` feature becomes 365 new features. `minute_of_day` adds 1,440 new columns. This seems like a poor trade-off for just the _potential_ for the model to learn about some latent behaviour.
+
+Our model is also not imbued with a natural sense of the relationships between the columns - any relationships it develops must be learned from scratch. The classes' linear independence mean that if examples are rare or missing in the training data (eg we have no training observations from `day_of_year` 129), test-performance is likely to miss their meanings (our model can't intuit that `day_of_year` 129 will be similar to 128 or 130).
+
+### Bucketed one hot encoding
+
+We can improve the efficiency of these one-hot encoded features by grouping our observations into a limited number of buckets. This lessens the impact of sparsity in training data. For example, we might choose to group our `minute_of_day` observations according to 24 buckets, one for each hour, instead of our original 1,440. We could use 48 buckets, each representing half an hour.
+
+Choosing a suitable number of buckets is a tricky problem, and relies on a strong sense of what patterns might exist in the data, or a lot of time to spend on hyperparameter tuning.
+
+However, this encoding scheme _still_ lacks an explicit inductive bias towards the cyclical relationship between these features. Though that's easier to learn in a compressed space, it would be nice if we could include it more intentionally.
+
+### Fuzzy one hot encoding
+
+To overcome the linear independence of features and introduce an explicit relationship between neighbouring values/buckets, we can introduce _fuzziness_ to our one-hot encoding. Instead of encoding a single `1` in each vector and filling the rest of the values with `0`s, we can instead apply a gaussian distribution (or any other appropriate distribution) to each vector with its center where we had previously placed our `1`.
+
+For example, our days of the week might be encoded as:
+
+```json
+{
+
+    "Monday": [1, 0.5, 0, 0, 0, 0, 0.5],
+    "Tuesday": [0.5, 1, 0.5, 0, 0, 0, 0],
+    "Wednesday": [0, 0.5, 1, 0.5, 0, 0, 0],
+    "Thursday": [0, 0, 0.5, 1, 0.5, 0, 0],
+    "Friday": [0, 0, 0, 0.5, 1, 0.5, 0],
+    "Saturday": [0, 0, 0, 0, 0.5, 1, 0.5],
+    "Sunday": [0.5, 0, 0, 0, 0, 0.5, 1]
+}
+```
+
+
+By allowing the model to observe (weak) correlations between target features and neighbouring cyclical feature indexes, we make it easier for the model to learn that Sunday and Monday share some similarities/proximity, or that 23:59 is adjacent to 00:00.
+
+## A better strategy
+
+All of the previous hacks, workarounds and adaptations get us _close_ to a solution, but they're either indirect, inelegant, or inefficient. Fundamentally, they all rely on the model to learn relationships that we already know and understand well, and should be able to encode explicitly.
+
+It _is_ possible to encode all of our intuition about the cyclical nature of dates and times into a single feature vector, without losing any of the information about the component parts of the timestamp. It's all made possible by some simple trigonometry. Let's consider what we already have
+
+### What we have
+
+A single normalised value between 0-1, representing the point of the observation in the cyclical feature space.
+
+For example, a Tuesday in a 7-day week is encoded as `0.166`.
+
+### What we want
+
+A projection of our input variable to a new space, with values also bounded between 0-1. Distances between pairs of points in our input and output space should be correlated, while allowing for distances to be calculated across the unit interval as if it were continuously connected.
+
+In short, we should be projecting the points on our 1D input onto a 2D circle!
+
+### Sine and cosine
+
+We can achieve this by simply calculating the sine and cosine of our input variable.
+
+Let's create a set of random input values between 0-1, representing observations of our cyclical feature.
+
+![Points randomly scattered along a straight line between zero and one](/images/the-best-way-to-encode-dates-times-and-other-cyclical-features/circle.svg)
+
+Now, let's calculate sin(2πx) and cos(2πx) for our input values. The following plot has been scaled to place outputs back in the unit interval using the following code:
+
+```python
+import numpy as np
+
+def encode_cyclical(a: float):
+    """
+    returns the sine and cosine of the input value, scaled to the unit interval
+    """
+    x = (np.sin(2 * np.pi * a) + 1) / 2
+    y = (np.cos(2 * np.pi * a) + 1) / 2
+    return x, y
+```
+
+
+![normalised values of sin(2πx) and cos(2πx) for a set of randomly chosen values between zero and one. The scattered points draw out two sinusoidal waves, offset by ¼](/images/the-best-way-to-encode-dates-times-and-other-cyclical-features/sin_cos.svg)
+
+Plotting the outputs on independent dimensions shows us what we want!
+
+![normalised values of sin(2πx) and cos(2πx) for a set of randomly chosen values between zero and one, plotted against one another. The scattered points draw out a circle, with points distributed around it in the same pattern as they were on the number line.](/images/the-best-way-to-encode-dates-times-and-other-cyclical-features/circle.svg)
+
+We can see instinctively that the encoding we've created fulfils our requirements. Points are evenly spaced along our circular number line, and the boundaries of the unit interval have been joined to create a fully cyclical system.
+
+We can go further than a visual proof though. Let's verify our assumptions with some more data.
+
+## Verifying that it works
+
+We can test whether our requirement for distances is met by our cyclical encoding scheme by calculating distances for random pairs of points in both spaces, and comparing the results.
+
+```python
+import numpy as np
+import pandas as pd
+
+
+df = pd.DataFrame({"a": np.random.random(100), "b": np.random.random(100)})
+
+def min_distance_in_1D(a: float, b: float):
+    """
+    returns the shortest distance between two points in the unit interval,
+    explicitly correcting for the assumption that the interval is cyclical
+    """
+    distance_within_unit_boundary = abs(a - b)
+    distance_across_unit_boundary = abs(1 - distance_within_unit_boundary)
+    return min(distance_within_unit_boundary, distance_across_unit_boundary)
+
+
+def encode_cyclical(a: float):
+    x = (np.sin(2 * np.pi * a) + 1) / 2
+    y = (np.cos(2 * np.pi * a) + 1) / 2
+    return x, y
+
+
+def distance_on_circle(a: float, b: float):
+    """
+    returns the shortest euclidean distance between two points in the unit
+    interval projected onto angles around a unit circle
+    """
+    xa, ya = encode_cyclical(a)
+    xb, yb = encode_cyclical(b)
+    return np.sqrt((xa - xb) ** 2 + (ya - yb) ** 2)
+
+
+df["min_distance_in_1D"] = df.apply(
+    lambda row: min_distance_in_1D(row.a, row.b), axis=1
+)
+df["distance_on_circle"] = df.apply(
+    lambda row: distance_on_circle(row.a, row.b), axis=1
+)
+
+df.plot.scatter(x="min_distance_in_1D", y="distance_on_circle")
+```
+
+
+![A scatter plot of distances between random pairs of points in the unit interval as measured by their (corrected) distance in one dimension, and the corresponding euclidean distance in our new cyclical space. The scattered points draw out a monotonically increasing curve.](/images/the-best-way-to-encode-dates-times-and-other-cyclical-features/distance_comparison.svg "Distances between random pairs of points in the unit interval as measured by their (corrected) distance in one dimension, and the corresponding euclidean distance in our new cyclical space.")
+
+Distances between random pairs of points in the unit interval as measured by their (corrected) distance in one dimension, and the corresponding euclidean distance in our new cyclical space.
+
+That line tells us that the scheme is natively encoding the cyclical nature of the data, without us having to explicitly correct for it in our distance calculation. It's not perfectly linear, but that's okay! The important thing is that the function is monotonically increasing. Now any learning algorithm should be able to resolve patterns in the data which cross the domain boundary.
+
+## Conclusions
+
+Nothing beats the efficiency and simplicity of sine-cosine embeddings for representing cyclical features. By directly encoding information about the fundamental nature of the values into the constructed space, they offer unparalleled flexibility for models to interpret the data efficiently.
+
+More than anything though, this post should serve as a reminder of the vast array of options available for feature engineering tasks, and highlight the importance of selecting the right approach!
