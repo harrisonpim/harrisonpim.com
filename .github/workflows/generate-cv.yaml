@@ -2,8 +2,12 @@ name: Generate CV
 
 on:
   push:
-    # branches:
-    #   - main
+    paths:
+      - 'app/cv/**'
+      - 'app/layout.tsx'
+      - 'styles/**'
+      - 'scripts/generate-cv.js'
+      - '.github/workflows/generate-cv.yaml'
 
 jobs:
   generate-cv:
@@ -29,10 +33,14 @@ jobs:
       - name: Generate CV
         run: yarn run generate-cv
 
-      - name: Commit changes
+      - name: Check for changes, and commit
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add .
-          git commit -m "generate cv"
-          git push
+          if ! git diff --quiet; then
+            git config --global user.name "GitHub Actions"
+            git config --global user.email "actions@github.com"
+            git add .
+            git commit -m "generate cv"
+            git push
+          else
+            echo "No changes to commit."
+          fi
