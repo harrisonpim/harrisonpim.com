@@ -8,7 +8,8 @@
     "env": "vercel link && vercel env pull",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next build && next start"
+    "start": "next build && next start",
+    "generate-cv": "node ./scripts/generate-cv.js"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.0.1",
@@ -19,6 +20,7 @@
     "@types/react": "^17.0.2",
     "@vercel/analytics": "^1.0.0",
     "autoprefixer": "^10.4.18",
+    "cliui": "5.0.0",
     "highlight.js": "^11.0.1",
     "next": "^14.1.0",
     "node": "^21.6.1",
