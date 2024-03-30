@@ -118,7 +118,7 @@ export default async function CV() {
       </Block>
       <section>
         <a
-          href="javascript:window.print()"
+          href="/cv.pdf"
           className="text-base text-gray no-underline dark:text-light-gray print:hidden"
         >
           Download this as a PDF

@@ -19,7 +19,7 @@ _Within_ each project, it might make perfect sense to call each of those directo
 
 To achieve that effect, I've added the snippet below to my `.zshrc` file.
 
-```zsh
+```sh
 DISABLE_AUTO_TITLE="true"
 is_git() {
   [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true ]]
