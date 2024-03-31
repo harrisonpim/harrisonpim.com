@@ -8,6 +8,11 @@ export const metadata = {
     icons: faviconEmoji('🕵️'),
 }
 
+# {metadata.title}
+
+<time dateTime={metadata.date}>{formatDate(metadata.date)}</time>
+
+
 Approximate nearest neighbour (ANN) search is a foundational task in data science and machine learning, where the goal is to efficiently find data points in a dataset that are most similar to a given query point. It's used all over the place, from [music recommendation](https://www.youtube.com/watch?v=QkCCyLW0ehU), to plagiarism detection, to [solving massive jigsaw puzzles](https://www.youtube.com/watch?v=WsPHBD5NsS0).
 
 While there are many algorithms for ANN search, one of the most effective is locality sensitive hashing (LSH), which allows for fast and approximate search by mapping similar data points to the same "buckets".

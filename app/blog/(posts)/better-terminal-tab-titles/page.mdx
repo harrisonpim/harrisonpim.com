@@ -8,6 +8,10 @@ export const metadata = {
   icons: faviconEmoji('🏷️'),
 }
 
+# {metadata.title}
+
+<time dateTime={metadata.date}>{formatDate(metadata.date)}</time>
+
 One of the simplest and subtlest improvements I've made to my shell configuration over the last few years was a tweak to my tab titles.
 
 By default, tabs are titled according to the shell's current working directory. If I find myself working across multiple services at once, it's easy to lose track of what's going on where.

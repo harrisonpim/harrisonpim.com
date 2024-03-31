@@ -8,6 +8,10 @@ export const metadata = {
     icons: faviconEmoji('📒'),
 }
 
+# {metadata.title}
+
+<time dateTime={metadata.date}>{formatDate(metadata.date)}</time>
+
 I really enjoy working with Jupyter notebooks. I used to exclusively use the JupyterLab UI, but lately I've been doing more of my notebook writing in VSCode. However, I've been missing some of the keybindings from JupyterLab which sped up my workflow, like the ability to merge cells with ⇧m. By default, VSCode users can only do this by awkwardly right-clicking the selected cells and choosing "Join selected cells".
 
 However, VSCode is super configurable and makes it very easy to add that shortcut back to your workflow. Here's how:

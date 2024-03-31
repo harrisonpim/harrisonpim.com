@@ -2,11 +2,15 @@ import { faviconEmoji } from 'lib/emoji'
 import { formatDate } from 'lib/date'
 
 export const metadata = {
-    title: "Using Emoji as Favicons",
-    description: "How I set a unique emoji as the favicon for each page on this website",
-    date: "2020-12-05",
-    icons: faviconEmoji('✨'),
+  title: "Using Emoji as Favicons",
+  description: "How I set a unique emoji as the favicon for each page on this website",
+  date: "2020-12-05",
+  icons: faviconEmoji('✨'),
 }
+
+# {metadata.title}
+
+<time dateTime={metadata.date}>{formatDate(metadata.date)}</time>
 
 [Favicons](https://en.m.wikipedia.org/wiki/Favicon) are fun.
 

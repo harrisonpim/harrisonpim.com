@@ -8,6 +8,11 @@ export const metadata = {
     icons: faviconEmoji('🔄'),
 }
 
+# {metadata.title}
+
+<time dateTime={metadata.date}>{formatDate(metadata.date)}</time>
+
+
 ## Garbage in, garbage out
 
 Feature engineering is often the most important part of a supervised learning project. It's how we translate our human-readable data into a machine-readable form. If we translate faithfully, the input features for our model should represent everything that a human could understand from each observation in the dataset. However, any mistranslations or wonky projection could hobble our model's performance before it's even started training.
