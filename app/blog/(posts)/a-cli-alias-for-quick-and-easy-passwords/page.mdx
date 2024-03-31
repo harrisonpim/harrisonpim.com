@@ -8,6 +8,10 @@ export const metadata = {
     icons: faviconEmoji('🔐'),
 }
 
+# {metadata.title}
+
+<time dateTime={metadata.date}>{formatDate(metadata.date)}</time>
+
 I often need to generate quick, ephemeral secrets or passwords for things I'm working on locally. Instead of using something like "password123" every time, I've put together an alias command which outputs a reliably complex string.
 
 As long as I manage it well, I could confidently continue to use that password when the work makes its way out into the real world, without worrying that it might be easily cracked.

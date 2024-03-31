@@ -8,6 +8,10 @@ export const metadata = {
     icons: faviconEmoji('🙊'),
 }
 
+# {metadata.title}
+
+<time dateTime={metadata.date}>{formatDate(metadata.date)}</time>
+
 Many software projects require sensitive data which shouldn't be committed to version control. You don't want Bad Guys to read your usernames, passwords, API keys, etc.
 
 To get around this, many projects require that each collaborator creates a local `.env` file with a list of secret environment variables which are read by the code. The file is then [gitignored](https://git-scm.com/docs/gitignore) so that the sensitive values never appear on GitHub for malicious users to steal.

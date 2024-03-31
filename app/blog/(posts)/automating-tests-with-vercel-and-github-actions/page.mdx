@@ -2,11 +2,15 @@ import { faviconEmoji } from 'lib/emoji'
 import { formatDate } from 'lib/date'
 
 export const metadata = {
-    title: "Automating tests with Vercel and GitHub actions",
-    description: "Making sure that what I build works for everyone, all the time",
-    date: "2021-05-09",
-    icons: faviconEmoji('✅'),
+  title: "Automating tests with Vercel and GitHub actions",
+  description: "Making sure that what I build works for everyone, all the time",
+  date: "2021-05-09",
+  icons: faviconEmoji('✅'),
 }
+
+# {metadata.title}
+
+<time dateTime={metadata.date}>{formatDate(metadata.date)}</time>
 
 I want the services I'm building to work for everyone, all the time.
 
