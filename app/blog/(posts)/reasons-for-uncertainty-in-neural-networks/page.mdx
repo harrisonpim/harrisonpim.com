@@ -19,9 +19,11 @@ I've often heard the saying:
 
 While I know that there's a valuable lesson there, I totally disagree with the statement itself!
 
-As any scientist knows, producing the same results by doing the same thing again and again is actually surprisingly hard! In practice, I think it's more true to say:
+As any scientist knows, producing the same results by doing the same thing again and again is surprisingly hard. In practice, I think it's more true to say:
 
 > madness is doing the same thing again and again, and expecting _the same_ result
+
+## Understanding uncertainty
 
 Consider a simple physics experiment, where the tester releases a ball down a slope, and measures how far the ball travels after meeting the flat ground. Despite keeping every variable constant (the angle of the incline, the weight of the ball, the release position, the smoothness of the track), there will inevitably be some variation in the final resting point of the ball after each run of the experiment. Unmeasurable hidden variables (imperfections in the roundness of the ball, or minute changes in air pressure) can all introduce a degree of stochasticity or randomness into the mechanics of the experiment, and therefore its results.
 
@@ -45,7 +47,7 @@ In science, **every measurement should be given with an associated uncertainty**
 
 ## Uncertainty in machine learning
 
-As machine learning practitioners, we build a lot of powerful decision-making systems. However, I rarely see people calculating or communicating uncertainties in this field!
+As machine learning practitioners, we build a lot of powerful decision-making systems. However, I rarely see people calculating or communicating uncertainties in this field. This is a huge missed opportunity!
 
 ### Measurements vs uncertainties
 
@@ -60,19 +62,17 @@ A common route to improving the accuracy of the classifier would be to use [acti
 ![A rough gaussian distribution representing uncertainty in the model's predictions, with a small amount of noise added.](/images/reasons-for-uncertainty-in-neural-networks/number-line-with-naive-uncertainty.svg "This is what we assume the model's confidence in its predictions looks like when using a naive active learning scheme. The confidence is directly related to the value")
 
 
-While it might be true that some values fall at the classification boundary between 0 and 1 because the model is uncertain about which class the  However, there will invariably be cases where .
+While it might be true that some values fall at the classification boundary between 0 and 1 because the model is uncertain about which class the observation belongs to, it's not true that the model's confidence in its predictions is directly related to the value it outputs.
 
-Some of the cases close to the boundary are uncertain, reflecting a poor understanding of the feature space. With each forward pass, it could classify the observation in either bucket
-
-However, some predictions sit *confidently* at the boundary between the two classes. The model knows that the data it's seeing falls somewhere between the two classes and will always put it in that spot.. 
+There will invariably be cases where the model is very confident in a prediction that sits between the two classes, and cases where it's very uncertain in a prediction that sits at the poles.
 
 Pay attention to the observations at the boundary in the graphic below. The variance in uncertainty at the boundary is much higher than in the previous diagram. While some of the observations near the boundary also have a high associated uncertainty, the uncertainty for some others is just as low as it is for the observations at the poles. This class of high-confidence, non-polar values provide a very interesting set of data for further exploration
 
 ![A more nuanced representation of uncertainty in model predictions, where confidence in each prediction is more independent from the observed value.](/images/reasons-for-uncertainty-in-neural-networks/more-realistic-uncertainty.svg "A more nuanced representation of uncertainty in model predictions, where confidence in each prediction is more independent from the observed value.")
 
-In my experience, this illustration is much closer to the reality than the previous one.
+In my experience, the illustration above is much closer to the reality than the one before it.
 
-By taking a more sophisticated approach to uncertainty, and capturing this orthogonal representation of measurement and uncertainty, We can improve sampling for active learning, and learn much more ourselves about how our model is performing.
+By taking a more sophisticated approach to uncertainty, and capturing this orthogonal representation of measurement and uncertainty, we can improve sampling for active learning and learn much more ourselves about how our model is performing.
 
 ## Methods for uncertainty estimation in neural networks
 
@@ -159,7 +159,7 @@ Laplace Approximation is a deterministic technique based on a second-order Taylo
 
 #### Implementation
 
-Luckily for us, the [laplace package](https://github.com/aleximmer/Laplace) provides a really easy way to get started with 
+Luckily for us, the [laplace package](https://github.com/aleximmer/Laplace) provides a really easy way to get started with Laplace approximation in PyTorch.
 
 ```python
 from laplace import Laplace
@@ -254,10 +254,10 @@ We can use our entropy data to find high confidence predictions which were incor
 
 As you can imagine, this is an exceptionally useful technique when debugging predictions in neural networks, or feeding a network in an active learning process!
 
-### Other methods
+### Other Methods for Uncertainty Estimation
 
 - **Bootstrapping:** Similar to Monte Carlo dropout, but applied to the dataset. By creating multiple versions of the original dataset through random sampling and training separate models on each, we can using the variance in predictions as a measure of uncertainty.
-- **[Deep ensembles](https://arxiv.org/abs/1612.01474):** A higher level version of Monte Carlo dropout - Deep ensembles involve training multiple neural network models independently on the same data and then aggregating their predictions. This approach provides a measure of uncertainty by examining the variability in predictions across the ensemble members. It has been shown to be effective in capturing epistemic uncertainty, particularly when combined with techniques like temperature scaling and Monte Carlo dropout.
+- **[Deep ensembles](https://arxiv.org/abs/1612.01474):** A higher level version of Monte Carlo dropout - Deep ensembles involve training multiple neural network models independently on the same data and then aggregating their predictions. This approach provides a measure of uncertainty by examining the variance in predictions across the ensemble members. It has been shown to be effective in capturing epistemic uncertainty, particularly when combined with techniques like temperature scaling and Monte Carlo dropout.
 - **Gaussian Processes:** These are a class of models that specify a prior directly on the space of functions. Instead of assuming a fixed function shape, Gaussian Processes allow for flexibility by considering a range of possible functions that could fit the data.
 - **[Stochastic Weight Averaging with Gaussians (SWAG)](https://arxiv.org/abs/1902.02476):** SWAG extends the idea of stochastic weight averaging by incorporating Gaussian approximations to the posterior distribution over the weights of neural network models.
 
