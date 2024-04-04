@@ -2,9 +2,12 @@ import { MetadataRoute } from 'next'
 import globby from 'globby'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : 'http://localhost:3000'
+  const baseUrl = {
+    production: 'https://harrisonpim.com',
+    preview: `https://${process.env.VERCEL_URL}`,
+    development: 'http://localhost:3000',
+  }[process.env.VERCEL_ENV || 'production']
+
   const pages = await globby(['app/**/page.{html,js,ts,jsx,tsx,mdx}'])
 
   const urls = pages.map((page) => {
