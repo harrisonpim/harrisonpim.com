@@ -1,0 +1,138 @@
+import { faviconEmoji } from 'lib/emoji'
+import { formatDate } from 'lib/date'
+
+export const metadata = {
+    title: "A glossary of knowledge organisation terminology",
+    description: "In data science and machine learning, the structures we use to represent grounded knowledge are increasingly important, but the corresponding names for those structures are often confused and conflated. In this post I'll disambiguate a few of the most common terms and provide examples of how and where they can be applied and misapplied.",
+    date: "2025-02-02",
+    icons: faviconEmoji('💭')
+}
+
+With the rise of generative language models and new approaches to information retrieval, structures for representing grounded knowledge have become even more important than they were before. Knowledge representation was already a messy, intertwined field with lots of conflated and overloaded terms. With the recent growth in interest, the terminology and concepts have become even more confusing.
+
+Whether you're interested in training language models, building search engines, or just managing documentation, you need clear structures to represent what you know.
+
+In this post, I'll break down the most commonly conflated or misused terminology used in knowledge organisation, from simple concept tagging all the way up to complex knowledge graphs.
+
+## What's a concept?
+
+A concept is a representation of a specific object or idea - a way of parcelling up meaning into discrete chunks that we can work with.
+
+You've probably worked with concepts like this before - adding tags to a blog post, or a category to a product on an e-commerce site, or metadata to a document would all be examples of associating an object with a concept.
+
+In the loosest sense, a concept is any discrete and identifiable object which can be associated with a document in a knowledge organisation system, which is not itself a document.
+
+## What's a controlled vocabulary?
+
+A [controlled vocabulary](https://en.wikipedia.org/wiki/Controlled_vocabulary) is a structured list of concepts, which ensures consistency in the way that concepts are referred to. By collecting the preferred labels and alternative labels which can be used to refer to a concept, we can ensure that users searching for the same concept using different terminology will all find the same resources.
+
+There are several types of controlled vocabularies, with subject headings and thesauri being the most common. Subject headings tend to be broader in scope, while thesauri are often more specialized for specific disciplines.
+
+For example, the [Library of Congress Subject Headings](https://id.loc.gov/authorities/subjects.html) (LCSH) specifies that [Motion pictures](https://id.loc.gov/authorities/subjects/sh85088084.html) is the preferred term for `sh85088084`, while "Movies", "Films", and "Cinema" are alternative terms that should map to the same concept. If one user searches for "movies" in a system using LCSH and another searches for "films", they should both find the same resources.
+
+The choice of terms to include in a controlled vocabulary is based on a few principles:
+- User warrant: the terms that users are most likely to search for
+- Literary warrant: the terms that are most common in the relevant literature
+- Structural warrant: the terms that fit the vocabulary's structure (these might be bridging terms between different parts of the vocabulary, making its overall structure more coherent)
+
+Concepts in a controlled vocabulary are typically characterised by:
+- A preferred term: The "official" words or phrases to use. This is typically the label which will be displayed in a user interface.
+- Alternative terms: Synonyms or variants that map to preferred terms. While users might be able to search for alternative terms, they'll probably see the preferred term in most contexts.
+- Scope notes: Explanations of when to use (or not use) specific terms. These are typically used by librarians or other internal knowledge workers to correctly classify documents.
+- Unique identifiers: Each concept typically has a permanent ID, which won't change even if the preferred term is updated.
+
+While controlled vocabularies are powerful tools for organizing information, they require significant effort to maintain and keep current, especially in fast-moving fields where consensus terminology is changing rapidly. That maintainance is expensive, requiring either human experts or sophisticated automation. They're typically maintained by large institutions like libraries or governments, and are not typically used in the context of individual companies.
+
+[The power to name](https://link.springer.com/book/10.1007/978-94-017-3435-6) which is conferred to those working on controlled vocabularies should not be underestimated. Our language shapes our thought, and the terminology that we use to describe our knowledge shapes the limits of knowledge itself.
+
+The harm is two-sided - while misnaming or misrepresenting can obviously lead to confusion for those learning about a concept, it can causes much more significant harm to those people whose names are misrepresented. For example, the perpetuation of [a racist name for the Khoekhoe people](https://en.wikipedia.org/wiki/Hottentot_(racial_term)) (also perpetuated in many 'authoritative' classification systems) has shaped the treatment of those people for centuries. 
+
+A few more examples of controlled vocabularies:
+- [Medical Subject Headings](https://en.wikipedia.org/wiki/Medical_Subject_Headings) (MeSH) for medical literature
+- [Library of Congress Names](https://id.loc.gov/authorities/names.html) (LC Names) for the names and aliases of people, organisations, and places.
+- [Getty Art & Architecture Thesaurus](https://www.getty.edu/vow/GettyThesaurusOfArtTerms/html/index.html) for categories of art and architecture.
+
+## What's a taxonomy?
+
+A taxonomy builds on a controlled vocabulary by adding relationships between its concepts.
+
+Taxonomies typically organise concepts hierarchically from the most general (at the root of the hierarchical tree) to specific (at the farthest edges or leaves of the hierarchical tree). They focus on `is a` relationships, where each sub-concept's meaning is wholly entailed by its parent concept. Taxonomic systems, particularly in biology, aim to reflect natural relationships between items being classified ([though this is not always possible](https://www.goodreads.com/book/show/50887097-why-fish-don-t-exist)!)
+
+Traditional taxonomies have a few key characteristics:
+- Hierarchical structure: Every concept has exactly one parent, and thus concepts cannot exist in multiple branches.
+- Inheritance: Properties of parent concepts apply to their children. Concepts in the same group therefore share defining features.
+- Completeness: All concepts must fit somewhere in the hierarchy.
+
+Common applications include:
+- Product categorisation in e-commerce (apparel → t-shirts → men's t-shirts → men's blue t-shirts)
+- File system organisation (`documents/reports/2024/Q1/sales_report.pdf`)
+- The ACM Computing Classification System, for computer science research papers (Information systems → Information retrieval → Evaluation of retrieval results → Relevance assessment)
+- Biological classification (Animalia → Chordata → Mammalia → Carnivora → Felidae → Felis → Felis Catus)
+
+Taxonomic views of the world are usually easy to construct, but their simplicity is also their weakness. The real world is much messier than we'd like to admit, and taxonomic representations are usually reductive. Our tendency to lean on hierarchical separations of race, gender, and other categories of people (often in spite of the blurrier, messier reality in front of our eyes) plays a huge part in perpetuating the harms which stem from those divisions.
+
+I'm (obviously) not saying that using a hierarchical file system makes you a racist. Taxonomies are really useful when they're done right - It's more often the _rigidity_ of old, hierarchical systems which makes them problematic. If you're designing a system to organise knowledge hierarchically, it's important to be aware of the biases which you're baking into your ways of understanding and navigating the world. If possible, you should design your hierarchy to be flexible/restructurable where possible, such that it can be updated as our understanding of the world changes.
+
+## What's an ontology?
+
+[Ontologies](https://en.wikipedia.org/wiki/Ontology_(information_science)) are the super-structure by which we can represent, name, and define the categories, properties, and relations between concepts in a domain. Ontologies don't just define lists of concepts, but the _properties_ of those concepts, the properties of the documents that they might be attached to, the types of relationships that can be set between them, and the rules governing how they interact.
+
+An ontology could be as simple as the hierarchical taxonomy of concepts that we saw earlier, or could add more complexity to allow for a rich network of concepts with multiple types of relationships and logical rules.
+
+Ontologies of this form emerged as a subfield of information science in the 1970s, and were originally developed for AI and knowledge engineering. As a result, the machine-readability of an ontology is just as important as its human-readability.
+
+A few ontologies which are still commonly encountered in the wild:
+- [SKOS](https://en.wikipedia.org/wiki/Simple_Knowledge_Organization_System) for representing controlled vocabularies and simple relationships between concepts
+- [OWL](https://en.wikipedia.org/wiki/Web_Ontology_Language) for representing more complex ontologies, with rules for reasoning about the concepts and relationships
+- [Schema.org](https://en.wikipedia.org/wiki/Schema.org) for representing content on the web
+- [Dublin Core](https://en.wikipedia.org/wiki/Dublin_Core) for representing documents both online and in physical libraries
+
+All of these are based on the [RDF](https://en.wikipedia.org/wiki/Resource_Description_Framework) standard, which is the most common foundational ontology for representing knowledge on the web. RDF is extremely powerful, but it's almost always better to work from a slightly higher-level abstraction like SKOS when designing an ontology for a new domain.
+
+## What's a knowledge base?
+
+[Knowledge bases](https://en.wikipedia.org/wiki/Knowledge_base) are the loosest of these structures, and the most flexibly used. They are essentially a collection of documents, which can be queried and searched using natural language.
+
+The term originated in the 1970s (ish), where knowledge bases were distinct from traditional databases. While databases focused on storing large volumes of structured, tabular data, knowledge bases were designed to represent complex, interconnected knowledge and support reasoning about that knowledge.
+
+The complexity of the information stored in knowledge bases means that the constrains applied to them are minimal. Formalised in the information retrieval discipline, knowledge base systems focus more on the analysis of each document with an emphasis on the semantics of the document for assessing relevance to a user's similarly unstructured query, rather than the coherence of the documents as a whole.
+
+With the rise of retrieval augmented generation (RAG) systems, there has been a resurgence in interest in knowledge bases. These systems are able to generate text based on results from a knowledge base, blending structured and unstructured data to produce a (hopefully) coherent and comprehensive response.
+
+You've probably encountered knowledge bases in the wild, like:
+- Corporate documentation systems like Notion
+- Wiki-style systems like Wikipedia
+- Complex personal knowledge management tools like Obsidian, or simpler notes apps
+
+## What's a knowledge graph?
+
+[Knowledge graphs](https://en.wikipedia.org/wiki/Knowledge_graph) bring together everything we've covered so far. Using a carefully designed ontology, we can structure a knowledge-base of documents alongside a controlled vocabulary of concepts to represent a domain as a web of connected knowledge.
+
+I often think of knowledge graphs as behaving like social networks, where concepts or documents are analogous to people. Nodes in a knowledge graph can maintain many relationships to one another, just like people, and those relationships between concepts/documents can be as strictly or expressively typed as the nodes themselves.
+
+Knowledge graphs' more sophisticated ontologies which allow for more complex relationships between concepts mean that they tend to suffer less from the restrictive nature of hierarchical taxonomies. They also benefit from our more modern, connected, fast-paced internet, with the ability to dynamically update the clusters of connected knowledge as our understanding of the world grows and develops.
+
+### Applying graph theory to knowledge graphs
+
+
+The rise of social networks like Facebook in the 2010s led to some massive advances in the fields of [graph theory](https://en.wikipedia.org/wiki/Graph_theory) and machine learning for the analysis of these sparse networks. We now have access to a powerful suite of techniques for learning information from dynamically evolving graphs, which we can apply to our knowledge organisation systems. 
+
+In the same way that we're able to use the structure of a social network to infer information about people and their relationships (bit spooky, not 100% ethical), we can use the structure of a knowledge graph to learn about all sorts of other domains (whose value is hopefully much less dependent on [surveillance capitalism](https://en.wikipedia.org/wiki/The_Age_of_Surveillance_Capitalism)).
+
+
+### Knowledge graphs in the wild
+
+You might have encountered knowledge graphs in the wild, like the [Google Knowledge Graph](https://en.wikipedia.org/wiki/Google_Knowledge_Graph). When searching for a distinct name or concept in a search engine which is backed by a knowledge graph, you'll often be presented with a mixture of relevant but unstructured documents from the system's search index (aka their knowledge base), paired with an exact-matching concept from their more structured knowledge graph, with links to related concepts. 
+Google's knowledge graph is based in large part on [Wikidata](https://en.wikipedia.org/wiki/Wikidata), a knowledge graph which brings together many controlled vocabularies and taxonomies of concepts from across the world.
+
+RAG systems are also able to take advantage of the structure of a knowledge graph to generate more accurate and relevant responses. The concepts in the knowledge graph can be used both to disambiguate the meaning of a user's query, guiding the retrieval of the most relevant documents or providing additional context for the generation of a response, and to add context for the user by defining relevant additional concepts which appear in the retrieved documents.
+
+## TL;DR
+
+- Concepts should represent discrete, identifiable ideas
+- Controlled vocabularies are a way of standardising terminology for a list of concepts
+- Taxonomies are a way of organising concepts hierarchically, inheriting properties from parent to child concepts
+- Ontologies allow us to define the properties of concepts, and the relationships between them
+- Knowledge bases are a flexible way of storing knowledge in a way that can be queried
+- Knowledge graphs represent knowledge as a network of connected nodes, which enable powerful extra analysis, using machine learning techniques
+- It's easy to inadvertenly misrepresent knowledge based on the structures we use to represent it, but we have a lot of historical precedent (both good and bad) to learn from!
