@@ -1,5 +1,12 @@
 [
     {
+        "title": "Building a knowledge graph for climate policy",
+        "url": "https://2025.berlinbuzzwords.de/",
+        "host": "Berlin Buzzwords",
+        "location": "Berlin, Germany",
+        "date": "2025-06-16"
+    },
+    {
         "title": "Measuring domain shifts in climate NLP",
         "url": "https://2024.appliedmldays.org/",
         "host": "AMLD 2024",
