@@ -1,6 +1,12 @@
 [
     {
         "title": "Building a knowledge graph for climate policy",
+        "url": "https://pydata.org/london2025/about",
+        "host": "Pydata London",
+        "date": "2025-06-07"
+    },
+    {
+        "title": "Building a knowledge graph for climate policy",
         "url": "https://2025.berlinbuzzwords.de/",
         "host": "Berlin Buzzwords",
         "location": "Berlin, Germany",
