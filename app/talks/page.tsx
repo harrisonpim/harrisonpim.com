@@ -20,11 +20,14 @@ type Talk = {
 
 export default async function Talks() {
   const talks: Talk[] = await import('./talks.json').then((m) => m.default)
+  const sortedTalks = talks.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  )
   return (
     <>
       <BackButton />
       <ul className="space-y-6 list-none pl-0 pt-3">
-        {talks.map((talk, i) => (
+        {sortedTalks.map((talk, i) => (
           <li key={i}>
             <Link
               as={talk.url}
