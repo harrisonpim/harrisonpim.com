@@ -1,0 +1,137 @@
+import { faviconEmoji } from 'lib/emoji'
+import CVBlock from './cvBlock'
+
+export const metadata = {
+  title: 'Harrison Pim',
+  description: "I'm a data scientist and machine learning engineer, leading the data science team at Climate Policy Radar.",
+  icons: faviconEmoji('📄'),
+}
+
+
+<section className="space-y-3">
+I'm a data scientist and machine learning engineer, currently leading the data science team at Climate Policy Radar. My background is in computational / quantum physics.
+
+I bring a decade of experience of working on hard R&D problems in natural language processing, knowledge graphs, computer vision, and information retrieval, building search and discovery systems for complex domains.
+
+I have a track record of working end-to-end, leading teams which turn open research questions into rigorously evaluated, production pipelines and services which help people in the real world.
+</section>
+
+<CVBlock heading="Experience">
+
+### Climate Policy Radar, Head of Data Science
+
+Jun 2025 - Present
+
+Managing a team of 4 data scientists and software engineers, building open source infrastructure for climate policy research.
+
+- Responsible for setting our data science strategy, managing projects and people, developing the team, collaborating with external partners, and hiring across the organisation.
+- Scaling our knowledge graph from 100s to 1000s of classifiers, developing more efficient training and evaluation pipelines for BERT-based models, bootstrapped by LLMs.
+- Researching reliable and trustworthy methods for policy synthesis and coherence evaluation.
+- Using graph theory and geometric deep learning to move beyond document-level analysis, and understand systemic patterns in global climate policy.
+- Balancing leadership with hands-on technical work, staying directly involved in our research and engineering.
+
+### Climate Policy Radar, Senior Data Scientist
+
+Sep 2023 - Jun 2025
+
+Led the development of a knowledge graph connecting 30,000+ global policy, litigation, and corporate disclosure documents, used by over 1,000,000 climate researchers in 100+ countries.
+
+- Designed an ontology and data schema in partnership with climate policy experts, allowing them to express their domain knowledge in a form which is readable by modern data pipelines.
+- Developed and evaluated ~100 keyword-based, BERT-based, and LLM-based concept classifiers with a macro F1 score > 0.9, and worked with our platform team to  continuously deploy them at scale.
+- Migrated our search infrastructure from elasticsearch to vespa, and developed an evaluation framework for tuning relevance.
+- Published and presented the team's research at NeurIPS, ACL, AMLD, Berlin Buzzwords, and PyData London.
+
+### Wellcome, Data Scientist, Senior Data Scientist
+
+Mar 2018 - Sep 2023
+
+Led ML research and development for search and discovery on wellcomecollection.org, as the sole data scientist in a team of 5-10 platform engineers.
+
+- Prototyped and productionised computer vision pipelines, novel NLP models, and core search algorithms, working end-to-end from research to deployment across millions of historical medical objects and documents.
+- Designed and implemented the eval framework for the catalogue search engine, establishing metrics and methods which became core to the team's development process.
+- Our team unified multiple disparate catalogues into a single searchable platform, growing annual usage from 1 million to 3.6 million users, and contributing to a 400% increase in usage of the digitised collections.
+- Led technical development on short-term projects, managing interns, students, and cross-departmental secondments.
+
+### UCL, MSc Advisor
+
+Jan 2021 - Sep 2023
+
+Supervised MSc dissertations on UCL's Data Science for Cultural Heritage programme, including a high-performance colour-based image search system, and an analysis of Wellcome's knowledge graph using graph theory and geometric deep learning.
+
+### The British Museum, Data Analyst
+
+Sep 2016 - Mar 2018
+
+Applied machine learning to web analytics, catalogue records, third-party reviews, and physical sensor data, distilling visitors' motivations, expectations, and needs when visiting the museum online and IRL.
+
+- Established A/B testing as a capability for the organisation, partnering with marketing and web teams.
+- Negotiated and led research partnerships with The Alan Turing Institute, Oxford Internet Institute, and TripAdvisor.
+
+### Great Little Place, Data Science Intern
+
+Jul 2015 - Sep 2015
+
+Built a ranking and recommendation system (collaborative filtering, graph algorithms) for an app with hundreds of thousands of users around the world.
+
+</CVBlock>
+
+<CVBlock heading="Education">
+
+### University College London (UCL), MSci Physics, 2:1
+
+2012 - 2016
+
+Thesis: Correlations between water fragments on silicon
+
+</CVBlock>
+
+<CVBlock heading="Skills + Tools">
+
+### Machine learning
+
+pytorch, transformers, sentence-transformers, scikit-learn, wandb, argilla, LLM and agent APIs (pydantic-ai, openrouter), fine-tuning and evaluating BERT-scale models
+
+### Data science
+
+python, jupyter, pandas, polars, numpy, scipy, matplotlib, spacy, nltk, networkx, neo4j, elasticsearch, vespa, duckdb, snowflake, SQL, Cypher
+
+### Software engineering
+
+pydantic, pytest, hypothesis, pyright, typer, fastapi, flask, prefect, dask, uv, pre-commit, git
+
+### Web/native development
+
+typescript, javascript, node.js, react, next.js, tailwind, graphql, jest, playwright, expo
+
+### Deployment
+
+AWS, pulumi, terraform, docker, github actions, vercel, netlify, railway, supabase, prefect, airflow
+
+</CVBlock>
+
+<CVBlock heading="Other Stuff">
+
+### Teaching and mentoring
+
+I try to share what I've learned through blog posts, reusable code, and/or talks at conferences and universities. I've also mentored and advised first-time conference speakers, artists, researchers in industry and academia, grant funding applicants, and students all the way from GCSE to PhD.
+
+### Software development
+
+I've built a lot of open source tools, sites, and services outside of work to sharpen my own development skills and experiment with new technologies. Outside of work, I recently built [Flora](https://flora.day), a spaced repetition learning app with LLM-powered flashcards.
+
+### Community
+
+I help to convene a monthly climate NLP community, running meetups and an online space for researchers and practitioners working at the intersection of NLP and climate. I've reviewed papers for the ClimateNLP workshop at ACL, among other venues.
+
+I've published and presented workshop papers and given invited talks at NeurIPS, ACL, and ICLR, and I've given 30+ talks at conferences and universities around the world, including PyData, Berlin Buzzwords, AMLD, and Mozfest.
+
+</CVBlock>
+
+<section>
+  <a
+    href="/cv.pdf"
+    className="text-base text-gray no-underline dark:text-light-gray print:hidden"
+  >
+    Download this as a PDF
+  </a>
+</section>

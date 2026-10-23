@@ -40,20 +40,25 @@ export default async function Blog() {
   posts.sort((a, b) => (a.date < b.date ? 1 : -1))
 
   return (
-    <div className="prose">
+    <div>
       <BackButton />
-      <ul className="space-y-6 list-none pl-0">
+      <ul className="space-y-6 list-none pl-0 py-6 ">
         {posts.map((post) => (
           <li key={post.title}>
             <Link
               as={`blog/${post.slug}`}
               href={`blog/${post.slug}`}
-              className="no-underline"
+              className="no-underline text-black dark:text-white"
               passHref
             >
               <h2 className="text-lg">{post.title}</h2>
-              <div className="text-sm text-gray dark:text-light-gray">
-                <time dateTime={post.date}>{formatDate(post.date)}</time>
+              <div className="text-sm">
+                <time
+                  dateTime={post.date}
+                  className=" text-gray dark:text-light-gray"
+                >
+                  {formatDate(post.date)}
+                </time>
                 <p>{post.description}</p>
               </div>
             </Link>

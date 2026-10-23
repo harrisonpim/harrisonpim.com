@@ -12,7 +12,7 @@ export default async function Layout({
     <>
       <div>
         <BackButton href="/blog" text="back to the blog" />
-        <article className="pt-4 prose">{children}</article>
+        <article className="prose dark:prose-invert">{children}</article>
       </div>
     </>
   )

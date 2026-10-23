@@ -1,53 +1,47 @@
-/* PROSE */
-
-.prose h1 {
-  @apply pt-4;
-}
-
-.prose h2,
-h3,
-h4,
-h5,
-h6 {
-  @apply pt-2;
-}
-
-.prose time {
-  @apply pt-2 text-gray dark:text-light-gray;
-}
-
+/* Custom prose styles to override Tailwind defaults */
 .prose {
-  @apply py-2 space-y-3;
+  @apply text-black dark:text-white;
+  --tw-prose-body: theme('colors.black');
+  --tw-prose-headings: theme('colors.black');
+  --tw-prose-links: theme('colors.black');
+  --tw-prose-bold: theme('colors.black');
+  --tw-prose-counters: theme('colors.gray');
+  --tw-prose-bullets: theme('colors.gray');
+  --tw-prose-hr: theme('colors.light-gray');
+  --tw-prose-quotes: theme('colors.black');
+  --tw-prose-quote-borders: theme('colors.light-gray');
+  --tw-prose-captions: theme('colors.gray');
+  --tw-prose-code: theme('colors.black');
+  --tw-prose-pre-code: theme('colors.code-text');
+  --tw-prose-pre-bg: theme('colors.code-background');
+  --tw-prose-th-borders: theme('colors.light-gray');
+  --tw-prose-td-borders: theme('colors.light-gray');
 }
 
-.prose p code {
+.dark .prose {
+  --tw-prose-body: theme('colors.white');
+  --tw-prose-headings: theme('colors.white');
+  --tw-prose-links: theme('colors.white');
+  --tw-prose-bold: theme('colors.white');
+  --tw-prose-counters: theme('colors.gray');
+  --tw-prose-bullets: theme('colors.gray');
+  --tw-prose-hr: theme('colors.gray');
+  --tw-prose-quotes: theme('colors.white');
+  --tw-prose-quote-borders: theme('colors.gray');
+  --tw-prose-captions: theme('colors.light-gray');
+  --tw-prose-code: theme('colors.white');
+  --tw-prose-pre-code: theme('colors.code-text');
+  --tw-prose-pre-bg: theme('colors.code-background');
+  --tw-prose-th-borders: theme('colors.gray');
+  --tw-prose-td-borders: theme('colors.gray');
+}
+
+/* Ensure inline code has proper styling */
+.prose :where(code):not(:where(pre *)) {
   @apply rounded bg-light-gray px-1 dark:bg-gray text-sm py-0.5;
 }
 
-.prose h1 {
-  @apply text-3xl leading-tight;
-}
-
-.prose h2 {
-  @apply text-2xl;
-}
-
-.prose h3 {
-  @apply text-xl;
-}
-
-.prose h4 {
-  @apply text-lg;
-}
-
-.prose h2,
-h3,
-h4,
-h5,
-h6 {
-  @apply font-medium;
-}
-
-.prose blockquote {
-  @apply border-l-4 pl-2;
+/* Ensure links are properly styled and underlined */
+.prose :where(a):not(:where([class~='not-prose'] *)) {
+  @apply underline decoration-1 underline-offset-[3px] text-black dark:text-white;
 }

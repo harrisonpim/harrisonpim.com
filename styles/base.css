@@ -1,19 +1,18 @@
 :root {
   @apply text-black dark:bg-dark-gray dark:text-white;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 @media print {
   html {
-    zoom: 0.67;
+    zoom: 0.75;
   }
   @page {
     size: A4;
-    format: A4;
     margin-top: 7mm;
     margin-bottom: 7mm;
-    margin-left: 2cm;
-    margin-right: 2cm;
+    margin-left: 1.5cm;
+    margin-right: 1.5cm;
   }
 }
 
@@ -30,7 +29,8 @@ ol {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   @apply font-space-grotesk;
 }
 

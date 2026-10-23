@@ -42,8 +42,8 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${space_grotesk.variable} ${roboto_mono.variable}`}
     >
-      <body className="p-4 font-sans lg:px-12 ">
-        <div className="max-w-2xl antialiased print:max-w-3xl">
+      <body className="p-4 font-sans lg:px-12 print:p-0">
+        <div className="max-w-2xl antialiased print:max-w-none dark:prose-invert">
           {children}
           <Analytics />
         </div>
